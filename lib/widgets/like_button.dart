@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/swiper_navigation_button.dart';
+import 'package:flutter_hw_1/base/swiper_navigation_button.dart';
 
 class LikeButton extends SwiperNavigationButton {
   const LikeButton({super.key, super.onPressed});

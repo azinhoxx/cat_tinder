@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/screens/home_screen.dart';
-import 'package:flutter_hw_1/tools/app_theme.dart';
+import 'package:flutter_hw_1/theme/app_theme.dart';
 
 class CatTinderApp extends StatefulWidget {
   const CatTinderApp({super.key});
