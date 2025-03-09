@@ -9,7 +9,7 @@ class LikeButton extends SwiperNavigationButton {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      child: Icon(Icons.favorite_sharp, color: Colors.greenAccent),
+      child: Icon(Icons.favorite_sharp, color: Colors.green),
     );
   }
 }

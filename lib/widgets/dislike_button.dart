@@ -9,7 +9,7 @@ class DislikeButton extends SwiperNavigationButton {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      child: Icon(Icons.close, color: Colors.redAccent),
+      child: Icon(Icons.close, color: Colors.red),
     );
   }
 }

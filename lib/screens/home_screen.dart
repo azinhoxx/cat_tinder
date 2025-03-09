@@ -22,57 +22,71 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CardSwiperController _controller = CardSwiperController();
   final List<SwiperSlide> _slides = [];
+
   bool _isLoading = true;
+  bool _isUndo = false;
 
   @override
   Widget build(BuildContext context) {
-    final swiperPuddings =
-        MediaQuery.of(context).size.width < 640
-            ? const EdgeInsets.all(5)
-            : const EdgeInsets.all(16);
-
     return Scaffold(
       appBar: const HomeAppBar(title: 'CatTinder'),
       body: SafeArea(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 8, 0, 40),
+            margin: const EdgeInsets.fromLTRB(0, 8, 0, 36),
             child:
                 _isLoading
                     ? const BlinkingPaw()
                     : Column(
-                      children: [
-                        Expanded(
-                          child: CardSwiper(
-                            controller: _controller,
-                            cardsCount: _slides.length,
-                            numberOfCardsDisplayed: min(3, _slides.length),
-                            backCardOffset: const Offset(0, 0),
-                            padding: swiperPuddings,
-                            cardBuilder:
-                                (
-                                  context,
-                                  index,
-                                  horizontalThresholdPercentage,
-                                  verticalThresholdPercentage,
-                                ) => _slides[index],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 20,
-                            children: [
-                              DislikeButton(onPressed: _onDislike),
-                              LikeButton(onPressed: _onLike),
-                              UndoButton(onPressed: _onUndo),
-                            ],
-                          ),
-                        ),
-                      ],
+                      children: [_buildSwiper(), _buildSwiperNavigation()],
                     ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwiperNavigation() {
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 20,
+        children: [
+          DislikeButton(onPressed: _onDislike),
+          AnimatedOpacity(
+            opacity: _isUndo ? 1 : 0,
+            duration: const Duration(milliseconds: 300),
+            child: IgnorePointer(
+              ignoring: !_isUndo,
+              child: UndoButton(onPressed: _onRevoke),
+            ),
+          ),
+          LikeButton(onPressed: _onLike),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSwiper() {
+    return Expanded(
+      child: SizedBox(
+        width: 500,
+        child: CardSwiper(
+          controller: _controller,
+          cardsCount: _slides.length,
+          numberOfCardsDisplayed: min(3, _slides.length),
+          backCardOffset: const Offset(0, 0),
+          padding: const EdgeInsets.all(6),
+          onSwipe: _onSwipe,
+          onUndo: _onUndo,
+          cardBuilder:
+              (
+                context,
+                index,
+                horizontalThresholdPercentage,
+                verticalThresholdPercentage,
+              ) => _slides[index],
         ),
       ),
     );
@@ -86,33 +100,54 @@ class _HomeScreenState extends State<HomeScreen> {
     _controller.swipe(CardSwiperDirection.left);
   }
 
-  void _onUndo() {
+  void _onRevoke() {
     _controller.undo();
   }
 
-  Future<void> _fetchCats() async {
-    final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
+  void _updateUndoVisibility(int? currentIndex) {
+    setState(() => _isUndo = currentIndex != null && currentIndex != 0);
+  }
 
+  bool _onSwipe(
+    int previousIndex,
+    int? currentIndex,
+    CardSwiperDirection direction,
+  ) {
+    _updateUndoVisibility(currentIndex);
+    return true;
+  }
+
+  bool _onUndo(
+    int? previousIndex,
+    int currentIndex,
+    CardSwiperDirection direction,
+  ) {
+    _updateUndoVisibility(currentIndex);
+    return true;
+  }
+
+  List<SwiperSlide> _parseCats(String responseBody) {
+    final data = jsonDecode(responseBody);
+    if (data is List) {
+      return data
+          .map((el) => SwiperSlide(data: el as Map<String, dynamic>))
+          .toList();
+    }
+    return [];
+  }
+
+  Future<void> _fetchCats() async {
     try {
+      final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       switch (response.statusCode) {
         case 200:
-          final data = jsonDecode(response.body);
-          if (data is List) {
-            final newSlides =
-                data.map((el) {
-                  return SwiperSlide(data: el as Map<String, dynamic>);
-                }).toList();
-
-            setState(() {
-              _slides.addAll(newSlides);
-              _isLoading = false;
-            });
-          }
+          setState(() {
+            _slides.addAll(_parseCats(response.body));
+            _isLoading = false;
+          });
       }
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 

@@ -11,12 +11,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: true,
       backgroundColor: Colors.white,
-      // elevation: 1,
-      // shadowColor: Colors.black,
-      // surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: GoogleFonts.berkshireSwash(
+        style: GoogleFonts.modak(
           fontSize: 42,
           fontWeight: FontWeight.w400,
           color: Colors.redAccent,

@@ -9,7 +9,7 @@ class UndoButton extends SwiperNavigationButton {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      child: Icon(Icons.rotate_left_sharp, color: Colors.blueAccent),
+      child: Icon(Icons.rotate_left_sharp, color: Colors.blue),
     );
   }
 }
