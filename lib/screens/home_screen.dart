@@ -1,14 +1,16 @@
 import 'dart:convert';
+import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/app_bar.dart';
+import 'package:flutter_hw_1/widgets/home_app_bar.dart';
 import 'package:flutter_hw_1/widgets/swiper_slide.dart';
+import 'package:flutter_hw_1/widgets/blinking_paw.dart';
+import 'package:flutter_hw_1/widgets/undo_button.dart';
+import 'package:flutter_hw_1/widgets/dislike_button.dart';
+import 'package:flutter_hw_1/widgets/like_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:flutter_hw_1/widgets/dislike_button.dart';
-import 'package:flutter_hw_1/widgets/like_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,46 +22,74 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CardSwiperController _controller = CardSwiperController();
   final List<SwiperSlide> _slides = [];
+  bool _isLoading = true;
 
   @override
   Widget build(BuildContext context) {
+    final swiperPuddings =
+        MediaQuery.of(context).size.width < 640
+            ? const EdgeInsets.all(8)
+            : const EdgeInsets.all(16);
+
     return Scaffold(
-      appBar: const CatTinderAppBar(title: 'CatTinder'),
+      appBar: const HomeAppBar(title: 'CatTinder'),
       body: SafeArea(
         child: Center(
-          child:
-              _slides.isEmpty
-                  ? CircularProgressIndicator.adaptive()
-                  : Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.8,
-                        child: CardSwiper(
-                          controller: _controller,
-                          cardsCount: _slides.length,
-                          numberOfCardsDisplayed: 1,
-                          cardBuilder:
-                              (
-                                context,
-                                index,
-                                horizontalThresholdPercentage,
-                                verticalThresholdPercentage,
-                              ) => _slides[index],
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 8, 0, 40),
+            child:
+                _isLoading
+                    ? BlinkingPaw()
+                    : Column(
+                      children: [
+                        Expanded(
+                          child: CardSwiper(
+                            controller: _controller,
+                            cardsCount: _slides.length,
+                            numberOfCardsDisplayed: min(3, _slides.length),
+                            backCardOffset: Offset(0, 0),
+                            padding: swiperPuddings,
+                            cardBuilder:
+                                (
+                                  context,
+                                  index,
+                                  horizontalThresholdPercentage,
+                                  verticalThresholdPercentage,
+                                ) => _slides[index],
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 10,
-                        children: [
-                          DislikeButton(onPressed: () => {print('Dislike')}),
-                          LikeButton(onPressed: () => {print('Like')}),
-                        ],
-                      ),
-                    ],
-                  ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 15,
+                            children: [
+                              DislikeButton(onPressed: _onDislike),
+                              LikeButton(onPressed: _onLike),
+                              UndoButton(onPressed: _onUndo),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+          ),
         ),
       ),
     );
+  }
+
+  void _cardBuilder() {}
+
+  void _onLike() {
+    _controller.swipe(CardSwiperDirection.right);
+  }
+
+  void _onDislike() {
+    _controller.swipe(CardSwiperDirection.left);
+  }
+
+  void _onUndo() {
+    _controller.undo();
   }
 
   Future<void> _fetchCats() async {
@@ -70,16 +100,22 @@ class _HomeScreenState extends State<HomeScreen> {
         case 200:
           final data = jsonDecode(response.body);
           if (data is List) {
-            final newSlides = data.map((el) {
-              return SwiperSlide(data: el as Map<String, dynamic>);
-            });
+            final newSlides =
+                data.map((el) {
+                  return SwiperSlide(data: el as Map<String, dynamic>);
+                }).toList();
 
             setState(() {
               _slides.addAll(newSlides);
+              _isLoading = false;
             });
           }
       }
-    } catch (error) {}
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override

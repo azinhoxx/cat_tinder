@@ -26,6 +26,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   cupertino_icons: ^1.0.8
   cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -36,3 +37,4 @@ flutter:
 
   assets:
     - .env
+    - assets/icons/paw_loading_icon.svg

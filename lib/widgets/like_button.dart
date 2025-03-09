@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/widgets/swiper_navigation_button.dart';
 
-class LikeButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  static void _defaultCallback() {}
-
-  const LikeButton({super.key, this.onPressed = _defaultCallback});
+class LikeButton extends SwiperNavigationButton {
+  const LikeButton({super.key, super.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return FloatingActionButton(
       onPressed: onPressed,
-      color: Colors.green,
-      icon: Icon(CupertinoIcons.suit_heart_fill),
-      iconSize: 32,
+      backgroundColor: Colors.white,
+      child: Icon(
+        CupertinoIcons.suit_heart_fill,
+        color: const Color.fromARGB(255, 159, 242, 202),
+      ),
     );
   }
 }

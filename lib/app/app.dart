@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/screens/home_screen.dart';
+import 'package:flutter_hw_1/tools/app_theme.dart';
 
-class CatTinderApp extends StatelessWidget {
+class CatTinderApp extends StatefulWidget {
   const CatTinderApp({super.key});
+
+  @override
+  State<CatTinderApp> createState() => _CatTinderAppState();
+}
+
+class _CatTinderAppState extends State<CatTinderApp> {
+  bool isDark = false;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +18,7 @@ class CatTinderApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Кототиндер',
       home: HomeScreen(),
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: AppTheme.theme(isDark),
     );
   }
 }
