@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final swiperPuddings =
         MediaQuery.of(context).size.width < 640
-            ? const EdgeInsets.all(8)
+            ? const EdgeInsets.all(5)
             : const EdgeInsets.all(16);
 
     return Scaffold(
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: const EdgeInsets.fromLTRB(0, 8, 0, 40),
             child:
                 _isLoading
-                    ? BlinkingPaw()
+                    ? const BlinkingPaw()
                     : Column(
                       children: [
                         Expanded(
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             controller: _controller,
                             cardsCount: _slides.length,
                             numberOfCardsDisplayed: min(3, _slides.length),
-                            backCardOffset: Offset(0, 0),
+                            backCardOffset: const Offset(0, 0),
                             padding: swiperPuddings,
                             cardBuilder:
                                 (
@@ -59,10 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 12),
+                          margin: const EdgeInsets.only(top: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            spacing: 15,
+                            spacing: 20,
                             children: [
                               DislikeButton(onPressed: _onDislike),
                               LikeButton(onPressed: _onLike),
@@ -77,8 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  void _cardBuilder() {}
 
   void _onLike() {
     _controller.swipe(CardSwiperDirection.right);

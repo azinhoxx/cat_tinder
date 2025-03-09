@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/base/swiper_navigation_button.dart';
+import 'package:flutter_hw_1/widgets/swiper_navigation_button.dart';
 
 class UndoButton extends SwiperNavigationButton {
   const UndoButton({super.key, super.onPressed});
@@ -10,7 +9,7 @@ class UndoButton extends SwiperNavigationButton {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      child: Icon(CupertinoIcons.return_icon, color: Colors.blue),
+      child: Icon(Icons.rotate_left_sharp, color: Colors.blueAccent),
     );
   }
 }

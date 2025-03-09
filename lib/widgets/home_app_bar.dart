@@ -16,7 +16,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       // surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: GoogleFonts.dynaPuff(
+        style: GoogleFonts.berkshireSwash(
           fontSize: 42,
           fontWeight: FontWeight.w400,
           color: Colors.redAccent,

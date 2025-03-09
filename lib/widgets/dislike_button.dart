@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/base/swiper_navigation_button.dart';
+import 'package:flutter_hw_1/widgets/swiper_navigation_button.dart';
 
 class DislikeButton extends SwiperNavigationButton {
   const DislikeButton({super.key, super.onPressed});
@@ -10,7 +9,7 @@ class DislikeButton extends SwiperNavigationButton {
     return FloatingActionButton(
       onPressed: onPressed,
       backgroundColor: Colors.white,
-      child: Icon(CupertinoIcons.xmark, color: Colors.redAccent),
+      child: Icon(Icons.close, color: Colors.redAccent),
     );
   }
 }

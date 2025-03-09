@@ -15,7 +15,7 @@ class SwiperSlide extends StatelessWidget {
     final name = data['breeds'][0]['name'] as String;
     final origin = data['breeds'][0]['origin'] as String;
 
-    const borderRadius = Radius.circular(16);
+    final borderRadius = const BorderRadius.all(Radius.circular(16.0));
 
     return GestureDetector(
       onTap: () {},
@@ -24,14 +24,14 @@ class SwiperSlide extends StatelessWidget {
         child: Center(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(borderRadius),
+                borderRadius: borderRadius,
                 color: Colors.white,
                 boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 8)],
               ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(borderRadius),
+                borderRadius: borderRadius,
                 child: SizedBox(
                   width: 800,
                   child: Stack(
@@ -44,31 +44,44 @@ class SwiperSlide extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              Text(
-                                name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                      Positioned.fill(
+                        top: null,
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: ClipRect(
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                    sigmaX: 2,
+                                    sigmaY: 2,
+                                  ),
+                                  child: Container(color: Colors.black26),
                                 ),
                               ),
-                              Text(
-                                origin,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.black87),
+                            ),
+
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              padding: const EdgeInsets.fromLTRB(24, 8, 16, 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    name,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    origin,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
