@@ -57,15 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
         spacing: 20,
         children: [
           DislikeButton(onPressed: _onDislike),
-          ExcludeFocus(
-            excluding: !_isUndoVisible,
-            child: AnimatedOpacity(
-              opacity: _isUndoVisible ? 1 : 0,
-              duration: const Duration(milliseconds: 200),
-              child: UndoButton(onPressed: _onRevoke),
-            ),
-          ),
           LikeButton(onPressed: _onLike),
+          UndoButton(onPressed: _isUndoVisible ? _onRevoke : null),
         ],
       ),
     );
@@ -83,6 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(6),
           onSwipe: _onSwipe,
           onUndo: _onUndo,
+          maxAngle: 15,
+          allowedSwipeDirection: const AllowedSwipeDirection.only(
+            right: true,
+            left: true,
+          ),
           isLoop: true,
           cardBuilder: (_, index, _, _) => _slides[index],
         ),
@@ -111,14 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
     int? currentIndex,
     CardSwiperDirection direction,
   ) async {
-    if (direction != CardSwiperDirection.none) {
-      setState(() {
-        direction == CardSwiperDirection.top ||
-                direction == CardSwiperDirection.right
-            ? _likeCounter++
-            : _dislikeCounter++;
-      });
-    }
+    setState(() {
+      direction == CardSwiperDirection.right
+          ? _likeCounter++
+          : _dislikeCounter++;
+    });
     // if (currentIndex != null && _slides.length - currentIndex <= 3) {
     //   await _fetchCats();
     // }

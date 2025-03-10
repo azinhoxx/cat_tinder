@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppTheme {
   static final _defaultFontFamily = 'Montserrat';
-  static final double _iconSize = 64;
+  static final double _iconSize = 40;
 
   static ThemeData theme(bool isDark) {
     final brightness = isDark ? Brightness.dark : Brightness.light;

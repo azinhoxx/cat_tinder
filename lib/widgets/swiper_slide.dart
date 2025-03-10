@@ -34,7 +34,14 @@ class SwiperSlide extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: borderRadius,
           color: Colors.white,
-          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 8)],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(30),
+              blurRadius: 12,
+              spreadRadius: 2,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: ClipRRect(
           borderRadius: borderRadius,
