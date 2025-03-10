@@ -12,8 +12,9 @@ class SwiperSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageUrl = data['url'] as String;
-    final name = data['breeds'][0]['name'] as String;
-    final origin = data['breeds'][0]['origin'] as String;
+    final breeds = data['breeds'][0];
+    final name = breeds['name'] as String;
+    final origin = breeds['origin'] as String;
 
     return GestureDetector(
       onTap: () {},
@@ -28,7 +29,7 @@ class SwiperSlide extends StatelessWidget {
     final borderRadius = const BorderRadius.all(Radius.circular(18));
 
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: borderRadius,
@@ -74,7 +75,7 @@ class SwiperSlide extends StatelessWidget {
       child: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: Container(color: Colors.black38),
+          child: Container(color: Colors.black26),
         ),
       ),
     );
@@ -84,19 +85,18 @@ class SwiperSlide extends StatelessWidget {
     return Container(
       alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            name,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+      child: DefaultTextStyle(
+        style: TextStyle(color: Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              name,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-          ),
-          Text(origin, style: TextStyle(color: Colors.white)),
-        ],
+            Text(origin),
+          ],
+        ),
       ),
     );
   }

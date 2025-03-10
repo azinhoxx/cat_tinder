@@ -24,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<SwiperSlide> _slides = [];
 
   bool _isLoading = true;
-  bool _isUndo = false;
+  bool _isUndoVisible = false;
+
+  int _likeCounter = 0;
+  int _dislikeCounter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 8, 0, 36),
+            margin: const EdgeInsets.only(top: 8).copyWith(bottom: 36),
             child:
                 _isLoading
                     ? const BlinkingPaw()
@@ -54,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
         spacing: 20,
         children: [
           DislikeButton(onPressed: _onDislike),
-          AnimatedOpacity(
-            opacity: _isUndo ? 1 : 0,
-            duration: const Duration(milliseconds: 300),
-            child: IgnorePointer(
-              ignoring: !_isUndo,
+          ExcludeFocus(
+            excluding: !_isUndoVisible,
+            child: AnimatedOpacity(
+              opacity: _isUndoVisible ? 1 : 0,
+              duration: const Duration(milliseconds: 200),
               child: UndoButton(onPressed: _onRevoke),
             ),
           ),
@@ -71,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSwiper() {
     return Expanded(
       child: SizedBox(
-        width: 500,
+        width: 560,
         child: CardSwiper(
           controller: _controller,
           cardsCount: _slides.length,
@@ -80,13 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(6),
           onSwipe: _onSwipe,
           onUndo: _onUndo,
-          cardBuilder:
-              (
-                context,
-                index,
-                horizontalThresholdPercentage,
-                verticalThresholdPercentage,
-              ) => _slides[index],
+          isLoop: true,
+          cardBuilder: (_, index, _, _) => _slides[index],
         ),
       ),
     );
@@ -105,14 +103,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _updateUndoVisibility(int? currentIndex) {
-    setState(() => _isUndo = currentIndex != null && currentIndex != 0);
+    setState(() => _isUndoVisible = currentIndex != null && currentIndex != 0);
   }
 
-  bool _onSwipe(
+  Future<bool> _onSwipe(
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
-  ) {
+  ) async {
+    if (direction != CardSwiperDirection.none) {
+      setState(() {
+        direction == CardSwiperDirection.top ||
+                direction == CardSwiperDirection.right
+            ? _likeCounter++
+            : _dislikeCounter++;
+      });
+    }
+    // if (currentIndex != null && _slides.length - currentIndex <= 3) {
+    //   await _fetchCats();
+    // }
     _updateUndoVisibility(currentIndex);
     return true;
   }
