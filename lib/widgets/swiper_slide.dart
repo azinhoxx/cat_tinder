@@ -1,8 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_hw_1/screens/detail_screen.dart';
 import 'package:flutter_hw_1/widgets/blinking_paw.dart';
+import 'package:flutter_hw_1/widgets/blur_overlay.dart';
+import 'package:flutter_hw_1/widgets/swiper_slide_container.dart';
 
 class SwiperSlide extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -17,93 +18,53 @@ class SwiperSlide extends StatelessWidget {
     final origin = breeds['origin'] as String;
 
     return GestureDetector(
-      onTap: () {},
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Center(child: _buildCard(imageUrl, name, origin)),
-      ),
-    );
-  }
-
-  Widget _buildCard(String imageUrl, String name, String origin) {
-    final borderRadius = const BorderRadius.all(Radius.circular(18));
-
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(30),
-              blurRadius: 12,
-              spreadRadius: 2,
-              offset: const Offset(0, 2),
+      onTap: () => _navigateDetailsScreen(context),
+      child: SwiperSlideContainer(
+        children: <Widget>[
+          Positioned.fill(
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              placeholder: (context, imageUrl) => const BlinkingPaw(),
+              fadeOutDuration: const Duration(milliseconds: 300),
+              fit: BoxFit.cover,
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: borderRadius,
-          child: SizedBox(
-            child: Stack(
-              children: [
-                _buildImage(imageUrl),
-                Positioned.fill(
-                  top: null,
-                  child: Stack(
-                    children: [
-                      _buildBlurOverlay(),
-                      _buildBreedInfo(name, origin),
+          ),
+          Positioned.fill(
+            top: null,
+            child: BlurOverlay(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
+                child: DefaultTextStyle(
+                  style: const TextStyle(color: Colors.white),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(origin),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  Widget _buildImage(String imageUrl) {
-    return Positioned.fill(
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        placeholder: (context, url) => BlinkingPaw(),
-        fadeOutDuration: const Duration(milliseconds: 400),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildBlurOverlay() {
-    return Positioned.fill(
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: Container(color: Colors.black26),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBreedInfo(String name, String origin) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: DefaultTextStyle(
-        style: TextStyle(color: Colors.white),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            Text(origin),
-          ],
-        ),
+  void _navigateDetailsScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder: (context) => CatDetailScreen(data: data),
       ),
     );
   }

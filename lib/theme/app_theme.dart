@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-abstract class AppTheme {
+class AppTheme {
+  AppTheme._();
+
   static final _defaultFontFamily = 'Montserrat';
   static final double _iconSize = 40;
 
-  static ThemeData theme(bool isDark) {
-    final brightness = isDark ? Brightness.dark : Brightness.light;
+  static ThemeData theme({required bool dark}) {
+    final brightness = dark ? Brightness.dark : Brightness.light;
+
+    final primaryBackgroundColor =
+        dark
+            ? AppColors.primaryBackgroundColorDark
+            : AppColors.primaryBackgroundColorLight;
+
     final theme = ThemeData(
       brightness: brightness,
       fontFamily: GoogleFonts.getFont(_defaultFontFamily).fontFamily,
-      scaffoldBackgroundColor: Colors.white,
+      primaryColor: primaryBackgroundColor,
+      scaffoldBackgroundColor: primaryBackgroundColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: primaryBackgroundColor,
+        iconTheme: IconThemeData(size: 24),
+      ),
     );
+
     return theme.copyWith(iconTheme: theme.iconTheme.copyWith(size: _iconSize));
   }
 }

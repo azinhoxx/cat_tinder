@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/home_app_bar.dart';
+import 'package:flutter_hw_1/widgets/app_bar.dart';
+import 'package:flutter_hw_1/constants/icons.dart';
+import 'package:flutter_hw_1/widgets/swiper_navigation_button.dart';
 import 'package:flutter_hw_1/widgets/swiper_slide.dart';
 import 'package:flutter_hw_1/widgets/blinking_paw.dart';
-import 'package:flutter_hw_1/widgets/undo_button.dart';
-import 'package:flutter_hw_1/widgets/dislike_button.dart';
-import 'package:flutter_hw_1/widgets/like_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -32,57 +31,70 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomeAppBar(title: 'CatTinder'),
+      appBar: const CatAppBar(title: 'CatTinder'),
       body: SafeArea(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.only(top: 8).copyWith(bottom: 36),
+            margin: const EdgeInsets.only(top: 16).copyWith(bottom: 36),
             child:
                 _isLoading
                     ? const BlinkingPaw()
                     : Column(
-                      children: [_buildSwiper(), _buildSwiperNavigation()],
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            width: 560,
+                            child: CardSwiper(
+                              controller: _controller,
+                              cardsCount: _slides.length,
+                              numberOfCardsDisplayed: min(3, _slides.length),
+                              backCardOffset: const Offset(0, 0),
+                              padding: const EdgeInsets.all(6),
+                              onSwipe: _onSwipe,
+                              onUndo: _onUndo,
+                              maxAngle: 15,
+                              allowedSwipeDirection:
+                                  const AllowedSwipeDirection.only(
+                                    right: true,
+                                    left: true,
+                                  ),
+                              cardBuilder:
+                                  (
+                                    context,
+                                    index,
+                                    horizontalOffsetPercentage,
+                                    verticalOffsetPercentage,
+                                  ) => _slides[index],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 20,
+                            children: [
+                              SwiperNavigationButton(
+                                onPressed: _onDislike,
+                                icon: AppIcons.dislike,
+                                color: Colors.red,
+                              ),
+                              SwiperNavigationButton(
+                                onPressed: _onLike,
+                                icon: AppIcons.like,
+                                color: Colors.green,
+                              ),
+                              SwiperNavigationButton(
+                                onPressed: _isUndoVisible ? _onRevoke : null,
+                                icon: AppIcons.undo,
+                                color: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSwiperNavigation() {
-    return Container(
-      margin: const EdgeInsets.only(top: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 20,
-        children: [
-          DislikeButton(onPressed: _onDislike),
-          LikeButton(onPressed: _onLike),
-          UndoButton(onPressed: _isUndoVisible ? _onRevoke : null),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSwiper() {
-    return Expanded(
-      child: SizedBox(
-        width: 560,
-        child: CardSwiper(
-          controller: _controller,
-          cardsCount: _slides.length,
-          numberOfCardsDisplayed: min(3, _slides.length),
-          backCardOffset: const Offset(0, 0),
-          padding: const EdgeInsets.all(6),
-          onSwipe: _onSwipe,
-          onUndo: _onUndo,
-          maxAngle: 15,
-          allowedSwipeDirection: const AllowedSwipeDirection.only(
-            right: true,
-            left: true,
-          ),
-          isLoop: true,
-          cardBuilder: (_, index, _, _) => _slides[index],
         ),
       ),
     );
@@ -104,19 +116,24 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => _isUndoVisible = currentIndex != null && currentIndex != 0);
   }
 
-  Future<bool> _onSwipe(
+  void _updateSlides(int? currentIndex) {
+    if (currentIndex != null &&
+        (_slides.length - currentIndex) <= _slides.length ~/ 2) {
+      _fetchCats();
+    }
+  }
+
+  bool _onSwipe(
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
-  ) async {
+  ) {
     setState(() {
       direction == CardSwiperDirection.right
           ? _likeCounter++
           : _dislikeCounter++;
     });
-    // if (currentIndex != null && _slides.length - currentIndex <= 3) {
-    //   await _fetchCats();
-    // }
+    _updateSlides(currentIndex);
     _updateUndoVisibility(currentIndex);
     return true;
   }

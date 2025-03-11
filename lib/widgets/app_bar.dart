@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const HomeAppBar({super.key, required this.title});
+  const CatAppBar({super.key, required this.title});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      backgroundColor: Colors.white,
       title: Text(
         title,
         style: GoogleFonts.modak(
@@ -22,7 +24,4 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
