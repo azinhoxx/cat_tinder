@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/constants/shadows.dart';
 
 class SwiperSlideContainer extends StatelessWidget {
   final List<Widget> children;
@@ -12,20 +13,14 @@ class SwiperSlideContainer extends StatelessWidget {
     const borderRadius = 18.0;
 
     return MouseRegion(
-      // cursor: SystemMouseCursors.click,
+      cursor: SystemMouseCursors.click,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
             color: Theme.of(context).primaryColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 16,
-                offset: const Offset(0, -3),
-              ),
-            ],
+            boxShadow: AppShadows.primaryWidgetShadow,
           ),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),

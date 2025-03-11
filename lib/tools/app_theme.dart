@@ -6,7 +6,7 @@ class AppTheme {
   AppTheme._();
 
   static final _defaultFontFamily = 'Montserrat';
-  static final double _iconSize = 40;
+  static final double _iconSize = 36;
 
   static ThemeData theme({required bool dark}) {
     final brightness = dark ? Brightness.dark : Brightness.light;
@@ -21,10 +21,7 @@ class AppTheme {
       fontFamily: GoogleFonts.getFont(_defaultFontFamily).fontFamily,
       primaryColor: primaryBackgroundColor,
       scaffoldBackgroundColor: primaryBackgroundColor,
-      appBarTheme: AppBarTheme(
-        backgroundColor: primaryBackgroundColor,
-        iconTheme: IconThemeData(size: 24),
-      ),
+      appBarTheme: AppBarTheme(backgroundColor: primaryBackgroundColor),
     );
 
     return theme.copyWith(iconTheme: theme.iconTheme.copyWith(size: _iconSize));

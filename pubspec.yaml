@@ -32,3 +32,8 @@ flutter:
   assets:
     - .env
     - assets/icons/paw_loading_icon.svg
+
+  fonts:
+    - family: CVIcons
+      fonts:
+        - asset: icons/CVIcons.ttf

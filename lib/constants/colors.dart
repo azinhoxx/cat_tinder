@@ -10,5 +10,10 @@ class AppColors {
     33,
   );
 
-  static const Color primaryBackgroundColorLight = Colors.white;
+  static const Color primaryBackgroundColorLight = Color.fromARGB(
+    255,
+    246,
+    247,
+    251,
+  );
 }
