@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/shadows.dart';
 
-class SwiperSlideContainer extends StatelessWidget {
+class CatSlideContainer extends StatelessWidget {
   final List<Widget> children;
 
-  const SwiperSlideContainer({super.key, required this.children});
+  const CatSlideContainer({super.key, required this.children});
 
   @override
   Widget build(BuildContext context) {

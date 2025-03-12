@@ -3,12 +3,17 @@
     "short_name": "flutter_application_1",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#hexcode",
-    "theme_color": "#hexcode",
+    "background_color": "#93AEB5",
+    "theme_color": "#93AEB5",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
+        { 
+            "src": "icons/favicon.ico",
+            "sizes": "16x16 32x32",
+            "type": "image/x-icon"
+        },
         {
             "src": "icons/Icon-192.png",
             "sizes": "192x192",

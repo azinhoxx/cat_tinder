@@ -8,6 +8,7 @@ class CatTinderApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'CatTinder',
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
       theme: AppTheme.theme(dark: false),

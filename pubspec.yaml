@@ -22,6 +22,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   cached_network_image: ^3.4.1
   flutter_svg: ^2.0.17
+  flutter_launcher_icons: ^0.14.3
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -37,3 +39,20 @@ flutter:
     - family: CVIcons
       fonts:
         - asset: icons/CVIcons.ttf
+
+# run: flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/icons/app_icon.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  background_color_ios: "#93AEB5"
+  windows:
+    generate: true
+    image_path: "assets/icons/rounded_app_icon.png"
+    icon_size: 256
+  macos:
+    generate: true
+  web:
+    generate: false
+

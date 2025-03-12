@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_hw_1/screens/detail_screen.dart';
 import 'package:flutter_hw_1/widgets/blinking_paw.dart';
 import 'package:flutter_hw_1/widgets/blur_overlay.dart';
-import 'package:flutter_hw_1/widgets/swiper_slide_container.dart';
+import 'package:flutter_hw_1/widgets/cat_slide_container.dart';
 
-class SwiperSlide extends StatelessWidget {
+class CatSlide extends StatelessWidget {
   final Map<String, dynamic> data;
 
-  const SwiperSlide({super.key, required this.data});
+  const CatSlide({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SwiperSlide extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _navigateDetailsScreen(context),
-      child: SwiperSlideContainer(
+      child: CatSlideContainer(
         children: <Widget>[
           Positioned.fill(
             child: CachedNetworkImage(
