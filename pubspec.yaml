@@ -22,11 +22,12 @@ dependencies:
   flutter_dotenv: ^5.2.1
   cached_network_image: ^3.4.1
   flutter_svg: ^2.0.17
-  flutter_launcher_icons: ^0.14.3
   provider: ^6.1.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.5
 
 flutter:
   uses-material-design: true
@@ -56,3 +57,12 @@ flutter_launcher_icons:
   web:
     generate: false
 
+
+flutter_native_splash:
+  color: "#93AEB5"
+  android_12:
+    color: "#93AEB5"
+  color_android: "#93AEB5"
+  color_ios: "#93AEB5"
+  color_web: "#93AEB5"
+  image_web: "assets/icons/app_icon_masked_324.png"

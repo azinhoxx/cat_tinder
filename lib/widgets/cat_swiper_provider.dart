@@ -11,11 +11,15 @@ class CatSwiperProvider extends ChangeNotifier {
   final List<CatSlide> _slides = [];
 
   CatSwiperProvider() {
-    _fetchCats();
+    _init();
   }
 
-  int _likesCount = 0;
+  Future<void> _init() async {
+    await _fetchCats();
+  }
+
   bool _isLoading = true;
+  int _likesCount = 0;
 
   List<CatSlide> get slides => _slides;
   int get likesCount => _likesCount;
@@ -87,7 +91,7 @@ class CatSwiperProvider extends ChangeNotifier {
         _slides.addAll(cats);
       }
     } finally {
-      _isLoading = false;
+      if (isLoading) _isLoading = false;
       notifyListeners();
     }
   }

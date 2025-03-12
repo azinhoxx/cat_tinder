@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   AppTheme._();
 
-  static final _defaultFontFamily = 'Montserrat';
-  static final double _iconSize = 36;
+  static const _defaultFontFamily = 'Montserrat';
+  static const double _iconSize = 36;
 
   static ThemeData theme({required bool dark}) {
     final brightness = dark ? Brightness.dark : Brightness.light;

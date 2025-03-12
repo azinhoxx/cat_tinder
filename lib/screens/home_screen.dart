@@ -23,62 +23,66 @@ class HomeScreen extends StatelessWidget {
           child: Center(
             child: Selector<CatSwiperProvider, bool>(
               selector: (context, provider) => provider.isLoading,
-              builder: (context, isLoading, child) {
-                return isLoading
-                    ? const PawLoadingIndicator()
-                    : Container(
-                      constraints: const BoxConstraints(maxWidth: 560),
-                      margin: const EdgeInsets.only(
-                        top: 16,
-                      ).copyWith(bottom: 36),
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: Consumer<CatSwiperProvider>(
-                              builder:
-                                  (context, provider, child) => CardSwiper(
-                                    controller: provider.controller,
-                                    cardsCount: provider.slides.length,
-                                    numberOfCardsDisplayed: min(
-                                      3,
-                                      provider.slides.length,
-                                    ),
-                                    backCardOffset: const Offset(0, 0),
-                                    padding: const EdgeInsets.all(6),
-                                    onSwipe: provider.onSwipe,
-                                    onUndo: provider.onUndo,
-                                    maxAngle: 15,
-                                    allowedSwipeDirection:
-                                        const AllowedSwipeDirection.only(
-                                          right: true,
-                                          left: true,
-                                        ),
-                                    cardBuilder:
+              builder:
+                  (context, isLoading, child) =>
+                      isLoading
+                          ? const PawLoadingIndicator()
+                          : Container(
+                            constraints: const BoxConstraints(maxWidth: 560),
+                            margin: const EdgeInsets.only(
+                              top: 16,
+                            ).copyWith(bottom: 36),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Consumer<CatSwiperProvider>(
+                                    builder:
                                         (
                                           context,
-                                          index,
-                                          horizontalOffsetPercentage,
-                                          verticalOffsetPercentage,
-                                        ) => provider.slides[index],
+                                          provider,
+                                          child,
+                                        ) => CardSwiper(
+                                          controller: provider.controller,
+                                          cardsCount: provider.slides.length,
+                                          numberOfCardsDisplayed: min(
+                                            3,
+                                            provider.slides.length,
+                                          ),
+                                          backCardOffset: const Offset(0, 0),
+                                          padding: const EdgeInsets.all(6),
+                                          onSwipe: provider.onSwipe,
+                                          onUndo: provider.onUndo,
+                                          maxAngle: 15,
+                                          allowedSwipeDirection:
+                                              const AllowedSwipeDirection.only(
+                                                right: true,
+                                                left: true,
+                                              ),
+                                          cardBuilder:
+                                              (
+                                                context,
+                                                index,
+                                                horizontalOffsetPercentage,
+                                                verticalOffsetPercentage,
+                                              ) => provider.slides[index],
+                                        ),
                                   ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              spacing: 12,
-                              children: <Widget>[
-                                DislikeButton(),
-                                LikeButton(),
-                                UndoButton(),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 16),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    spacing: 12,
+                                    children: <Widget>[
+                                      DislikeButton(),
+                                      LikeButton(),
+                                      UndoButton(),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    );
-              },
             ),
           ),
         ),
