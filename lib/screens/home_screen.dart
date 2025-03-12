@@ -57,27 +57,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 16),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       spacing: 12,
                       children: <Widget>[
-                        Consumer<CatSwiperProvider>(
-                          builder:
-                              (context, provider, child) =>
-                                  DislikeButton(onPressed: provider.onDislike),
-                        ),
-                        Consumer<CatSwiperProvider>(
-                          builder:
-                              (context, provider, child) => LikeButton(
-                                onPressed: provider.onLike,
-                                count: provider.likesCount,
-                              ),
-                        ),
-                        Consumer<CatSwiperProvider>(
-                          builder:
-                              (context, provider, child) =>
-                                  UndoButton(onPressed: provider.onRevoke),
-                        ),
+                        DislikeButton(),
+                        LikeButton(),
+                        UndoButton(),
                       ],
                     ),
                   ),

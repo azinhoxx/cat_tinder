@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/icons.dart';
+import 'package:flutter_hw_1/widgets/cat_swiper_provider.dart';
+import 'package:provider/provider.dart' show ReadContext, SelectContext;
 
 class LikeButton extends StatelessWidget {
-  final VoidCallback? onPressed;
-  final int count;
-
-  const LikeButton({super.key, this.onPressed, required this.count});
+  const LikeButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('like');
+    final likes = context.select(
+      (CatSwiperProvider provider) => provider.likesCount,
+    );
+    final onPressed = context.read<CatSwiperProvider>().onLike;
     return IconButton(
       onPressed: onPressed,
       color: Colors.green,
@@ -19,9 +23,11 @@ class LikeButton extends StatelessWidget {
           Icon(AppIcons.like),
           const SizedBox(width: 8.0),
           Container(
-            constraints: BoxConstraints(minWidth: _calculateWidthTextLikes()),
+            constraints: BoxConstraints(
+              minWidth: _calculateWidthTextLikes(likes),
+            ),
             child: Text(
-              '$count',
+              '$likes',
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.green),
             ),
@@ -31,7 +37,7 @@ class LikeButton extends StatelessWidget {
     );
   }
 
-  double _calculateWidthTextLikes() {
+  double _calculateWidthTextLikes(int count) {
     final textPainter = TextPainter(
       text: TextSpan(text: '$count'),
       textDirection: TextDirection.ltr,
