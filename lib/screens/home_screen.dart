@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/widgets/app_bar.dart';
+import 'package:flutter_hw_1/widgets/loading_indicator.dart';
 import 'package:flutter_hw_1/widgets/dislike_button.dart';
 import 'package:flutter_hw_1/widgets/like_button.dart';
 import 'package:flutter_hw_1/widgets/cat_swiper_provider.dart';
@@ -20,55 +21,64 @@ class HomeScreen extends StatelessWidget {
         appBar: const CatAppBar(title: 'CatTinder'),
         body: SafeArea(
           child: Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 560),
-              margin: const EdgeInsets.only(top: 16).copyWith(bottom: 36),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Consumer<CatSwiperProvider>(
-                      builder:
-                          (context, provider, child) => CardSwiper(
-                            controller: provider.controller,
-                            cardsCount: provider.slides.length,
-                            numberOfCardsDisplayed: min(
-                              3,
-                              provider.slides.length,
+            child: Selector<CatSwiperProvider, bool>(
+              selector: (context, provider) => provider.isLoading,
+              builder: (context, isLoading, child) {
+                return isLoading
+                    ? const PawLoadingIndicator()
+                    : Container(
+                      constraints: const BoxConstraints(maxWidth: 560),
+                      margin: const EdgeInsets.only(
+                        top: 16,
+                      ).copyWith(bottom: 36),
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: Consumer<CatSwiperProvider>(
+                              builder:
+                                  (context, provider, child) => CardSwiper(
+                                    controller: provider.controller,
+                                    cardsCount: provider.slides.length,
+                                    numberOfCardsDisplayed: min(
+                                      3,
+                                      provider.slides.length,
+                                    ),
+                                    backCardOffset: const Offset(0, 0),
+                                    padding: const EdgeInsets.all(6),
+                                    onSwipe: provider.onSwipe,
+                                    onUndo: provider.onUndo,
+                                    maxAngle: 15,
+                                    allowedSwipeDirection:
+                                        const AllowedSwipeDirection.only(
+                                          right: true,
+                                          left: true,
+                                        ),
+                                    cardBuilder:
+                                        (
+                                          context,
+                                          index,
+                                          horizontalOffsetPercentage,
+                                          verticalOffsetPercentage,
+                                        ) => provider.slides[index],
+                                  ),
                             ),
-                            backCardOffset: const Offset(0, 0),
-                            padding: const EdgeInsets.all(6),
-                            onSwipe: provider.onSwipe,
-                            onUndo: provider.onUndo,
-                            maxAngle: 15,
-                            allowedSwipeDirection:
-                                const AllowedSwipeDirection.only(
-                                  right: true,
-                                  left: true,
-                                ),
-                            cardBuilder:
-                                (
-                                  context,
-                                  index,
-                                  horizontalOffsetPercentage,
-                                  verticalOffsetPercentage,
-                                ) => provider.slides[index],
                           ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 12,
-                      children: <Widget>[
-                        DislikeButton(),
-                        LikeButton(),
-                        UndoButton(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              spacing: 12,
+                              children: <Widget>[
+                                DislikeButton(),
+                                LikeButton(),
+                                UndoButton(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+              },
             ),
           ),
         ),

@@ -8,7 +8,6 @@ class DislikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('dislike');
     final onPressed =
         Provider.of<CatSwiperProvider>(context, listen: false).onDislike;
     return IconButton(

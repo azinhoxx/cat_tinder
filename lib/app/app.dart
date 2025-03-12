@@ -10,7 +10,7 @@ class CatTinderApp extends StatelessWidget {
     return MaterialApp(
       title: 'CatTinder',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       theme: AppTheme.theme(dark: false),
     );
   }

@@ -8,7 +8,6 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('like');
     final likes = context.select<CatSwiperProvider, int>(
       (provider) => provider.likesCount,
     );

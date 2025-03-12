@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_hw_1/screens/detail_screen.dart';
-import 'package:flutter_hw_1/widgets/blinking_paw.dart';
+import 'package:flutter_hw_1/widgets/loading_indicator.dart';
 import 'package:flutter_hw_1/widgets/blur_overlay.dart';
 import 'package:flutter_hw_1/widgets/cat_slide_container.dart';
 
@@ -24,7 +24,7 @@ class CatSlide extends StatelessWidget {
           Positioned.fill(
             child: CachedNetworkImage(
               imageUrl: imageUrl,
-              placeholder: (context, imageUrl) => const BlinkingPaw(),
+              placeholder: (context, imageUrl) => const PawLoadingIndicator(),
               fadeOutDuration: const Duration(milliseconds: 300),
               fit: BoxFit.cover,
             ),

@@ -8,7 +8,6 @@ class UndoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('undo');
     final onPressed = context.read<CatSwiperProvider>().onRevoke;
     return IconButton(
       onPressed: onPressed,
