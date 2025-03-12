@@ -13,7 +13,7 @@ class UndoButton extends StatelessWidget {
     return IconButton(
       onPressed: onPressed,
       color: Colors.blue,
-      icon: Icon(AppIcons.undo),
+      icon: const Icon(AppIcons.undo),
     );
   }
 }
