@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/widgets/cat_slide.dart';
 import 'package:http/http.dart' as http;
 
@@ -77,7 +78,11 @@ class CatSwiperProvider extends ChangeNotifier {
     final data = jsonDecode(responseBody);
     if (data is List) {
       return data
-          .map((el) => CatSlide(data: el as Map<String, dynamic>))
+          .map(
+            (el) => CatSlide(
+              cat: CatModel.fromJson(json: el as Map<String, dynamic>),
+            ),
+          )
           .toList();
     }
     return [];

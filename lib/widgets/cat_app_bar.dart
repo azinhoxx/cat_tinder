@@ -13,20 +13,28 @@ class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: title,
-              style: Theme.of(context).appBarTheme.titleTextStyle,
-            ),
-            WidgetSpan(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Icon(AppIcons.heart1, color: Colors.redAccent, size: 36),
+      title: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: RichText(
+          maxLines: 1,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: title,
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
-            ),
-          ],
+              const WidgetSpan(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Icon(
+                    AppIcons.heart1,
+                    color: Colors.redAccent,
+                    size: 36,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

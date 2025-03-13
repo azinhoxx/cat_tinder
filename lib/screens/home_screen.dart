@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/widgets/cat_app_bar.dart';
 import 'package:flutter_hw_1/widgets/cat_scaffold.dart';
@@ -34,10 +32,10 @@ class HomeScreen extends StatelessWidget {
                                   (context, provider, child) => CardSwiper(
                                     controller: provider.controller,
                                     cardsCount: provider.slides.length,
-                                    numberOfCardsDisplayed: min(
-                                      3,
-                                      provider.slides.length,
-                                    ),
+                                    numberOfCardsDisplayed:
+                                        provider.slides.length < 3
+                                            ? provider.slides.length
+                                            : 3,
                                     backCardOffset: const Offset(0, 0),
                                     padding: const EdgeInsets.all(0),
                                     onSwipe: provider.onSwipe,
