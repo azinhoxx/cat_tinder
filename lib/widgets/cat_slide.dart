@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_hw_1/screens/detail_screen.dart';
-import 'package:flutter_hw_1/widgets/loading_indicator.dart';
+import 'package:flutter_hw_1/screens/cat_detail_screen.dart';
+import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
 import 'package:flutter_hw_1/widgets/blur_overlay.dart';
 import 'package:flutter_hw_1/widgets/cat_slide_container.dart';
 
@@ -10,6 +10,14 @@ class CatSlide extends StatelessWidget {
 
   const CatSlide({super.key, required this.data});
 
+  void _navigateDetailsScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder: (context) => CatDetailScreen(data: data),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final imageUrl = data['url'] as String;
@@ -17,7 +25,8 @@ class CatSlide extends StatelessWidget {
     final name = breeds['name'] as String;
     final origin = breeds['origin'] as String;
 
-    return GestureDetector(
+    return InkWell(
+      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
       onTap: () => _navigateDetailsScreen(context),
       child: CatSlideContainer(
         children: <Widget>[
@@ -57,14 +66,6 @@ class CatSlide extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void _navigateDetailsScreen(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<dynamic>(
-        builder: (context) => CatDetailScreen(data: data),
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   AppTheme._();
 
   static const _defaultFontFamily = 'Montserrat';
+  static const _defaultFontFamilyTitle = 'Sour Gummy';
   static const double _iconSize = 36;
 
   static ThemeData theme({required bool dark}) {
@@ -18,10 +18,24 @@ class AppTheme {
 
     final theme = ThemeData(
       brightness: brightness,
-      fontFamily: GoogleFonts.getFont(_defaultFontFamily).fontFamily,
       primaryColor: primaryBackgroundColor,
+      textTheme: TextTheme(
+        bodyMedium: TextStyle(
+          fontFamily: _defaultFontFamily,
+          color: dark ? Colors.white : Colors.black87,
+        ),
+      ),
       scaffoldBackgroundColor: primaryBackgroundColor,
-      appBarTheme: AppBarTheme(backgroundColor: primaryBackgroundColor),
+      appBarTheme: AppBarTheme(
+        backgroundColor: primaryBackgroundColor,
+        titleTextStyle: TextStyle(
+          fontFamily: _defaultFontFamilyTitle,
+          color: Colors.redAccent,
+          fontSize: 42,
+          letterSpacing: 1,
+        ),
+      ),
+      cardTheme: CardTheme(color: primaryBackgroundColor),
     );
 
     return theme.copyWith(iconTheme: theme.iconTheme.copyWith(size: _iconSize));

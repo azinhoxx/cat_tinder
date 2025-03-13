@@ -6,6 +6,14 @@ import 'package:provider/provider.dart' show Provider, SelectContext;
 class LikeButton extends StatelessWidget {
   const LikeButton({super.key});
 
+  double _calculateWidthTextLikes(int count) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: '$count'),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    return textPainter.width + 10;
+  }
+
   @override
   Widget build(BuildContext context) {
     final likes = context.select<CatSwiperProvider, int>(
@@ -35,13 +43,5 @@ class LikeButton extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  double _calculateWidthTextLikes(int count) {
-    final textPainter = TextPainter(
-      text: TextSpan(text: '$count'),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    return textPainter.width + 10;
   }
 }
