@@ -5,6 +5,7 @@ import 'package:flutter_hw_1/utilities/utils.dart';
 class CatModelListItem<T> {
   final String label;
   final T value;
+
   const CatModelListItem({required this.label, required this.value});
 }
 

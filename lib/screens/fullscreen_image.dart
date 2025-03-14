@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
+import 'package:flutter_hw_1/widgets/base/image_container.dart';
 
 class FullscreenImage extends StatelessWidget {
   const FullscreenImage({super.key});
@@ -13,38 +12,52 @@ class FullscreenImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     final cat = CatModelProvider.of(context).cat;
 
     return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            Positioned.fill(child: Container(color: Colors.black54)),
-            Positioned.fill(
-              child: InteractiveViewer(
-                child: CachedNetworkImage(
-                  imageUrl: cat.imageUrl,
-                  placeholder:
-                      (context, imageUrl) => const PawLoadingIndicator(),
-                  fadeOutDuration: const Duration(milliseconds: 300),
-                  fit: BoxFit.contain,
-                ),
+      body: SafeArea(
+        child: Center(
+          child: KeyboardListener(
+            focusNode: FocusNode()..requestFocus(),
+            onKeyEvent: (value) {
+              if (value.logicalKey == LogicalKeyboardKey.escape) {
+                _closeFullScreen(context);
+              }
+            },
+            child: GestureDetector(
+              onTap: () => _closeFullScreen(context),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(color: Colors.black54),
+                  Center(
+                    child: InteractiveViewer(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: ImageContainer(
+                          imageUrl: cat.imageUrl,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: CloseButton(
+                      onPressed: () => _closeFullScreen(context),
+                      color: Colors.red,
+                      style: const ButtonStyle(
+                        iconSize: WidgetStatePropertyAll(32.0),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: CloseButton(
-                color: Colors.red,
-                style: const ButtonStyle(
-                  iconSize: WidgetStatePropertyAll(32.0),
-                ),
-                onPressed: () => _closeFullScreen(context),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

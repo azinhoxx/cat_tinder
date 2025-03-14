@@ -1,13 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/screens/fullscreen_image.dart';
+import 'package:flutter_hw_1/widgets/base/image_container.dart';
 import 'package:flutter_hw_1/widgets/details_screen/card_progress_bar.dart';
 import 'package:flutter_hw_1/providers/cat_model_provider.dart';
 import 'package:flutter_hw_1/widgets/details_screen/card_rich_text.dart';
-import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CatDetailCard extends StatelessWidget {
@@ -42,56 +41,55 @@ class CatDetailCard extends StatelessWidget {
     final itemsStringValues = _buildItems<String>(
       items: cat.toStringValuesList(),
       builder: (el) {
-        if (el.label.toLowerCase().contains('wikipedia')) {
-          return CardRichText(
-            key: ValueKey(el),
-            label: el.label,
-            child: TextSpan(
-              text: el.value!,
-              style: const TextStyle(color: Colors.blueAccent),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () {
-                      final url = Uri.parse(el.value!);
-                      launchUrl(url);
-                    },
-            ),
-          );
-        }
         return CardRichText(
           key: ValueKey(el),
           label: el.label,
-          child: TextSpan(text: el.value!),
+          child:
+              el.label.toLowerCase().contains('wikipedia')
+                  ? TextSpan(
+                    text: el.value!,
+                    style: const TextStyle(color: Colors.blueAccent),
+                    recognizer:
+                        TapGestureRecognizer()
+                          ..onTap = () {
+                            final url = Uri.parse(el.value!);
+                            launchUrl(url);
+                          },
+                  )
+                  : TextSpan(text: el.value!),
         );
       },
     );
 
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppDecorations.defaultBorderRadius),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppDecorations.defaultBorderRadius),
+        ),
       ),
       color: Colors.white,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppDecorations.defaultBorderRadius),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(AppDecorations.defaultBorderRadius),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
+            Flexible(
               child: InkWell(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppDecorations.defaultBorderRadius),
+                ),
                 onTap: () => _navigateFullScreen(context: context, cat: cat),
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: CachedNetworkImage(
-                        width: double.infinity,
-                        imageUrl: cat.imageUrl,
-                        placeholder:
-                            (context, imageUrl) => const PawLoadingIndicator(),
-                        fadeOutDuration: const Duration(milliseconds: 300),
+                      child: ImageContainer(
                         fit: BoxFit.cover,
+                        imageUrl: cat.imageUrl,
                       ),
                     ),
-                    Positioned(
+                    const Positioned(
                       top: 16,
                       right: 16,
                       child: Icon(
@@ -104,7 +102,7 @@ class CatDetailCard extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
+            Flexible(
               child: ListView.separated(
                 separatorBuilder: (context, index) => const Divider(),
                 padding: const EdgeInsets.all(12.0),
@@ -117,18 +115,15 @@ class CatDetailCard extends StatelessWidget {
                   }
                   return LayoutBuilder(
                     builder: (context, constraints) {
-                      final isSmallScreen = constraints.maxWidth < 440;
+                      final isSmallScreen = constraints.maxWidth < 350;
                       return Container(
                         margin: const EdgeInsets.only(top: 12.0),
-                        child:
-                            isSmallScreen
-                                ? Column(
-                                  spacing: 16.0,
-                                  children: itemsIntegerValues,
-                                )
-                                : Column(
-                                  spacing: 16.0,
-                                  children: <Widget>[
+                        child: Column(
+                          spacing: 16.0,
+                          children:
+                              isSmallScreen
+                                  ? itemsIntegerValues
+                                  : <Widget>[
                                     for (
                                       int i = 0;
                                       i < itemsIntegerValues.length;
@@ -137,17 +132,17 @@ class CatDetailCard extends StatelessWidget {
                                       Row(
                                         spacing: 12.0,
                                         children: [
-                                          Expanded(
+                                          Flexible(
                                             child: itemsIntegerValues[i],
                                           ),
                                           if (i + 1 < itemsIntegerValues.length)
-                                            Expanded(
+                                            Flexible(
                                               child: itemsIntegerValues[i + 1],
                                             ),
                                         ],
                                       ),
                                   ],
-                                ),
+                        ),
                       );
                     },
                   );

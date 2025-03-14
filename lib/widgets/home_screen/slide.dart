@@ -16,7 +16,8 @@ class Slide extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute<dynamic>(
         builder:
-            (context) => CatModelProvider(cat: cat, child: DetailsScreen()),
+            (context) =>
+                CatModelProvider(cat: cat, child: const DetailsScreen()),
       ),
     );
   }
@@ -30,9 +31,7 @@ class Slide extends StatelessWidget {
       onTap: () => _navigateDetailsScreen(context),
       child: SlideContainer(
         children: <Widget>[
-          Positioned.fill(
-            child: ImageContainer(fit: BoxFit.cover, imageUrl: cat.imageUrl),
-          ),
+          ImageContainer(fit: BoxFit.cover, imageUrl: cat.imageUrl),
           if (cat.name != null)
             Positioned.fill(
               top: null,
@@ -44,6 +43,7 @@ class Slide extends StatelessWidget {
                     vertical: 8.0,
                   ),
                   child: DefaultTextStyle(
+                    textAlign: TextAlign.center,
                     style: const TextStyle(color: Colors.white),
                     child: Column(
                       children: <Widget>[

@@ -14,12 +14,11 @@ class _BlinkingPawState extends State<PawLoadingIndicator>
 
   @override
   void initState() {
-    debugPrint('PawLoadingIndicator created');
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.9,
       upperBound: 1.1,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     )..repeat(reverse: true);
     super.initState();
   }

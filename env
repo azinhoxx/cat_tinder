@@ -1,0 +1,5 @@
+CATS_SLIDES_FETCH_LIMIT=2
+
+CATS_API_KEY="YOUR_KEY"
+
+CATS_API=https://api.thecatapi.com/v1/images/search?limit=$CATS_SLIDES_FETCH_LIMIT&api_key=$CATS_API_KEY&has_breeds=1

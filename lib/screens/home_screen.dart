@@ -15,73 +15,84 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SwiperProvider(),
-      child: CatScaffold(
-        appBar: const CatAppBar(),
-        body:
-            Selector<SwiperProvider, ({bool isLoading, String? errorMessage})>(
-              selector:
-                  (context, provider) => (
-                    isLoading: provider.isLoading,
-                    errorMessage: provider.errorMessage,
-                  ),
-              builder:
-                  (context, value, child) =>
-                      value.errorMessage != null
-                          ? ErrorMessage(
-                            message: value.errorMessage!,
-                            buttonText: 'TRY AGAIN',
-                          )
-                          : value.isLoading
-                          ? const PawLoadingIndicator()
-                          : Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: Consumer<SwiperProvider>(
-                                  builder:
-                                      (context, provider, child) => CardSwiper(
-                                        controller: provider.controller,
-                                        cardsCount: provider.slides.length,
-                                        numberOfCardsDisplayed:
-                                            provider.slides.length < 3
-                                                ? provider.slides.length
-                                                : 3,
-                                        backCardOffset: const Offset(0, 0),
-                                        padding: const EdgeInsets.all(0),
-                                        onSwipe: provider.onSwipe,
-                                        onUndo: provider.onUndo,
-                                        maxAngle: 15,
-                                        allowedSwipeDirection:
-                                            const AllowedSwipeDirection.only(
-                                              right: true,
-                                              left: true,
-                                            ),
-                                        cardBuilder:
-                                            (
-                                              context,
-                                              index,
-                                              horizontalOffsetPercentage,
-                                              verticalOffsetPercentage,
-                                            ) => provider.slides[index],
+    return CatScaffold(
+      appBar: const CatAppBar(),
+      body: ChangeNotifierProvider(
+        create: (context) => SwiperProvider(),
+        child: Selector<
+          SwiperProvider,
+          ({bool isLoading, String? errorMessage})
+        >(
+          selector:
+              (context, provider) => (
+                isLoading: provider.isLoading,
+                errorMessage: provider.errorMessage,
+              ),
+          builder:
+              (context, value, child) =>
+                  value.errorMessage != null
+                      ? ErrorMessage(
+                        message: value.errorMessage!,
+                        buttonText: 'TRY AGAIN',
+                        onPressed:
+                            Provider.of<SwiperProvider>(
+                              context,
+                              listen: false,
+                            ).fetchMoreCats,
+                      )
+                      : value.isLoading
+                      ? const PawLoadingIndicator()
+                      : Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: Selector<SwiperProvider, int>(
+                              selector:
+                                  (context, provider) => provider.slides.length,
+                              builder: (context, value, child) {
+                                final provider = Provider.of<SwiperProvider>(
+                                  context,
+                                  listen: false,
+                                );
+                                return CardSwiper(
+                                  controller: provider.controller,
+                                  cardsCount: provider.slides.length,
+                                  numberOfCardsDisplayed:
+                                      provider.slides.length < 3
+                                          ? provider.slides.length
+                                          : 3,
+                                  backCardOffset: const Offset(0, 0),
+                                  padding: const EdgeInsets.all(0),
+                                  onSwipe: provider.onSwipe,
+                                  onUndo: provider.onUndo,
+                                  maxAngle: 15,
+                                  allowedSwipeDirection:
+                                      const AllowedSwipeDirection.only(
+                                        right: true,
+                                        left: true,
                                       ),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    DislikeButton(),
-                                    LikeButton(),
-                                    UndoButton(),
-                                  ],
-                                ),
-                              ),
-                            ],
+                                  cardBuilder:
+                                      (
+                                        context,
+                                        index,
+                                        horizontalOffsetPercentage,
+                                        verticalOffsetPercentage,
+                                      ) => provider.slides[index],
+                                );
+                              },
+                            ),
                           ),
+                          if (child != null) child,
+                        ],
+                      ),
+          child: Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 12,
+              children: <Widget>[DislikeButton(), LikeButton(), UndoButton()],
             ),
+          ),
+        ),
       ),
     );
   }

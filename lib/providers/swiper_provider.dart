@@ -12,17 +12,19 @@ class SwiperProvider extends ChangeNotifier {
   final List<Slide> _slides = [];
   String? _errorMessage;
 
-  SwiperProvider() {
-    _fetchCats();
-  }
-
   bool _isLoading = true;
+  bool _isFetching = true;
   int _likesCount = 0;
 
   List<Slide> get slides => _slides;
   int get likesCount => _likesCount;
   bool get isLoading => _isLoading;
+  bool get isFetching => _isFetching;
   String? get errorMessage => _errorMessage;
+
+  SwiperProvider() {
+    _fetchCats();
+  }
 
   void onLike() {
     controller.swipe(CardSwiperDirection.right);
@@ -85,7 +87,17 @@ class SwiperProvider extends ChangeNotifier {
     return [];
   }
 
+  /// Use it when you need to have the opportunity to try again.
+  /// For example, if there was an error the first time around.
+  Future<void> fetchMoreCats() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+    await _fetchCats();
+  }
+
   Future<void> _fetchCats() async {
+    _isFetching = true;
     try {
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
@@ -98,6 +110,7 @@ class SwiperProvider extends ChangeNotifier {
       _errorMessage = 'Something went wrong';
     } finally {
       if (isLoading) _isLoading = false;
+      _isFetching = false;
       notifyListeners();
     }
   }

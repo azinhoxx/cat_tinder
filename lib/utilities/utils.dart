@@ -1,4 +1,4 @@
-class AppUtils {
+abstract final class AppUtils {
   AppUtils._();
 
   static T? safeCast<T>(dynamic value) {

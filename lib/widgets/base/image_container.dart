@@ -13,6 +13,9 @@ class ImageContainer extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, imageUrl) => const PawLoadingIndicator(),
+      errorWidget:
+          (context, url, error) =>
+              const Icon(Icons.error, size: 80, color: Colors.redAccent),
       fadeOutDuration: const Duration(milliseconds: 300),
       fit: fit,
     );
