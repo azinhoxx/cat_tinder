@@ -17,6 +17,7 @@ class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
         fit: BoxFit.scaleDown,
         child: RichText(
           maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           text: TextSpan(
             children: [
               TextSpan(

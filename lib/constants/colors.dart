@@ -16,4 +16,6 @@ class AppColors {
     247,
     251,
   );
+
+  static const Color backgroundProgressBar = Color.fromARGB(255, 225, 225, 225);
 }

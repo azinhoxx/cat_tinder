@@ -22,11 +22,12 @@ class AppTheme {
       textTheme: TextTheme(
         bodyMedium: TextStyle(
           fontFamily: _defaultFontFamily,
-          color: dark ? Colors.white : Colors.black87,
+          color: dark ? Colors.white : Colors.black,
         ),
       ),
       scaffoldBackgroundColor: primaryBackgroundColor,
       appBarTheme: AppBarTheme(
+        scrolledUnderElevation: 0,
         backgroundColor: primaryBackgroundColor,
         titleTextStyle: TextStyle(
           fontFamily: _defaultFontFamilyTitle,

@@ -8,8 +8,8 @@ class CatDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CatScaffold(
-      appBar: const CatAppBar(title: 'CatTinder'),
+    return const CatScaffold(
+      appBar: CatAppBar(title: 'CatTinder'),
       body: CatDetailCard(),
     );
   }
