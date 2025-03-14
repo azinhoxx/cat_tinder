@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
+import 'package:flutter_hw_1/screens/fullscreen_image_screen.dart';
 import 'package:flutter_hw_1/widgets/cat_card_progress_bar.dart';
 import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
 import 'package:flutter_hw_1/widgets/cat_card_rich_text.dart';
@@ -11,6 +12,19 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CatDetailCard extends StatelessWidget {
   const CatDetailCard({super.key});
+
+  void _navigateFullScreen({
+    required BuildContext context,
+    required CatModel cat,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder:
+            (context) =>
+                CatModelProvider(cat: cat, child: FullScreenImageScreen()),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +45,7 @@ class CatDetailCard extends StatelessWidget {
       builder: (el) {
         if (el.label.toLowerCase().contains('wikipedia')) {
           return CatCardRichText(
+            key: ValueKey(el),
             label: el.label,
             child: TextSpan(
               text: el.value!,
@@ -38,8 +53,8 @@ class CatDetailCard extends StatelessWidget {
               recognizer:
                   TapGestureRecognizer()
                     ..onTap = () {
-                      final uri = Uri.parse(el.value!);
-                      launchUrl(uri);
+                      final url = Uri.parse(el.value!);
+                      launchUrl(url);
                     },
             ),
           );
@@ -67,18 +82,36 @@ class CatDetailCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Expanded(
-              child: CachedNetworkImage(
-                width: double.infinity,
-                imageUrl: cat.imageUrl,
-                placeholder: (context, imageUrl) => const PawLoadingIndicator(),
-                fadeOutDuration: const Duration(milliseconds: 300),
-                fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () => _navigateFullScreen(context: context, cat: cat),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CachedNetworkImage(
+                        width: double.infinity,
+                        imageUrl: cat.imageUrl,
+                        placeholder:
+                            (context, imageUrl) => const PawLoadingIndicator(),
+                        fadeOutDuration: const Duration(milliseconds: 300),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      top: 16,
+                      right: 16,
+                      child: Icon(
+                        Icons.open_in_full_sharp,
+                        color: Colors.redAccent,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
               child: ListView.separated(
-                separatorBuilder:
-                    (context, index) => const SizedBox(height: 4.0),
+                separatorBuilder: (context, index) => const Divider(),
                 padding: const EdgeInsets.all(12.0),
                 itemCount:
                     itemsStringValues.length +
