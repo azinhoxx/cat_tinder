@@ -29,6 +29,7 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         scrolledUnderElevation: 0,
         backgroundColor: primaryBackgroundColor,
+        iconTheme: IconThemeData(color: Colors.redAccent, size: 28),
         titleTextStyle: TextStyle(
           fontFamily: _defaultFontFamilyTitle,
           color: Colors.redAccent,

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_hw_1/widgets/cat_card_progress_bar.dart';
 import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
 import 'package:flutter_hw_1/widgets/cat_card_rich_text.dart';
 import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CatDetailCard extends StatelessWidget {
   const CatDetailCard({super.key});
@@ -26,15 +28,29 @@ class CatDetailCard extends StatelessWidget {
 
     final itemsStringValues = _buildItems<String>(
       items: cat.toStringValuesList(),
-      builder:
-          (el) => CatCardRichText(
-            key: ValueKey(el),
+      builder: (el) {
+        if (el.label.toLowerCase().contains('wikipedia')) {
+          return CatCardRichText(
             label: el.label,
-            text: el.value!,
-          ),
+            child: TextSpan(
+              text: el.value!,
+              style: const TextStyle(color: Colors.blueAccent),
+              recognizer:
+                  TapGestureRecognizer()
+                    ..onTap = () {
+                      final uri = Uri.parse(el.value!);
+                      launchUrl(uri);
+                    },
+            ),
+          );
+        }
+        return CatCardRichText(
+          key: ValueKey(el),
+          label: el.label,
+          child: TextSpan(text: el.value!),
+        );
+      },
     );
-
-    const gapY = 16.0;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -60,44 +76,54 @@ class CatDetailCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: ListView.separated(
+                separatorBuilder:
+                    (context, index) => const SizedBox(height: 4.0),
                 padding: const EdgeInsets.all(12.0),
-                children: <Widget>[
-                  ...itemsStringValues,
-                  const SizedBox(height: gapY),
-                  if (itemsIntegerValues.isNotEmpty)
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final isSmallScreen = constraints.maxWidth < 440;
-                        return isSmallScreen
-                            ? Column(
-                              spacing: gapY,
-                              children:
-                                  itemsIntegerValues.map((el) => el).toList(),
-                            )
-                            : Column(
-                              spacing: gapY,
-                              children: <Widget>[
-                                for (
-                                  int i = 0;
-                                  i < itemsIntegerValues.length;
-                                  i += 2
+                itemCount:
+                    itemsStringValues.length +
+                    (itemsIntegerValues.isNotEmpty ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < itemsStringValues.length) {
+                    return itemsStringValues[index];
+                  }
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isSmallScreen = constraints.maxWidth < 440;
+                      return Container(
+                        margin: const EdgeInsets.only(top: 12.0),
+                        child:
+                            isSmallScreen
+                                ? Column(
+                                  spacing: 16.0,
+                                  children: itemsIntegerValues,
                                 )
-                                  Row(
-                                    spacing: 12.0,
-                                    children: [
-                                      Expanded(child: itemsIntegerValues[i]),
-                                      if (i + 1 < itemsIntegerValues.length)
-                                        Expanded(
-                                          child: itemsIntegerValues[i + 1],
-                                        ),
-                                    ],
-                                  ),
-                              ],
-                            );
-                      },
-                    ),
-                ],
+                                : Column(
+                                  spacing: 16.0,
+                                  children: <Widget>[
+                                    for (
+                                      int i = 0;
+                                      i < itemsIntegerValues.length;
+                                      i += 2
+                                    )
+                                      Row(
+                                        spacing: 12.0,
+                                        children: [
+                                          Expanded(
+                                            child: itemsIntegerValues[i],
+                                          ),
+                                          if (i + 1 < itemsIntegerValues.length)
+                                            Expanded(
+                                              child: itemsIntegerValues[i + 1],
+                                            ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],
@@ -110,12 +136,11 @@ class CatDetailCard extends StatelessWidget {
     required List<CatModelListItem<T?>> items,
     required Widget Function(CatModelListItem<T?>) builder,
   }) {
-    return items
-        .where(
-          (el) =>
-              (el.value.toString() != 'null' && el.value.toString().isNotEmpty),
-        )
-        .map((el) => builder(el))
-        .toList();
+    return items.fold<List<Widget>>([], (list, el) {
+      if (el.value != null && el.value.toString().isNotEmpty) {
+        list.add(builder(el));
+      }
+      return list;
+    });
   }
 }

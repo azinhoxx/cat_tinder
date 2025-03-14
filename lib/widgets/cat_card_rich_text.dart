@@ -3,9 +3,9 @@ import 'package:flutter_hw_1/constants/icons.dart';
 
 class CatCardRichText extends StatelessWidget {
   final String label;
-  final String text;
+  final TextSpan child;
 
-  const CatCardRichText({super.key, required this.label, required this.text});
+  const CatCardRichText({super.key, required this.label, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CatCardRichText extends StatelessWidget {
                   text: '$label: ',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                TextSpan(text: text),
+                child,
               ],
             ),
           ),
