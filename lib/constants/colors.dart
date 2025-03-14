@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+abstract final class AppColors {
   AppColors._();
 
   static const Color primaryBackgroundColorDark = Color.fromARGB(

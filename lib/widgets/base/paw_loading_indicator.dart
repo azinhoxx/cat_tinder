@@ -14,6 +14,7 @@ class _BlinkingPawState extends State<PawLoadingIndicator>
 
   @override
   void initState() {
+    debugPrint('PawLoadingIndicator created');
     _controller = AnimationController(
       vsync: this,
       lowerBound: 0.9,

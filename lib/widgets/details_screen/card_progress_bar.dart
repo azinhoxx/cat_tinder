@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/colors.dart';
 
-class CatCardProgressBar extends StatelessWidget {
+class CardProgressBar extends StatelessWidget {
   final String label;
   final int value;
 
-  const CatCardProgressBar({
-    super.key,
-    required this.label,
-    required this.value,
-  });
+  const CardProgressBar({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +13,10 @@ class CatCardProgressBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4.0,
       children: [
-        RichText(
+        Text.rich(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          text: TextSpan(
-            style: DefaultTextStyle.of(context).style,
+          TextSpan(
             children: [
               TextSpan(
                 text: '$label ',

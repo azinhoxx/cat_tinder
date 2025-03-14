@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/icons.dart';
 
-class CatCardRichText extends StatelessWidget {
+class CardRichText extends StatelessWidget {
   final String label;
   final TextSpan child;
 
-  const CatCardRichText({super.key, required this.label, required this.child});
+  const CardRichText({super.key, required this.label, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,8 @@ class CatCardRichText extends StatelessWidget {
       children: <Widget>[
         const Icon(AppIcons.cat, size: 20, color: Colors.red),
         Expanded(
-          child: RichText(
-            text: TextSpan(
-              style: DefaultTextStyle.of(context).style,
+          child: Text.rich(
+            TextSpan(
               children: [
                 TextSpan(
                   text: '$label: ',

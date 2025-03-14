@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/colors.dart';
 
-class AppTheme {
+abstract final class AppTheme {
   AppTheme._();
 
   static const _defaultFontFamily = 'Montserrat';
@@ -9,12 +9,10 @@ class AppTheme {
   static const double _iconSize = 36;
 
   static ThemeData theme() {
-    final brightness = Brightness.light;
-
     final primaryBackgroundColor = AppColors.primaryBackgroundColorLight;
 
     final theme = ThemeData(
-      brightness: brightness,
+      brightness: Brightness.light,
       primaryColor: primaryBackgroundColor,
       textTheme: TextTheme(
         bodyMedium: TextStyle(

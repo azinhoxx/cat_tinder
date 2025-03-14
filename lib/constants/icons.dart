@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppIcons {
+abstract final class AppIcons {
   AppIcons._();
 
   static const _fontFamily = 'CVIcons';
@@ -10,6 +10,8 @@ class AppIcons {
   static const IconData dislike = IconData(0xe802, fontFamily: _fontFamily);
   static const IconData cat = IconData(0xe803, fontFamily: _fontFamily);
 
-  static const IconData heart1 = IconData(0xe804, fontFamily: _fontFamily);
-  static const IconData heart2 = IconData(0xe805, fontFamily: _fontFamily);
+  static const IconData heartHandWritten = IconData(
+    0xe804,
+    fontFamily: _fontFamily,
+  );
 }

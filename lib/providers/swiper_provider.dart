@@ -4,26 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/widgets/cat_slide.dart';
+import 'package:flutter_hw_1/widgets/home_screen/slide.dart';
 import 'package:http/http.dart' as http;
 
-class CatSwiperProvider extends ChangeNotifier {
+class SwiperProvider extends ChangeNotifier {
   final CardSwiperController controller = CardSwiperController();
-  final List<CatSlide> _slides = [];
+  final List<Slide> _slides = [];
   String? _errorMessage;
 
-  CatSwiperProvider() {
-    _init();
-  }
-
-  Future<void> _init() async {
-    await _fetchCats();
+  SwiperProvider() {
+    _fetchCats();
   }
 
   bool _isLoading = true;
   int _likesCount = 0;
 
-  List<CatSlide> get slides => _slides;
+  List<Slide> get slides => _slides;
   int get likesCount => _likesCount;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
@@ -76,14 +72,13 @@ class CatSwiperProvider extends ChangeNotifier {
     return true;
   }
 
-  List<CatSlide> _parseCats(String responseBody) {
+  List<Slide> _parseCats(String responseBody) {
     final data = jsonDecode(responseBody);
     if (data is List) {
       return data
           .map(
-            (el) => CatSlide(
-              cat: CatModel.fromJson(json: el as Map<String, dynamic>),
-            ),
+            (el) =>
+                Slide(cat: CatModel.fromJson(json: el as Map<String, dynamic>)),
           )
           .toList();
     }

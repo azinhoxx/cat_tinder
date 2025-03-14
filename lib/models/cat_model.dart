@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_hw_1/tools/utils.dart';
+import 'package:flutter_hw_1/utilities/utils.dart';
 
 @immutable
 class CatModelListItem<T> {
@@ -82,7 +82,7 @@ class CatModel {
       CatModelListItem(label: 'Origin', value: origin),
       CatModelListItem(label: 'Description', value: description),
       CatModelListItem(label: 'Temperament', value: temperament),
-      CatModelListItem(label: 'Life Span', value: lifeSpan),
+      CatModelListItem(label: 'Life Span', value: '$lifeSpan years'),
       CatModelListItem(label: 'Wikipedia URL', value: wikipediaUrl),
       CatModelListItem(label: 'Imperial Weight', value: '$weightImperial kg'),
       CatModelListItem(label: 'Metric Weight', value: '$weightMetric kg'),

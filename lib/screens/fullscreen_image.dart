@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
+import 'package:flutter_hw_1/providers/cat_model_provider.dart';
+import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
 
-class FullScreenImageScreen extends StatelessWidget {
-  const FullScreenImageScreen({super.key});
+class FullscreenImage extends StatelessWidget {
+  const FullscreenImage({super.key});
 
   void _closeFullScreen(BuildContext context) {
     Navigator.pop(context);

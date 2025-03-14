@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class ErrorMessage extends StatelessWidget {
   final String message;
+  final String buttonText;
+  final VoidCallback? onPressed;
 
-  const ErrorMessage({super.key, required this.message});
+  const ErrorMessage({
+    super.key,
+    required this.message,
+    required this.buttonText,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +30,21 @@ class ErrorMessage extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: Colors.blue.shade800,
+              foregroundColor: const Color(0xFF1565C0),
               padding: const EdgeInsets.all(20.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.0),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),
             ),
             child: Text(
-              'TRY AGAIN',
-              style: TextStyle(color: Colors.blue.shade800, letterSpacing: 1.0),
+              buttonText,
+              style: TextStyle(
+                color: const Color(0xFF1565C0),
+                letterSpacing: 1.0,
+              ),
             ),
           ),
         ],

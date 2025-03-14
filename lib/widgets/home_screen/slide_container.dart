@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 
-class CatSlideContainer extends StatelessWidget {
+class SlideContainer extends StatelessWidget {
   final List<Widget> children;
   final double borderRadius;
 
-  const CatSlideContainer({
+  const SlideContainer({
     super.key,
     required this.children,
     this.borderRadius = AppDecorations.defaultBorderRadius,

@@ -3,11 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/screens/fullscreen_image_screen.dart';
-import 'package:flutter_hw_1/widgets/cat_card_progress_bar.dart';
-import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/cat_card_rich_text.dart';
-import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
+import 'package:flutter_hw_1/screens/fullscreen_image.dart';
+import 'package:flutter_hw_1/widgets/details_screen/card_progress_bar.dart';
+import 'package:flutter_hw_1/providers/cat_model_provider.dart';
+import 'package:flutter_hw_1/widgets/details_screen/card_rich_text.dart';
+import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CatDetailCard extends StatelessWidget {
@@ -20,8 +20,7 @@ class CatDetailCard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute<dynamic>(
         builder:
-            (context) =>
-                CatModelProvider(cat: cat, child: FullScreenImageScreen()),
+            (context) => CatModelProvider(cat: cat, child: FullscreenImage()),
       ),
     );
   }
@@ -33,7 +32,7 @@ class CatDetailCard extends StatelessWidget {
     final itemsIntegerValues = _buildItems<int>(
       items: cat.toIntegerValuesList(),
       builder:
-          (el) => CatCardProgressBar(
+          (el) => CardProgressBar(
             key: ValueKey(el),
             label: el.label,
             value: el.value!,
@@ -44,7 +43,7 @@ class CatDetailCard extends StatelessWidget {
       items: cat.toStringValuesList(),
       builder: (el) {
         if (el.label.toLowerCase().contains('wikipedia')) {
-          return CatCardRichText(
+          return CardRichText(
             key: ValueKey(el),
             label: el.label,
             child: TextSpan(
@@ -59,7 +58,7 @@ class CatDetailCard extends StatelessWidget {
             ),
           );
         }
-        return CatCardRichText(
+        return CardRichText(
           key: ValueKey(el),
           label: el.label,
           child: TextSpan(text: el.value!),
