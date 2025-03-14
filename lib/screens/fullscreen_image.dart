@@ -12,7 +12,7 @@ class FullscreenImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     final cat = CatModelProvider.of(context).cat;
 

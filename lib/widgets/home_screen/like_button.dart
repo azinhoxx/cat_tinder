@@ -8,14 +8,21 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likes = context.select<SwiperProvider, int>(
-      (provider) => provider.likesCount,
+    final values = context.select<SwiperProvider, ({int likes, bool disabled})>(
+      (provider) => (
+        likes: provider.likesCount,
+        disabled: provider.isNotNextSlide,
+      ),
     );
+
     final onPressed =
         Provider.of<SwiperProvider>(context, listen: false).onLike;
 
+    final Color color =
+        values.disabled ? Theme.of(context).disabledColor : Colors.green;
+
     return IconButton(
-      onPressed: onPressed,
+      onPressed: values.disabled ? null : onPressed,
       color: Colors.green,
       icon: Row(
         spacing: 8.0,
@@ -24,12 +31,12 @@ class LikeButton extends StatelessWidget {
           const Icon(AppIcons.like),
           Container(
             constraints: BoxConstraints(
-              minWidth: _calculateWidthTextLikes(likes),
+              minWidth: _calculateWidthTextLikes(values.likes),
             ),
             child: Text(
-              '$likes',
+              '${values.likes}',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.green),
+              style: TextStyle(color: color),
             ),
           ),
         ],

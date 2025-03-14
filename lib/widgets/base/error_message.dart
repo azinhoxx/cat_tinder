@@ -34,7 +34,10 @@ class ErrorMessage extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: const Color(0xFF1565C0),
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 12.0,
+              ),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/icons.dart';
 import 'package:flutter_hw_1/providers/swiper_provider.dart';
-import 'package:provider/provider.dart' show Provider;
+import 'package:provider/provider.dart' show Provider, SelectContext;
 
 class UndoButton extends StatelessWidget {
   const UndoButton({super.key});
@@ -10,8 +10,13 @@ class UndoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final onPressed =
         Provider.of<SwiperProvider>(context, listen: false).onRevoke;
+
+    final disabled = context.select<SwiperProvider, bool>(
+      (provider) => provider.isNotPrevSlide,
+    );
+
     return IconButton(
-      onPressed: onPressed,
+      onPressed: disabled ? null : onPressed,
       color: Colors.blue,
       icon: const Icon(AppIcons.undo),
     );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -6,24 +7,36 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/widgets/home_screen/slide.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SwiperProvider extends ChangeNotifier {
+  final Future<SharedPreferencesWithCache> _prefs =
+      SharedPreferencesWithCache.create(
+        cacheOptions: const SharedPreferencesWithCacheOptions(
+          allowList: <String>{'counter'},
+        ),
+      );
+
   final CardSwiperController controller = CardSwiperController();
   final List<Slide> _slides = [];
-  String? _errorMessage;
 
+  String? _errorMessage;
   bool _isLoading = true;
-  bool _isFetching = true;
   int _likesCount = 0;
+  int _currentIndex = 0;
 
   List<Slide> get slides => _slides;
   int get likesCount => _likesCount;
+  int get currentIndex => _currentIndex;
   bool get isLoading => _isLoading;
-  bool get isFetching => _isFetching;
   String? get errorMessage => _errorMessage;
+
+  bool get isNotNextSlide => _currentIndex == slides.length - 1;
+  bool get isNotPrevSlide => _currentIndex == 0;
 
   SwiperProvider() {
     _fetchCats();
+    _syncData();
   }
 
   void onLike() {
@@ -39,18 +52,18 @@ class SwiperProvider extends ChangeNotifier {
   }
 
   void _updateSlides(int? currentIndex) {
-    if (currentIndex != null &&
-        (_slides.length - currentIndex) <= _slides.length ~/ 2) {
+    if (currentIndex != null && (_slides.length - currentIndex) <= 5) {
       _fetchCats();
     }
   }
 
-  void _updateCounter({
+  Future<void> _updateCounter({
     required CardSwiperDirection direction,
     bool isUndo = false,
-  }) {
+  }) async {
     final delta = isUndo ? -1 : 1;
     if (direction == CardSwiperDirection.right) _likesCount += delta;
+    await _saveCounter();
   }
 
   bool onSwipe(
@@ -60,6 +73,7 @@ class SwiperProvider extends ChangeNotifier {
   ) {
     _updateCounter(direction: direction);
     _updateSlides(currentIndex);
+    if (currentIndex != null) _currentIndex = currentIndex;
     notifyListeners();
     return true;
   }
@@ -70,6 +84,7 @@ class SwiperProvider extends ChangeNotifier {
     CardSwiperDirection direction,
   ) {
     _updateCounter(direction: direction, isUndo: true);
+    _currentIndex = currentIndex;
     notifyListeners();
     return true;
   }
@@ -89,30 +104,59 @@ class SwiperProvider extends ChangeNotifier {
 
   /// Use it when you need to have the opportunity to try again.
   /// For example, if there was an error the first time around.
-  Future<void> fetchMoreCats() async {
+  /// It will clear all slides.
+  Future<void> recoverFromError() async {
     _isLoading = true;
     _errorMessage = null;
+    _slides.clear();
     notifyListeners();
     await _fetchCats();
   }
 
-  Future<void> _fetchCats() async {
-    _isFetching = true;
+  Future<bool> hasNetwork() async {
     try {
+      final result = await InternetAddress.lookup('example.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
+
+  void _handleError() {
+    _errorMessage ??= 'Something went wrong';
+  }
+
+  Future<void> _fetchCats() async {
+    try {
+      bool online = await hasNetwork();
+      if (!online) {
+        _errorMessage = 'No internet connection';
+        return;
+      }
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
-        _errorMessage = 'Something went wrong';
+        _handleError();
       }
     } catch (error) {
-      _errorMessage = 'Something went wrong';
+      _handleError();
     } finally {
       if (isLoading) _isLoading = false;
-      _isFetching = false;
       notifyListeners();
     }
+  }
+
+  Future<void> _syncData() async {
+    final SharedPreferencesWithCache prefs = await _prefs;
+    _likesCount = prefs.getInt('counter') ?? 0;
+    notifyListeners();
+  }
+
+  Future<void> _saveCounter() async {
+    final SharedPreferencesWithCache prefs = await _prefs;
+    await prefs.setInt('counter', _likesCount);
   }
 
   @override
