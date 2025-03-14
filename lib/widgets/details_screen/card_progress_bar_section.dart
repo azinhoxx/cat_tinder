@@ -9,7 +9,7 @@ class CardProgressBarSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isSmallScreen = constraints.maxWidth < 350;
+        final isSmallScreen = constraints.maxWidth < 380;
 
         return Container(
           margin: const EdgeInsets.only(top: 12.0),
