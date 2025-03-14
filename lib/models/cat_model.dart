@@ -84,8 +84,8 @@ class CatModel {
       CatModelListItem(label: 'Temperament', value: temperament),
       CatModelListItem(label: 'Life Span', value: lifeSpan),
       CatModelListItem(label: 'Wikipedia URL', value: wikipediaUrl),
-      CatModelListItem(label: 'Imperial Weight', value: weightImperial),
-      CatModelListItem(label: 'Metric Weight', value: weightMetric),
+      CatModelListItem(label: 'Imperial Weight', value: '$weightImperial kg'),
+      CatModelListItem(label: 'Metric Weight', value: '$weightMetric kg'),
     ];
   }
 

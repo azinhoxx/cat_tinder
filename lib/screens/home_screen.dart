@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/widgets/cat_app_bar.dart';
 import 'package:flutter_hw_1/widgets/cat_scaffold.dart';
+import 'package:flutter_hw_1/widgets/error_message.dart';
 import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
 import 'package:flutter_hw_1/widgets/dislike_button.dart';
 import 'package:flutter_hw_1/widgets/like_button.dart';
@@ -18,11 +19,20 @@ class HomeScreen extends StatelessWidget {
       create: (context) => CatSwiperProvider(),
       child: CatScaffold(
         appBar: const CatAppBar(title: 'CatTinder'),
-        body: Selector<CatSwiperProvider, bool>(
-          selector: (context, provider) => provider.isLoading,
+        body: Selector<
+          CatSwiperProvider,
+          ({bool isLoading, String? errorMessage})
+        >(
+          selector:
+              (context, provider) => (
+                isLoading: provider.isLoading,
+                errorMessage: provider.errorMessage,
+              ),
           builder:
-              (context, isLoading, child) =>
-                  isLoading
+              (context, value, child) =>
+                  value.errorMessage != null
+                      ? ErrorMessage(message: value.errorMessage!)
+                      : value.isLoading
                       ? const PawLoadingIndicator()
                       : Column(
                         children: <Widget>[

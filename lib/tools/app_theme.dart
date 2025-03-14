@@ -8,13 +8,10 @@ class AppTheme {
   static const _defaultFontFamilyTitle = 'Sour Gummy';
   static const double _iconSize = 36;
 
-  static ThemeData theme({required bool dark}) {
-    final brightness = dark ? Brightness.dark : Brightness.light;
+  static ThemeData theme() {
+    final brightness = Brightness.light;
 
-    final primaryBackgroundColor =
-        dark
-            ? AppColors.primaryBackgroundColorDark
-            : AppColors.primaryBackgroundColorLight;
+    final primaryBackgroundColor = AppColors.primaryBackgroundColorLight;
 
     final theme = ThemeData(
       brightness: brightness,
@@ -22,7 +19,7 @@ class AppTheme {
       textTheme: TextTheme(
         bodyMedium: TextStyle(
           fontFamily: _defaultFontFamily,
-          color: dark ? Colors.white : Colors.black,
+          color: Colors.black,
         ),
       ),
       scaffoldBackgroundColor: primaryBackgroundColor,
@@ -35,6 +32,7 @@ class AppTheme {
           color: Colors.redAccent,
           fontSize: 42,
           letterSpacing: 1,
+          fontWeight: FontWeight.bold,
         ),
       ),
       cardTheme: CardTheme(color: primaryBackgroundColor),

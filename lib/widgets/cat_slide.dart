@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/screens/cat_detail_screen.dart';
 import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
@@ -24,7 +25,7 @@ class CatSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+      borderRadius: BorderRadius.circular(AppDecorations.defaultBorderRadius),
       onTap: () => _navigateDetailsScreen(context),
       child: CatSlideContainer(
         children: <Widget>[

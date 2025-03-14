@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 class CatSwiperProvider extends ChangeNotifier {
   final CardSwiperController controller = CardSwiperController();
   final List<CatSlide> _slides = [];
+  String? _errorMessage;
 
   CatSwiperProvider() {
     _init();
@@ -25,6 +26,7 @@ class CatSwiperProvider extends ChangeNotifier {
   List<CatSlide> get slides => _slides;
   int get likesCount => _likesCount;
   bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   void onLike() {
     controller.swipe(CardSwiperDirection.right);
@@ -94,7 +96,11 @@ class CatSwiperProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
+      } else {
+        _errorMessage = 'Something went wrong';
       }
+    } catch (error) {
+      _errorMessage = 'Something went wrong';
     } finally {
       if (isLoading) _isLoading = false;
       notifyListeners();

@@ -69,15 +69,11 @@ class CatDetailCard extends StatelessWidget {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppDecorations.defaultBorderRadius),
-        ),
+        borderRadius: BorderRadius.circular(AppDecorations.defaultBorderRadius),
       ),
       color: Colors.white,
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppDecorations.defaultBorderRadius),
-        ),
+        borderRadius: BorderRadius.circular(AppDecorations.defaultBorderRadius),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

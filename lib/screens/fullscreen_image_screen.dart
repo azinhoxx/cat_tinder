@@ -1,17 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hw_1/widgets/cat_model_provider.dart';
 import 'package:flutter_hw_1/widgets/paw_loading_indicator.dart';
 
 class FullScreenImageScreen extends StatelessWidget {
   const FullScreenImageScreen({super.key});
 
-  void _closeScreen(BuildContext context) {
+  void _closeFullScreen(BuildContext context) {
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
     final cat = CatModelProvider.of(context).cat;
 
     return Scaffold(
@@ -22,7 +25,6 @@ class FullScreenImageScreen extends StatelessWidget {
             Positioned.fill(
               child: InteractiveViewer(
                 child: CachedNetworkImage(
-                  width: double.infinity,
                   imageUrl: cat.imageUrl,
                   placeholder:
                       (context, imageUrl) => const PawLoadingIndicator(),
@@ -34,10 +36,12 @@ class FullScreenImageScreen extends StatelessWidget {
             Positioned(
               top: 8,
               right: 8,
-              child: IconButton(
-                color: Colors.white,
-                onPressed: () => _closeScreen(context),
-                icon: Icon(Icons.close),
+              child: CloseButton(
+                color: Colors.red,
+                style: const ButtonStyle(
+                  iconSize: WidgetStatePropertyAll(32.0),
+                ),
+                onPressed: () => _closeFullScreen(context),
               ),
             ),
           ],

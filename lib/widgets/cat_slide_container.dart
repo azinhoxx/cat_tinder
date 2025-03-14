@@ -19,10 +19,10 @@ class CatSlideContainer extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          borderRadius: BorderRadius.circular(borderRadius),
           child: Stack(children: children),
         ),
       ),
