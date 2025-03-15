@@ -17,39 +17,42 @@ class FullscreenImage extends StatelessWidget {
 
     final cat = CatModelProvider.of(context).cat;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: KeyboardListener(
-            focusNode: FocusNode()..requestFocus(),
-            onKeyEvent: (value) {
-              if (value.logicalKey == LogicalKeyboardKey.escape) {
-                _closeFullScreen(context);
-              }
-            },
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                PhotoView(
-                  backgroundDecoration: const BoxDecoration(
-                    color: Colors.black54,
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: Center(
+            child: KeyboardListener(
+              focusNode: FocusNode()..requestFocus(),
+              onKeyEvent: (value) {
+                if (value.logicalKey == LogicalKeyboardKey.escape) {
+                  _closeFullScreen(context);
+                }
+              },
+              child: Stack(
+                children: [
+                  PhotoView(
+                    minScale: 0.4,
+                    maxScale: 3.0,
+                    imageProvider: CachedNetworkImageProvider(cat.imageUrl),
                   ),
-                  minScale: 0.4,
-                  maxScale: 3.0,
-                  imageProvider: CachedNetworkImageProvider(cat.imageUrl),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: CloseButton(
-                    onPressed: () => _closeFullScreen(context),
-                    color: Colors.red,
-                    style: const ButtonStyle(
-                      iconSize: WidgetStatePropertyAll(32.0),
+
+                  const Positioned(
+                    top: 6.0,
+                    left: 6.0,
+                    child: BackButton(
+                      color: Colors.red,
+                      style: ButtonStyle(
+                        iconSize: WidgetStatePropertyAll(28.0),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

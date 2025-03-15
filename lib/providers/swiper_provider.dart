@@ -71,8 +71,8 @@ class SwiperProvider extends ChangeNotifier {
     int? currentIndex,
     CardSwiperDirection direction,
   ) {
-    _updateCounter(direction: direction);
     _updateSlides(currentIndex);
+    _updateCounter(direction: direction);
     if (currentIndex != null) _currentIndex = currentIndex;
     notifyListeners();
     return true;
@@ -104,16 +104,21 @@ class SwiperProvider extends ChangeNotifier {
 
   /// Use it when you need to have the opportunity to try again.
   /// For example, if there was an error the first time around.
-  /// It will clear all slides.
+  /// It will clear all slides previous to the trigger slide.
   Future<void> recoverFromError() async {
     _isLoading = true;
     _errorMessage = null;
-    _slides.clear();
+    if (_currentIndex != 0) {
+      _slides.removeRange(0, _currentIndex - 1);
+    }
+    _currentIndex = 0;
     notifyListeners();
-    await _fetchCats();
+    if (_slides.length <= 5) {
+      await _fetchCats();
+    }
   }
 
-  Future<bool> hasNetwork() async {
+  Future<bool> _hasNetwork() async {
     try {
       final result = await InternetAddress.lookup('example.com');
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
@@ -126,13 +131,17 @@ class SwiperProvider extends ChangeNotifier {
     _errorMessage ??= 'Something went wrong';
   }
 
+  Future<void> checkNetworkError() async {
+    bool online = await _hasNetwork();
+    if (!online) {
+      _errorMessage = 'No internet connection';
+    }
+  }
+
   Future<void> _fetchCats() async {
     try {
-      bool online = await hasNetwork();
-      if (!online) {
-        _errorMessage = 'No internet connection';
-        return;
-      }
+      checkNetworkError();
+      if (_errorMessage != null) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);

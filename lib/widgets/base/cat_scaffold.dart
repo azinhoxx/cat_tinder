@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/widgets/base/cat_app_bar.dart';
 
 class CatScaffold extends StatelessWidget {
   final Widget body;
-  final PreferredSizeWidget? appBar;
 
-  const CatScaffold({super.key, this.appBar, required this.body});
+  const CatScaffold({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: const CatAppBar(),
       body: SafeArea(
         child: Center(
           child: Container(
