@@ -122,6 +122,7 @@ class SwiperProvider extends ChangeNotifier {
   /// For example, if there was an error the first time around.
   /// It will set [errorMessage] to null.
   /// Set [force] flag for forced reload widget tree.
+  /// After [force=true] it will start from the first slide.
   Future<void> recoverFromError({bool force = false}) async {
     if (force) {
       _isLoading = true;

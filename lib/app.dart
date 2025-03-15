@@ -33,7 +33,7 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/error':
       return AppUtils.buildRoute(
-        PopScope(
+        page: PopScope(
           canPop: false,
           child: ErrorScreen(
             message: args!['message'] as String,
@@ -49,10 +49,11 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
               ? const FullscreenImage()
               : const DetailsScreen();
       return AppUtils.buildRoute(
-        CatModelProvider(cat: args!['cat'] as CatModel, child: screen),
+        page: CatModelProvider(cat: args!['cat'] as CatModel, child: screen),
+        customAnimation: settings.name == '/details',
       );
     case '/':
     default:
-      return AppUtils.buildRoute(const HomeScreen());
+      return AppUtils.buildRoute(page: const HomeScreen());
   }
 }

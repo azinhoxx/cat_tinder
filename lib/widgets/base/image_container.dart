@@ -29,7 +29,7 @@ class _ImageContainerState extends State<ImageContainer> {
     _imageRenderMethodKey = UniqueKey();
   }
 
-  void _refreshImage() {
+  void _retryRequest() {
     setState(() {
       _imageRenderMethodKey = UniqueKey();
     });
@@ -52,7 +52,7 @@ class _ImageContainerState extends State<ImageContainer> {
             child: Center(
               child: IconButton(
                 padding: const EdgeInsets.all(40.0),
-                onPressed: _refreshImage,
+                onPressed: _retryRequest,
                 icon: const Icon(AppIcons.refresh),
               ),
             ),
