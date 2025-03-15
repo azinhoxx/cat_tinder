@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ErrorMessage extends StatelessWidget {
+class ErrorMessageWidget extends StatelessWidget {
   final String message;
   final String buttonText;
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
-  const ErrorMessage({
+  const ErrorMessageWidget({
     super.key,
     required this.message,
     required this.buttonText,
-    this.onPressed,
+    required this.onPressed,
   });
 
   @override
@@ -42,13 +42,7 @@ class ErrorMessage extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),
             ),
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                color: const Color(0xFF1565C0),
-                letterSpacing: 1.0,
-              ),
-            ),
+            child: Text(buttonText, style: const TextStyle(letterSpacing: 1.0)),
           ),
         ],
       ),

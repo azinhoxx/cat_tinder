@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/screens/details_screen.dart';
 import 'package:flutter_hw_1/widgets/base/image_container.dart';
-import 'package:flutter_hw_1/providers/cat_model_provider.dart';
 import 'package:flutter_hw_1/widgets/home_screen/container_background.dart';
 
 class Slide extends StatelessWidget {
@@ -12,13 +10,7 @@ class Slide extends StatelessWidget {
   const Slide({super.key, required this.cat});
 
   void _navigateDetailsScreen(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<dynamic>(
-        builder:
-            (context) =>
-                CatModelProvider(cat: cat, child: const DetailsScreen()),
-      ),
-    );
+    Navigator.pushNamed(context, '/details', arguments: {'cat': cat});
   }
 
   @override

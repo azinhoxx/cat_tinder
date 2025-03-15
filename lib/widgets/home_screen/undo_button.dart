@@ -8,10 +8,10 @@ class UndoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed =
+    final VoidCallback onPressed =
         Provider.of<SwiperProvider>(context, listen: false).onRevoke;
 
-    final disabled = context.select<SwiperProvider, bool>(
+    final bool disabled = context.select<SwiperProvider, bool>(
       (provider) => provider.isNotPrevSlide,
     );
 

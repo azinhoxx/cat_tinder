@@ -9,6 +9,22 @@ import 'package:flutter_hw_1/widgets/home_screen/slide.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum ErrorType {
+  networkError('No network connection'),
+  genericError('Something went wrong');
+
+  final String message;
+  const ErrorType(this.message);
+}
+
+@immutable
+class ErrorMessage {
+  final ErrorType type;
+  final int slidesCount;
+
+  const ErrorMessage({required this.type, this.slidesCount = 0});
+}
+
 class SwiperProvider extends ChangeNotifier {
   final Future<SharedPreferencesWithCache> _prefs =
       SharedPreferencesWithCache.create(
@@ -20,7 +36,7 @@ class SwiperProvider extends ChangeNotifier {
   final CardSwiperController controller = CardSwiperController();
   final List<Slide> _slides = [];
 
-  String? _errorMessage;
+  ErrorMessage? _errorMessage;
   bool _isLoading = true;
   int _likesCount = 0;
   int _currentIndex = 0;
@@ -29,7 +45,7 @@ class SwiperProvider extends ChangeNotifier {
   int get likesCount => _likesCount;
   int get currentIndex => _currentIndex;
   bool get isLoading => _isLoading;
-  String? get errorMessage => _errorMessage;
+  ErrorMessage? get errorMessage => _errorMessage;
 
   bool get isNotNextSlide => _currentIndex == slides.length - 1;
   bool get isNotPrevSlide => _currentIndex == 0;
@@ -104,21 +120,19 @@ class SwiperProvider extends ChangeNotifier {
 
   /// Use it when you need to have the opportunity to try again.
   /// For example, if there was an error the first time around.
-  /// It will clear all slides previous to the trigger slide.
-  Future<void> recoverFromError() async {
-    _isLoading = true;
+  /// It will set [errorMessage] to null.
+  /// Set [force] flag for forced reload widget tree.
+  Future<void> recoverFromError({bool force = false}) async {
+    if (force) {
+      _isLoading = true;
+      _currentIndex = 0;
+    }
     _errorMessage = null;
-    if (_currentIndex != 0) {
-      _slides.removeRange(0, _currentIndex - 1);
-    }
-    _currentIndex = 0;
     notifyListeners();
-    if (_slides.length <= 5) {
-      await _fetchCats();
-    }
+    await _fetchCats();
   }
 
-  Future<bool> _hasNetwork() async {
+  static Future<bool> hasNetwork() async {
     try {
       final result = await InternetAddress.lookup('example.com');
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
@@ -127,32 +141,35 @@ class SwiperProvider extends ChangeNotifier {
     }
   }
 
-  void _handleError() {
-    _errorMessage ??= 'Something went wrong';
+  void _setError(ErrorType type) {
+    _errorMessage ??= ErrorMessage(type: type, slidesCount: _slides.length);
   }
 
-  Future<void> checkNetworkError() async {
-    bool online = await _hasNetwork();
+  Future<bool> setNetworkError() async {
+    bool online = await hasNetwork();
     if (!online) {
-      _errorMessage = 'No internet connection';
+      _setError(ErrorType.networkError);
     }
+    return online;
   }
 
   Future<void> _fetchCats() async {
     try {
-      checkNetworkError();
-      if (_errorMessage != null) return;
+      if (!await setNetworkError()) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
-        _handleError();
+        _setError(ErrorType.genericError);
       }
-    } catch (error) {
-      _handleError();
+    } catch (_) {
+      _setError(ErrorType.genericError);
     } finally {
       if (isLoading) _isLoading = false;
+      if (slides.isEmpty) {
+        _setError(ErrorType.networkError);
+      }
       notifyListeners();
     }
   }

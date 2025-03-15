@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/icons.dart';
 
 class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CatAppBar({super.key});
+  final bool automaticallyImplyLeading;
+
+  const CatAppBar({super.key, this.automaticallyImplyLeading = true});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -10,6 +12,7 @@ class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: automaticallyImplyLeading,
       centerTitle: true,
       title: const FittedBox(
         fit: BoxFit.scaleDown,

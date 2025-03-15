@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/providers/swiper_provider.dart';
 import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
-import 'package:provider/provider.dart';
 
 class ImageContainer extends StatelessWidget {
   final BoxFit fit;
@@ -22,7 +20,6 @@ class ImageContainer extends StatelessWidget {
       imageUrl: imageUrl,
       placeholder: (context, imageUrl) => const PawLoadingIndicator(),
       errorWidget: (context, url, error) {
-        Provider.of<SwiperProvider>(context, listen: false).checkNetworkError();
         return const Icon(Icons.error, size: 80, color: Colors.redAccent);
       },
       fadeOutDuration: const Duration(milliseconds: 300),

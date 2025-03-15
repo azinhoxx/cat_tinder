@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/constants/decorations.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/screens/fullscreen_image.dart';
 import 'package:flutter_hw_1/widgets/base/image_container.dart';
 
 class CardImageSection extends StatelessWidget {
@@ -12,13 +11,7 @@ class CardImageSection extends StatelessWidget {
     required BuildContext context,
     required CatModel cat,
   }) {
-    Navigator.of(context).push(
-      MaterialPageRoute<dynamic>(
-        builder:
-            (context) =>
-                CatModelProvider(cat: cat, child: const FullscreenImage()),
-      ),
-    );
+    Navigator.pushNamed(context, '/fullscreen', arguments: {'cat': cat});
   }
 
   @override

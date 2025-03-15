@@ -13,6 +13,8 @@ class SwiperCardList extends StatelessWidget {
     return Selector<SwiperProvider, int>(
       selector: (context, provider) => provider.slides.length,
       builder: (context, count, child) {
+        debugPrint('$this build');
+
         return CardSwiper(
           controller: provider.controller,
           cardsCount: count,
