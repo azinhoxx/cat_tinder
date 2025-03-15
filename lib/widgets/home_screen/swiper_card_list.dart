@@ -13,8 +13,6 @@ class SwiperCardList extends StatelessWidget {
     return Selector<SwiperProvider, int>(
       selector: (context, provider) => provider.slides.length,
       builder: (context, count, child) {
-        debugPrint('$this build');
-
         return CardSwiper(
           controller: provider.controller,
           cardsCount: count,
@@ -23,6 +21,8 @@ class SwiperCardList extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           onSwipe: provider.onSwipe,
           onUndo: provider.onUndo,
+          onEnd: provider.onEnd,
+          isLoop: false,
           maxAngle: 15,
           allowedSwipeDirection: const AllowedSwipeDirection.only(
             right: true,

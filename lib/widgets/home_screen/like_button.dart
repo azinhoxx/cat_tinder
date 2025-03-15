@@ -13,37 +13,38 @@ class LikeButton extends StatelessWidget {
 
     return Selector<SwiperProvider, bool>(
       selector: (context, provider) => provider.isNotNextSlide,
-      builder:
-          (context, disabled, child) => IconButton(
-            onPressed: disabled ? null : onPressed,
-            color: Colors.green,
-            icon: Row(
-              spacing: 8.0,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                const Icon(AppIcons.like),
-                Selector<SwiperProvider, int>(
-                  selector: (context, provider) => provider.likesCount,
-                  builder:
-                      (context, likes, child) => Container(
-                        constraints: BoxConstraints(
-                          minWidth: _calculateWidthTextLikes(likes),
-                        ),
-                        child: Text(
-                          '$likes',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color:
-                                disabled
-                                    ? Theme.of(context).disabledColor
-                                    : Colors.green,
-                          ),
+      builder: (context, disabled, child) {
+        return IconButton(
+          onPressed: disabled ? null : onPressed,
+          color: Colors.green,
+          icon: Row(
+            spacing: 8.0,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Icon(AppIcons.like),
+              Selector<SwiperProvider, int>(
+                selector: (context, provider) => provider.likesCount,
+                builder:
+                    (context, likes, child) => Container(
+                      constraints: BoxConstraints(
+                        minWidth: _calculateWidthTextLikes(likes),
+                      ),
+                      child: Text(
+                        '$likes',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color:
+                              disabled
+                                  ? Theme.of(context).disabledColor
+                                  : Colors.green,
                         ),
                       ),
-                ),
-              ],
-            ),
+                    ),
+              ),
+            ],
           ),
+        );
+      },
     );
   }
 

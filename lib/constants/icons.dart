@@ -9,7 +9,7 @@ abstract final class AppIcons {
   static const IconData like = IconData(0xe800, fontFamily: _fontFamily);
   static const IconData dislike = IconData(0xe802, fontFamily: _fontFamily);
   static const IconData cat = IconData(0xe803, fontFamily: _fontFamily);
-
+  static const IconData refresh = IconData(0xe805, fontFamily: _fontFamily);
   static const IconData heartHandWritten = IconData(
     0xe804,
     fontFamily: _fontFamily,

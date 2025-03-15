@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/models/error_model.dart';
 import 'package:flutter_hw_1/widgets/base/cat_scaffold.dart';
 import 'package:flutter_hw_1/widgets/base/error_message_widget.dart';
 import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   void _navigateErrorScreen(
     BuildContext context,
-    ErrorMessage error,
+    CustomError error,
     VoidCallback onPressed,
   ) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -33,17 +34,14 @@ class HomeScreen extends StatelessWidget {
     return CatScaffold(
       body: ChangeNotifierProvider(
         create: (context) => SwiperProvider(),
-        child: Selector<
-          SwiperProvider,
-          ({bool isLoading, ErrorMessage? errorMessage})
-        >(
+        child: Selector<SwiperProvider, ({bool isLoading, CustomError? error})>(
           selector:
               (context, provider) => (
                 isLoading: provider.isLoading,
-                errorMessage: provider.errorMessage,
+                error: provider.error,
               ),
           builder: (context, value, child) {
-            final errorMessage = value.errorMessage;
+            final error = value.error;
 
             final onPressed =
                 Provider.of<SwiperProvider>(
@@ -51,16 +49,16 @@ class HomeScreen extends StatelessWidget {
                   listen: false,
                 ).recoverFromError;
 
-            if (errorMessage != null && errorMessage.slidesCount == 0) {
+            if (error != null && error.slidesCount == 0) {
               return ErrorMessageWidget(
-                message: errorMessage.type.message,
+                message: error.type.message,
                 buttonText: 'TRY AGAIN',
                 onPressed: () => onPressed(force: true),
               );
             }
 
-            if (errorMessage != null) {
-              _navigateErrorScreen(context, errorMessage, onPressed);
+            if (error != null) {
+              _navigateErrorScreen(context, error, onPressed);
             }
 
             if (value.isLoading) {

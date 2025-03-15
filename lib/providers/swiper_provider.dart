@@ -1,31 +1,26 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
+import 'package:flutter_hw_1/models/error_model.dart';
+import 'package:flutter_hw_1/utilities/utils.dart';
 import 'package:flutter_hw_1/widgets/home_screen/slide.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ErrorType {
-  networkError('No network connection'),
-  genericError('Something went wrong');
+class ErrorHandler {
+  CustomError? error;
 
-  final String message;
-  const ErrorType(this.message);
-}
-
-@immutable
-class ErrorMessage {
-  final ErrorType type;
-  final int slidesCount;
-
-  const ErrorMessage({required this.type, this.slidesCount = 0});
+  void setError({required CustomErrorType type, required int count}) {
+    error ??= CustomError(type: type, slidesCount: count);
+  }
 }
 
 class SwiperProvider extends ChangeNotifier {
+  final ErrorHandler _errorHandler = ErrorHandler();
+
   final Future<SharedPreferencesWithCache> _prefs =
       SharedPreferencesWithCache.create(
         cacheOptions: const SharedPreferencesWithCacheOptions(
@@ -36,7 +31,6 @@ class SwiperProvider extends ChangeNotifier {
   final CardSwiperController controller = CardSwiperController();
   final List<Slide> _slides = [];
 
-  ErrorMessage? _errorMessage;
   bool _isLoading = true;
   int _likesCount = 0;
   int _currentIndex = 0;
@@ -45,8 +39,7 @@ class SwiperProvider extends ChangeNotifier {
   int get likesCount => _likesCount;
   int get currentIndex => _currentIndex;
   bool get isLoading => _isLoading;
-  ErrorMessage? get errorMessage => _errorMessage;
-
+  CustomError? get error => _errorHandler.error;
   bool get isNotNextSlide => _currentIndex == slides.length - 1;
   bool get isNotPrevSlide => _currentIndex == 0;
 
@@ -69,7 +62,7 @@ class SwiperProvider extends ChangeNotifier {
 
   void _updateSlides(int? currentIndex) {
     if (currentIndex != null && (_slides.length - currentIndex) <= 5) {
-      _fetchCats();
+      // _fetchCats();
     }
   }
 
@@ -82,11 +75,11 @@ class SwiperProvider extends ChangeNotifier {
     await _saveCounter();
   }
 
-  bool onSwipe(
+  Future<bool> onSwipe(
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
-  ) {
+  ) async {
     _updateSlides(currentIndex);
     _updateCounter(direction: direction);
     if (currentIndex != null) _currentIndex = currentIndex;
@@ -103,6 +96,13 @@ class SwiperProvider extends ChangeNotifier {
     _currentIndex = currentIndex;
     notifyListeners();
     return true;
+  }
+
+  Future<void> onEnd() async {
+    if (!await _setNetworkError()) {
+      await recoverFromError();
+    }
+    controller.undo();
   }
 
   List<Slide> _parseCats(String responseBody) {
@@ -127,49 +127,42 @@ class SwiperProvider extends ChangeNotifier {
       _isLoading = true;
       _currentIndex = 0;
     }
-    _errorMessage = null;
+    _errorHandler.error = null;
     notifyListeners();
     await _fetchCats();
   }
 
-  static Future<bool> hasNetwork() async {
-    try {
-      final result = await InternetAddress.lookup('example.com');
-      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-    } on SocketException catch (_) {
-      return false;
-    }
-  }
-
-  void _setError(ErrorType type) {
-    _errorMessage ??= ErrorMessage(type: type, slidesCount: _slides.length);
-  }
-
-  Future<bool> setNetworkError() async {
-    bool online = await hasNetwork();
+  Future<bool> _setNetworkError() async {
+    bool online = await AppUtils.hasNetwork();
     if (!online) {
-      _setError(ErrorType.networkError);
+      _errorHandler.setError(
+        type: CustomErrorType.networkError,
+        count: _slides.length,
+      );
     }
-    return online;
+    return !online;
   }
 
   Future<void> _fetchCats() async {
     try {
-      if (!await setNetworkError()) return;
+      if (await _setNetworkError()) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
-        _setError(ErrorType.genericError);
+        _errorHandler.setError(
+          type: CustomErrorType.genericError,
+          count: _slides.length,
+        );
       }
     } catch (_) {
-      _setError(ErrorType.genericError);
+      _errorHandler.setError(
+        type: CustomErrorType.genericError,
+        count: _slides.length,
+      );
     } finally {
       if (isLoading) _isLoading = false;
-      if (slides.isEmpty) {
-        _setError(ErrorType.networkError);
-      }
       notifyListeners();
     }
   }

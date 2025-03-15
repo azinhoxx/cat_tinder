@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hw_1/widgets/base/custom_button.dart';
 
 class ErrorMessageWidget extends StatelessWidget {
   final String message;
@@ -29,21 +30,7 @@ class ErrorMessageWidget extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: const Color(0xFF1565C0),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 12.0,
-              ),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(6.0)),
-              ),
-            ),
-            child: Text(buttonText, style: const TextStyle(letterSpacing: 1.0)),
-          ),
+          CustomButton(text: buttonText, onPressed: onPressed),
         ],
       ),
     );
