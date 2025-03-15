@@ -15,7 +15,8 @@ class CardImageSection extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute<dynamic>(
         builder:
-            (context) => CatModelProvider(cat: cat, child: FullscreenImage()),
+            (context) =>
+                CatModelProvider(cat: cat, child: const FullscreenImage()),
       ),
     );
   }
@@ -32,8 +33,15 @@ class CardImageSection extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: ImageContainer(fit: BoxFit.cover, imageUrl: cat.imageUrl),
+            child: ImageContainer(
+              fit: BoxFit.cover,
+              imageUrl: cat.imageUrl,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(AppDecorations.defaultBorderRadius),
+              ),
+            ),
           ),
+
           const Positioned(
             top: 16,
             right: 16,

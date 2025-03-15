@@ -56,31 +56,26 @@ class CatDetailCard extends StatelessWidget {
         ),
       ),
       color: Colors.white,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppDecorations.defaultBorderRadius),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Flexible(child: CardImageSection()),
-            Flexible(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                padding: const EdgeInsets.all(12.0),
-                itemCount:
-                    itemsStringValues.length +
-                    (itemsIntegerValues.isNotEmpty ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index < itemsStringValues.length) {
-                    return itemsStringValues[index];
-                  }
-                  return CardProgressBarSection(items: itemsIntegerValues);
-                },
-              ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Flexible(child: CardImageSection()),
+          Flexible(
+            child: ListView.separated(
+              separatorBuilder: (context, index) => const Divider(),
+              padding: const EdgeInsets.all(12.0),
+              itemCount:
+                  itemsStringValues.length +
+                  (itemsIntegerValues.isNotEmpty ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index < itemsStringValues.length) {
+                  return itemsStringValues[index];
+                }
+                return CardProgressBarSection(items: itemsIntegerValues);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

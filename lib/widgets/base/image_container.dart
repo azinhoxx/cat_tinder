@@ -5,8 +5,14 @@ import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
 class ImageContainer extends StatelessWidget {
   final BoxFit fit;
   final String imageUrl;
+  final BorderRadiusGeometry? borderRadius;
 
-  const ImageContainer({super.key, required this.fit, required this.imageUrl});
+  const ImageContainer({
+    super.key,
+    required this.fit,
+    required this.imageUrl,
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,14 @@ class ImageContainer extends StatelessWidget {
           (context, url, error) =>
               const Icon(Icons.error, size: 80, color: Colors.redAccent),
       fadeOutDuration: const Duration(milliseconds: 300),
-      fit: fit,
+      imageBuilder:
+          (context, imageProvider) => DecoratedBox(
+            position: DecorationPosition.foreground,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              image: DecorationImage(image: imageProvider, fit: fit),
+            ),
+          ),
     );
   }
 }

@@ -4,8 +4,7 @@ import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/screens/details_screen.dart';
 import 'package:flutter_hw_1/widgets/base/image_container.dart';
 import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/home_screen/blur_overlay.dart';
-import 'package:flutter_hw_1/widgets/home_screen/slide_container.dart';
+import 'package:flutter_hw_1/widgets/home_screen/container_background.dart';
 
 class Slide extends StatelessWidget {
   final CatModel cat;
@@ -29,39 +28,49 @@ class Slide extends StatelessWidget {
         Radius.circular(AppDecorations.defaultBorderRadius),
       ),
       onTap: () => _navigateDetailsScreen(context),
-      child: SlideContainer(
-        children: <Widget>[
-          ImageContainer(fit: BoxFit.cover, imageUrl: cat.imageUrl),
-          if (cat.name != null)
-            Positioned.fill(
-              top: null,
-              child: BlurOverlay(
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: DefaultTextStyle(
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          cat.name!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+      child: Card(
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            ImageContainer(
+              fit: BoxFit.cover,
+              imageUrl: cat.imageUrl,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(AppDecorations.defaultBorderRadius),
+              ),
+            ),
+
+            if (cat.name != null)
+              Positioned.fill(
+                top: null,
+                child: ContainerBackground(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    ),
+                    child: DefaultTextStyle(
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            cat.name!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
-                        ),
-                        if (cat.origin != null) Text(cat.origin!),
-                      ],
+                          if (cat.origin != null) Text(cat.origin!),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
