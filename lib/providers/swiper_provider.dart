@@ -62,7 +62,7 @@ class SwiperProvider extends ChangeNotifier {
 
   void _updateSlides(int? currentIndex) {
     if (currentIndex != null && (_slides.length - currentIndex) <= 5) {
-      // _fetchCats();
+      _fetchCats();
     }
   }
 
