@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/base/custom_button.dart';
+import 'package:flutter_hw_1/widgets/base/error_handle_button.dart';
 
 class ErrorMessageWidget extends StatelessWidget {
   final String message;
   final String buttonText;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const ErrorMessageWidget({
     super.key,
@@ -30,7 +30,7 @@ class ErrorMessageWidget extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          CustomButton(text: buttonText, onPressed: onPressed),
+          ErrorHandleButton(text: buttonText, onPressed: onPressed),
         ],
       ),
     );

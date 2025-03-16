@@ -4,14 +4,14 @@ import 'package:flutter_hw_1/widgets/base/error_message_widget.dart';
 
 class ErrorScreen extends StatelessWidget {
   final String message;
-  final String buttonText;
   final Future<bool> Function()? onPressed;
+  final String buttonText;
 
   const ErrorScreen({
     super.key,
     required this.message,
-    required this.buttonText,
     this.onPressed,
+    required this.buttonText,
   });
 
   Future<void> _handleBack(BuildContext context) async {
@@ -29,8 +29,8 @@ class ErrorScreen extends StatelessWidget {
       body: Center(
         child: ErrorMessageWidget(
           message: message,
-          buttonText: buttonText,
           onPressed: () => _handleBack(context),
+          buttonText: buttonText,
         ),
       ),
     );

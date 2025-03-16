@@ -29,12 +29,14 @@ class SwiperProvider extends ChangeNotifier {
   bool _isLoading = true;
   int _likesCount = 0;
   int _currentIndex = 0;
+  bool _isHandling = false;
 
   List<Slide> get slides => _slides;
   int get likesCount => _likesCount;
   int get currentIndex => _currentIndex;
   bool get isLoading => _isLoading;
   bool get isFirstLoading => _isFirstLoading;
+  bool get isHandling => _isHandling;
   CustomError? get error => _errorHandler.error;
   bool get isNotNextSlide => _currentIndex == slides.length;
   bool get isNotPrevSlide => _currentIndex == 0;
@@ -125,21 +127,25 @@ class SwiperProvider extends ChangeNotifier {
     return [];
   }
 
-  /// Use it when you need to have the opportunity to try again.
-  /// For example, if there was an error the first time around.
-  /// It will set [errorMessage] to null.
-  /// Set [force] flag for forced reload widget tree.
-  /// After [force=true] it will start from the first slide.
-  Future<bool> recoverFromError({bool force = false}) async {
-    if (!await AppUtils.hasNetwork()) return false;
-    if (force) {
-      _isLoading = true;
-      _currentIndex = 0;
+  Future<bool> handleError({bool force = false}) async {
+    if (!_isHandling) {
+      _isHandling = true;
+      notifyListeners();
+      if (!await AppUtils.hasNetwork()) {
+        _isHandling = false;
+        notifyListeners();
+        return false;
+      }
+      if (force) {
+        _isLoading = true;
+        _currentIndex = 0;
+      }
+      _errorHandler.error = null;
+      notifyListeners();
+      await _fetchCats(isNetwork: true, callback: () => {_isHandling = false});
+      return true;
     }
-    _errorHandler.error = null;
-    notifyListeners();
-    await _fetchCats(isNetwork: true);
-    return true;
+    return false;
   }
 
   Future<bool> _setNetworkError() async {
@@ -164,7 +170,10 @@ class SwiperProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> _fetchCats({bool isNetwork = false}) async {
+  Future<void> _fetchCats({
+    bool isNetwork = false,
+    VoidCallback? callback,
+  }) async {
     try {
       if (!isNetwork && !await AppUtils.hasNetwork()) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
@@ -177,11 +186,11 @@ class SwiperProvider extends ChangeNotifier {
     } catch (_) {
       _writeGenericError();
     } finally {
-      _finalizeFetching();
+      _finalizeFetching(callback);
     }
   }
 
-  void _finalizeFetching() {
+  void _finalizeFetching(VoidCallback? callback) {
     if (_isLoading) _isLoading = false;
     if (_isFirstLoading) {
       _isFirstLoading = false;
@@ -191,6 +200,9 @@ class SwiperProvider extends ChangeNotifier {
     }
     if (_slides.isEmpty) {
       _writeNetworkError();
+    }
+    if (callback != null) {
+      callback();
     }
     notifyListeners();
   }
