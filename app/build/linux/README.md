@@ -1,1 +1,1 @@
-You need to clone repository and run ``flutter build web`` from the project root.
+You need to clone repository in your LINUX host and run ``flutter build linux`` from the project root.

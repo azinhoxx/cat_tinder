@@ -71,14 +71,25 @@ class SwiperProvider extends ChangeNotifier {
     await _saveCounter();
   }
 
+  Future<void> _syncData() async {
+    final SharedPreferencesWithCache prefs = await _prefs;
+    _likesCount = prefs.getInt('counter') ?? 0;
+    notifyListeners();
+  }
+
+  Future<void> _saveCounter() async {
+    final SharedPreferencesWithCache prefs = await _prefs;
+    await prefs.setInt('counter', _likesCount);
+  }
+
   Future<bool> onSwipe(
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
   ) async {
-    _updateSlides(currentIndex);
     _updateCounter(direction: direction);
     if (currentIndex != null) _currentIndex = currentIndex;
+    _updateSlides(currentIndex);
     notifyListeners();
     return true;
   }
@@ -120,13 +131,14 @@ class SwiperProvider extends ChangeNotifier {
   /// Set [force] flag for forced reload widget tree.
   /// After [force=true] it will start from the first slide.
   Future<void> recoverFromError({bool force = false}) async {
+    if (!await AppUtils.hasNetwork()) return;
     if (force) {
       _isLoading = true;
       _currentIndex = 0;
     }
     _errorHandler.error = null;
     notifyListeners();
-    await _fetchCats();
+    await _fetchCats(isNetwork: true);
   }
 
   Future<bool> _setNetworkError() async {
@@ -151,9 +163,9 @@ class SwiperProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> _fetchCats() async {
+  Future<void> _fetchCats({bool isNetwork = false}) async {
     try {
-      if (!await AppUtils.hasNetwork()) return;
+      if (!isNetwork && !await AppUtils.hasNetwork()) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
@@ -164,29 +176,22 @@ class SwiperProvider extends ChangeNotifier {
     } catch (_) {
       _writeGenericError();
     } finally {
-      if (_isLoading) _isLoading = false;
-      if (_isFirstLoading) {
-        _isFirstLoading = false;
-        if (AppUtils.isSplashSupportedPlatform) {
-          FlutterNativeSplash.remove();
-        }
-      }
-      if (_slides.isEmpty) {
-        _writeNetworkError();
-      }
-      notifyListeners();
+      _finalizeFetching();
     }
   }
 
-  Future<void> _syncData() async {
-    final SharedPreferencesWithCache prefs = await _prefs;
-    _likesCount = prefs.getInt('counter') ?? 0;
+  void _finalizeFetching() {
+    if (_isLoading) _isLoading = false;
+    if (_isFirstLoading) {
+      _isFirstLoading = false;
+      if (AppUtils.isSplashSupportedPlatform) {
+        FlutterNativeSplash.remove();
+      }
+    }
+    if (_slides.isEmpty) {
+      _writeNetworkError();
+    }
     notifyListeners();
-  }
-
-  Future<void> _saveCounter() async {
-    final SharedPreferencesWithCache prefs = await _prefs;
-    await prefs.setInt('counter', _likesCount);
   }
 
   @override
