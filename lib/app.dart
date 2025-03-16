@@ -41,6 +41,7 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
             onPressed: args['onPressed'] as VoidCallback?,
           ),
         ),
+        animated: false,
       );
     case '/fullscreen':
     case '/details':
@@ -50,7 +51,7 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
               : const DetailsScreen();
       return AppUtils.buildRoute(
         page: CatModelProvider(cat: args!['cat'] as CatModel, child: screen),
-        customAnimation: settings.name == '/details',
+        animated: settings.name == '/details',
       );
     case '/':
     default:

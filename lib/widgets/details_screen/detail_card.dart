@@ -44,7 +44,7 @@ class CatDetailCard extends StatelessWidget {
                             launchUrl(url);
                           },
                   )
-                  : TextSpan(text: el.value!),
+                  : TextSpan(text: el.value! + (el.add ?? '')),
         );
       },
     );

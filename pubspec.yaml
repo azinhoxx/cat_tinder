@@ -25,11 +25,11 @@ dependencies:
   url_launcher: ^6.3.1
   shared_preferences: ^2.5.2
   photo_view: ^0.15.0
+  flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.3
-  flutter_native_splash: ^2.4.5
   rename: ^3.0.2
 
 flutter:
@@ -53,29 +53,3 @@ flutter:
           weight: 400
         - asset: fonts/Montserrat-Bold.ttf
           weight: 700
-
-# run: flutter pub run flutter_launcher_icons
-flutter_launcher_icons:
-  image_path: assets/icons/app_icon.png
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  background_color_ios: "#93AEB5"
-  windows:
-    generate: true
-    image_path: assets/icons/rounded_app_icon.png
-    icon_size: 256
-  macos:
-    generate: true
-  web:
-    generate: false
-
-# run: dart run flutter_native_splash:create
-flutter_native_splash:
-  color: "#93AEB5"
-  android_12:
-    color: "#93AEB5"
-  color_android: "#93AEB5"
-  color_ios: "#93AEB5"
-  color_web: "#93AEB5"
-  image_web: assets/icons/app_icon_masked_324.png

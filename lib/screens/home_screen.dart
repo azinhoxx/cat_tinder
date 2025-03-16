@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hw_1/models/error_model.dart';
+import 'package:flutter_hw_1/utilities/utils.dart';
 import 'package:flutter_hw_1/widgets/base/cat_scaffold.dart';
 import 'package:flutter_hw_1/widgets/base/error_message_widget.dart';
 import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
@@ -34,10 +35,14 @@ class HomeScreen extends StatelessWidget {
     return CatScaffold(
       body: ChangeNotifierProvider(
         create: (context) => SwiperProvider(),
-        child: Selector<SwiperProvider, ({bool isLoading, CustomError? error})>(
+        child: Selector<
+          SwiperProvider,
+          ({bool isLoading, bool isFirstLoading, CustomError? error})
+        >(
           selector:
               (context, provider) => (
                 isLoading: provider.isLoading,
+                isFirstLoading: provider.isFirstLoading,
                 error: provider.error,
               ),
           builder: (context, value, child) {
@@ -48,6 +53,10 @@ class HomeScreen extends StatelessWidget {
                   context,
                   listen: false,
                 ).recoverFromError;
+
+            if (value.isFirstLoading && AppUtils.isSplashSupportedPlatform) {
+              return Container();
+            }
 
             if (error != null && error.slidesCount == 0) {
               return ErrorMessageWidget(

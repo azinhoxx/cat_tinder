@@ -5,8 +5,9 @@ import 'package:flutter_hw_1/utilities/utils.dart';
 class CatModelListItem<T> {
   final String label;
   final T value;
+  final String? add;
 
-  const CatModelListItem({required this.label, required this.value});
+  const CatModelListItem({required this.label, required this.value, this.add});
 }
 
 @immutable
@@ -95,10 +96,14 @@ class CatModel {
       CatModelListItem(label: 'Origin', value: origin),
       CatModelListItem(label: 'Description', value: description),
       CatModelListItem(label: 'Temperament', value: temperament),
-      CatModelListItem(label: 'Life Span', value: '$lifeSpan years'),
+      CatModelListItem(label: 'Life Span', value: lifeSpan, add: ' years'),
       CatModelListItem(label: 'Wikipedia URL', value: wikipediaUrl),
-      CatModelListItem(label: 'Imperial Weight', value: '$weightImperial kg'),
-      CatModelListItem(label: 'Metric Weight', value: '$weightMetric kg'),
+      CatModelListItem(
+        label: 'Imperial Weight',
+        value: weightImperial,
+        add: ' kg',
+      ),
+      CatModelListItem(label: 'Metric Weight', value: weightMetric, add: ' kg'),
     ];
   }
 

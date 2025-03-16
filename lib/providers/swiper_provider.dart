@@ -5,18 +5,12 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hw_1/models/cat_model.dart';
 import 'package:flutter_hw_1/models/error_model.dart';
+import 'package:flutter_hw_1/utilities/error_handler.dart';
 import 'package:flutter_hw_1/utilities/utils.dart';
 import 'package:flutter_hw_1/widgets/home_screen/slide.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-class ErrorHandler {
-  CustomError? error;
-
-  void setError({required CustomErrorType type, required int count}) {
-    error ??= CustomError(type: type, slidesCount: count);
-  }
-}
 
 class SwiperProvider extends ChangeNotifier {
   final ErrorHandler _errorHandler = ErrorHandler();
@@ -31,6 +25,7 @@ class SwiperProvider extends ChangeNotifier {
   final CardSwiperController controller = CardSwiperController();
   final List<Slide> _slides = [];
 
+  bool _isFirstLoading = true;
   bool _isLoading = true;
   int _likesCount = 0;
   int _currentIndex = 0;
@@ -39,8 +34,9 @@ class SwiperProvider extends ChangeNotifier {
   int get likesCount => _likesCount;
   int get currentIndex => _currentIndex;
   bool get isLoading => _isLoading;
+  bool get isFirstLoading => _isFirstLoading;
   CustomError? get error => _errorHandler.error;
-  bool get isNotNextSlide => _currentIndex == slides.length - 1;
+  bool get isNotNextSlide => _currentIndex == slides.length;
   bool get isNotPrevSlide => _currentIndex == 0;
 
   SwiperProvider() {
@@ -100,7 +96,7 @@ class SwiperProvider extends ChangeNotifier {
 
   Future<void> onEnd() async {
     if (!await _setNetworkError()) {
-      await recoverFromError();
+      _setGenericError();
     }
     controller.undo();
   }
@@ -144,26 +140,39 @@ class SwiperProvider extends ChangeNotifier {
     return !online;
   }
 
+  void _setGenericError() {
+    _errorHandler.setError(
+      type: CustomErrorType.genericError,
+      count: _slides.length,
+    );
+  }
+
   Future<void> _fetchCats() async {
     try {
-      if (await _setNetworkError()) return;
+      if (!await AppUtils.hasNetwork()) return;
       final response = await http.get(Uri.parse(dotenv.env['CATS_API']!));
       if (response.statusCode == 200) {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
+        _setGenericError();
+      }
+    } catch (_) {
+      _setGenericError();
+    } finally {
+      if (_isLoading) _isLoading = false;
+      if (_isFirstLoading) {
+        _isFirstLoading = false;
+        if (AppUtils.isSplashSupportedPlatform) {
+          FlutterNativeSplash.remove();
+        }
+      }
+      if (_slides.isEmpty) {
         _errorHandler.setError(
-          type: CustomErrorType.genericError,
+          type: CustomErrorType.networkError,
           count: _slides.length,
         );
       }
-    } catch (_) {
-      _errorHandler.setError(
-        type: CustomErrorType.genericError,
-        count: _slides.length,
-      );
-    } finally {
-      if (isLoading) _isLoading = false;
       notifyListeners();
     }
   }
