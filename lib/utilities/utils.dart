@@ -7,7 +7,7 @@ abstract final class AppUtils {
   AppUtils._();
 
   static final bool isSplashSupportedPlatform =
-      Platform.isIOS || Platform.isAndroid || kIsWeb;
+      kIsWeb || Platform.isIOS || Platform.isAndroid;
 
   static T? safeCast<T>(dynamic value) {
     return (value is T) ? value : null;

@@ -1,0 +1,1 @@
+You need to clone repository in your LINUX host and run ``flutter build linux`` from the project root.

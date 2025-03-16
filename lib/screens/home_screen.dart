@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                 ).recoverFromError;
 
             if (value.isFirstLoading && AppUtils.isSplashSupportedPlatform) {
-              return Container();
+              return const SizedBox.shrink();
             }
 
             if (error != null && error.slidesCount == 0) {

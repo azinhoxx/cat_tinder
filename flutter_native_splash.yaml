@@ -5,16 +5,16 @@ flutter_native_splash:
   android_12:
     color: "#93aeb5"
     icon_background_color: "#93aeb5"
-    image: assets/icons/app_icon_masked_1180.png
+    image: assets/icons/app_icon_masked_1152.png
 
   color_android: "#93aeb5"
-  image_android: assets/icons/app_icon_masked_1180.png
+  image_android: assets/icons/app_icon_masked_1152.png
 
   android_screen_orientation: "portrait"
   fullscreen: true
 
   color_ios: "#93aeb5"
-  image_ios: assets/icons/app_icon_masked_1180.png
+  image_ios: assets/icons/app_icon_masked_1152.png
 
   color_web: "#93aeb5"
-  image_web: assets/icons/app_icon_masked_1180.png
+  image_web: assets/icons/app_icon_masked_1152.png

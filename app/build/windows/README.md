@@ -1,0 +1,1 @@
+You need to clone repository and run ``flutter build windows`` from the project root.

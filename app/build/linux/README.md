@@ -1,0 +1,1 @@
+You need to clone repository and run ``flutter build web`` from the project root.

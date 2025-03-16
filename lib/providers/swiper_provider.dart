@@ -96,7 +96,7 @@ class SwiperProvider extends ChangeNotifier {
 
   Future<void> onEnd() async {
     if (!await _setNetworkError()) {
-      _setGenericError();
+      _writeGenericError();
     }
     controller.undo();
   }
@@ -132,17 +132,21 @@ class SwiperProvider extends ChangeNotifier {
   Future<bool> _setNetworkError() async {
     bool online = await AppUtils.hasNetwork();
     if (!online) {
-      _errorHandler.setError(
-        type: CustomErrorType.networkError,
-        count: _slides.length,
-      );
+      _writeNetworkError();
     }
     return !online;
   }
 
-  void _setGenericError() {
+  void _writeGenericError() {
     _errorHandler.setError(
       type: CustomErrorType.genericError,
+      count: _slides.length,
+    );
+  }
+
+  void _writeNetworkError() {
+    _errorHandler.setError(
+      type: CustomErrorType.networkError,
       count: _slides.length,
     );
   }
@@ -155,10 +159,10 @@ class SwiperProvider extends ChangeNotifier {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
-        _setGenericError();
+        _writeGenericError();
       }
     } catch (_) {
-      _setGenericError();
+      _writeGenericError();
     } finally {
       if (_isLoading) _isLoading = false;
       if (_isFirstLoading) {
@@ -168,10 +172,7 @@ class SwiperProvider extends ChangeNotifier {
         }
       }
       if (_slides.isEmpty) {
-        _errorHandler.setError(
-          type: CustomErrorType.networkError,
-          count: _slides.length,
-        );
+        _writeNetworkError();
       }
       notifyListeners();
     }
