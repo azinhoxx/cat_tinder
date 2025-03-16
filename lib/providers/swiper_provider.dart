@@ -130,8 +130,8 @@ class SwiperProvider extends ChangeNotifier {
   /// It will set [errorMessage] to null.
   /// Set [force] flag for forced reload widget tree.
   /// After [force=true] it will start from the first slide.
-  Future<void> recoverFromError({bool force = false}) async {
-    if (!await AppUtils.hasNetwork()) return;
+  Future<bool> recoverFromError({bool force = false}) async {
+    if (!await AppUtils.hasNetwork()) return false;
     if (force) {
       _isLoading = true;
       _currentIndex = 0;
@@ -139,6 +139,7 @@ class SwiperProvider extends ChangeNotifier {
     _errorHandler.error = null;
     notifyListeners();
     await _fetchCats(isNetwork: true);
+    return true;
   }
 
   Future<bool> _setNetworkError() async {

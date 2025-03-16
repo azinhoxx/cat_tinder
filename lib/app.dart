@@ -33,7 +33,7 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
           child: ErrorScreen(
             message: args!['message'] as String,
             buttonText: args['buttonText'] as String,
-            onPressed: args['onPressed'] as VoidCallback?,
+            onPressed: args['onPressed'] as Future<bool> Function()?,
           ),
         ),
         animated: false,

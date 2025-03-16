@@ -5,7 +5,7 @@ import 'package:flutter_hw_1/widgets/base/error_message_widget.dart';
 class ErrorScreen extends StatelessWidget {
   final String message;
   final String buttonText;
-  final VoidCallback? onPressed;
+  final Future<bool> Function()? onPressed;
 
   const ErrorScreen({
     super.key,
@@ -14,11 +14,12 @@ class ErrorScreen extends StatelessWidget {
     this.onPressed,
   });
 
-  void _handleBack(BuildContext context) {
+  Future<void> _handleBack(BuildContext context) async {
+    bool result = false;
     if (onPressed != null) {
-      onPressed!();
+      result = await onPressed!();
     }
-    Navigator.pop(context);
+    if (context.mounted && result) Navigator.pop(context);
   }
 
   @override
