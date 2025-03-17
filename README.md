@@ -1,6 +1,6 @@
 Проект по учебной программме Flutter МФТИ ВШПИ, 2 курс, весна.
 
-Release версия доступна по [ссылке](https://github.com/azinhoxx/cat_tinder/releases/tag/v1.0.0).
+Release версии доступны по [ссылке](https://github.com/azinhoxx/cat_tinder/releases).
 
 # Описание
 
