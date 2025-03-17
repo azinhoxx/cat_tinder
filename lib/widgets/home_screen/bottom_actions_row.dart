@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/home_screen/dislike_button.dart';
-import 'package:flutter_hw_1/widgets/home_screen/like_button.dart';
-import 'package:flutter_hw_1/widgets/home_screen/undo_button.dart';
+import 'package:cat_tinder/widgets/home_screen/dislike_button.dart';
+import 'package:cat_tinder/widgets/home_screen/like_button.dart';
+import 'package:cat_tinder/widgets/home_screen/undo_button.dart';
 
 class BottomActionsRow extends StatelessWidget {
   const BottomActionsRow({super.key});

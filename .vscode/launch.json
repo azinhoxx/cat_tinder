@@ -2,18 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_hw_1",
+            "name": "cat_tinder",
             "request": "launch",
             "type": "dart",
         },
         {
-            "name": "flutter_hw_1 (profile mode)",
+            "name": "cat_tinder (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "flutter_hw_1 (release mode)",
+            "name": "cat_tinder (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

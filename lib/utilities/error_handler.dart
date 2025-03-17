@@ -1,4 +1,4 @@
-import 'package:flutter_hw_1/models/error_model.dart';
+import 'package:cat_tinder/models/error_model.dart';
 
 class ErrorHandler {
   CustomError? error;

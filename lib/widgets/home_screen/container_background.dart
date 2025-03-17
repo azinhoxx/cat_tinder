@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/decorations.dart';
+import 'package:cat_tinder/constants/decorations.dart';
 
 class ContainerBackground extends StatelessWidget {
   final Widget child;

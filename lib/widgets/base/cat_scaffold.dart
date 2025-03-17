@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/base/cat_app_bar.dart';
+import 'package:cat_tinder/widgets/base/cat_app_bar.dart';
 
 class CatScaffold extends StatelessWidget {
   final Widget body;

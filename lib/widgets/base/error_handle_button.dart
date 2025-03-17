@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/providers/swiper_provider.dart';
+import 'package:cat_tinder/providers/swiper_provider.dart';
 import 'package:provider/provider.dart' show Selector;
 
 class ErrorHandleButton extends StatelessWidget {

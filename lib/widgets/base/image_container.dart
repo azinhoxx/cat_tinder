@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/decorations.dart';
-import 'package:flutter_hw_1/constants/icons.dart';
-import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
+import 'package:cat_tinder/constants/decorations.dart';
+import 'package:cat_tinder/constants/icons.dart';
+import 'package:cat_tinder/widgets/base/paw_loading_indicator.dart';
 
 class ImageContainer extends StatefulWidget {
   final BorderRadiusGeometry borderRadius;

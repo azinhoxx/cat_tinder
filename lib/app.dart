@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/screens/details_screen.dart';
-import 'package:flutter_hw_1/screens/error_screen.dart';
-import 'package:flutter_hw_1/screens/fullscreen_image.dart';
-import 'package:flutter_hw_1/screens/home_screen.dart';
-import 'package:flutter_hw_1/utilities/utils.dart';
-import 'package:flutter_hw_1/theme.dart';
+import 'package:cat_tinder/models/cat_model.dart';
+import 'package:cat_tinder/providers/cat_model_provider.dart';
+import 'package:cat_tinder/screens/details_screen.dart';
+import 'package:cat_tinder/screens/error_screen.dart';
+import 'package:cat_tinder/screens/fullscreen_image.dart';
+import 'package:cat_tinder/screens/home_screen.dart';
+import 'package:cat_tinder/utilities/utils.dart';
+import 'package:cat_tinder/theme.dart';
 
 class CatTinderApp extends StatelessWidget {
   const CatTinderApp({super.key});

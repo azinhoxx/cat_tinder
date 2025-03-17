@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:flutter_hw_1/providers/swiper_provider.dart';
+import 'package:cat_tinder/providers/swiper_provider.dart';
 import 'package:provider/provider.dart';
 
 class SwiperCardList extends StatelessWidget {

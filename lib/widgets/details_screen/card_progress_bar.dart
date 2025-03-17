@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/colors.dart';
+import 'package:cat_tinder/constants/colors.dart';
 
 class CardProgressBar extends StatelessWidget {
   final String label;

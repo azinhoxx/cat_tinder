@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/icons.dart';
-import 'package:flutter_hw_1/providers/swiper_provider.dart';
+import 'package:cat_tinder/constants/icons.dart';
+import 'package:cat_tinder/providers/swiper_provider.dart';
 import 'package:provider/provider.dart' show Provider, SelectContext;
 
 class DislikeButton extends StatelessWidget {

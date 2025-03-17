@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_hw_1/utilities/utils.dart';
+import 'package:cat_tinder/utilities/utils.dart';
 
 @immutable
 class CatModelListItem<T> {

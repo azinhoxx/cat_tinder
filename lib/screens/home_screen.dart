@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/models/error_model.dart';
-import 'package:flutter_hw_1/utilities/utils.dart';
-import 'package:flutter_hw_1/widgets/base/cat_scaffold.dart';
-import 'package:flutter_hw_1/widgets/base/error_message_widget.dart';
-import 'package:flutter_hw_1/widgets/base/paw_loading_indicator.dart';
-import 'package:flutter_hw_1/widgets/home_screen/bottom_actions_row.dart';
-import 'package:flutter_hw_1/providers/swiper_provider.dart';
-import 'package:flutter_hw_1/widgets/home_screen/swiper_card_list.dart';
+import 'package:cat_tinder/models/error_model.dart';
+import 'package:cat_tinder/utilities/utils.dart';
+import 'package:cat_tinder/widgets/base/cat_scaffold.dart';
+import 'package:cat_tinder/widgets/base/error_message_widget.dart';
+import 'package:cat_tinder/widgets/base/paw_loading_indicator.dart';
+import 'package:cat_tinder/widgets/home_screen/bottom_actions_row.dart';
+import 'package:cat_tinder/providers/swiper_provider.dart';
+import 'package:cat_tinder/widgets/home_screen/swiper_card_list.dart';
 import 'package:provider/provider.dart' show Selector, Provider;
 
 class HomeScreen extends StatelessWidget {

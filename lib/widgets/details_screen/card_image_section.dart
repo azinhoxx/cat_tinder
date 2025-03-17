@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/decorations.dart';
-import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/base/image_container.dart';
+import 'package:cat_tinder/constants/decorations.dart';
+import 'package:cat_tinder/models/cat_model.dart';
+import 'package:cat_tinder/providers/cat_model_provider.dart';
+import 'package:cat_tinder/widgets/base/image_container.dart';
 
 class CardImageSection extends StatelessWidget {
   const CardImageSection({super.key});

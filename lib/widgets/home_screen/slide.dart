@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/decorations.dart';
-import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/widgets/base/image_container.dart';
-import 'package:flutter_hw_1/widgets/home_screen/container_background.dart';
+import 'package:cat_tinder/constants/decorations.dart';
+import 'package:cat_tinder/models/cat_model.dart';
+import 'package:cat_tinder/widgets/base/image_container.dart';
+import 'package:cat_tinder/widgets/home_screen/container_background.dart';
 
 class Slide extends StatelessWidget {
   final CatModel cat;

@@ -1,11 +1,11 @@
 {
-    "name": "flutter_application_1",
-    "short_name": "flutter_application_1",
+    "name": "CatTinder",
+    "short_name": "CatTinder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#93aeb5",
     "theme_color": "#93AEB5",
-    "description": "A new Flutter project.",
+    "description": "CatTinder. An app for liking cats.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

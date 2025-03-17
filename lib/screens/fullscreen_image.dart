@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hw_1/providers/cat_model_provider.dart';
+import 'package:cat_tinder/providers/cat_model_provider.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FullscreenImage extends StatelessWidget {

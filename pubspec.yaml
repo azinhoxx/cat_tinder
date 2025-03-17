@@ -1,9 +1,9 @@
-name: flutter_hw_1
+name: cat_tinder
 description: "CatTinder. An app for liking cats."
 
-homepage: https://github.com/azinhoxx/flutter_hw_1
-repository: https://github.com/azinhoxx/flutter_hw_1
-documentation: https://github.com/azinhoxx/flutter_hw_1
+homepage: https://github.com/azinhoxx/cat_tinder
+repository: https://github.com/azinhoxx/cat_tinder
+documentation: https://github.com/azinhoxx/cat_tinder
 
 publish_to: 'none'
 
@@ -31,6 +31,8 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.3
   rename: ^3.0.2
+  # dart run inno_bundle:build --release
+  inno_bundle: ^0.9.0
 
 flutter:
   uses-material-design: true
@@ -53,3 +55,6 @@ flutter:
           weight: 400
         - asset: fonts/Montserrat-Bold.ttf
           weight: 700
+inno_bundle:
+  id: 0a9a47d0-02b3-11f0-bc70-f72afea39321
+  publisher: dimas

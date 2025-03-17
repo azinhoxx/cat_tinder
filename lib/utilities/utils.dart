@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 abstract final class AppUtils {
   AppUtils._();
@@ -43,12 +42,8 @@ abstract final class AppUtils {
   static Future<bool> hasNetwork() async {
     try {
       if (kIsWeb) {
-        print('WEB');
-        final response = await http.get(Uri.parse('https://example.com'));
-        print(response);
-        return response.statusCode == 200;
+        return true;
       } else {
-        print('NOT WEB');
         final result = await InternetAddress.lookup('example.com');
         return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
       }

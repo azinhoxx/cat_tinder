@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/decorations.dart';
-import 'package:flutter_hw_1/models/cat_model.dart';
-import 'package:flutter_hw_1/widgets/details_screen/card_image_section.dart';
-import 'package:flutter_hw_1/widgets/details_screen/card_progress_bar.dart';
-import 'package:flutter_hw_1/providers/cat_model_provider.dart';
-import 'package:flutter_hw_1/widgets/details_screen/card_rich_text.dart';
-import 'package:flutter_hw_1/widgets/details_screen/card_progress_bar_section.dart';
+import 'package:cat_tinder/constants/decorations.dart';
+import 'package:cat_tinder/models/cat_model.dart';
+import 'package:cat_tinder/widgets/details_screen/card_image_section.dart';
+import 'package:cat_tinder/widgets/details_screen/card_progress_bar.dart';
+import 'package:cat_tinder/providers/cat_model_provider.dart';
+import 'package:cat_tinder/widgets/details_screen/card_rich_text.dart';
+import 'package:cat_tinder/widgets/details_screen/card_progress_bar_section.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CatDetailCard extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/widgets/base/error_handle_button.dart';
+import 'package:cat_tinder/widgets/base/error_handle_button.dart';
 
 class ErrorMessageWidget extends StatelessWidget {
   final String message;

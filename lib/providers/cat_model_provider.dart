@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/models/cat_model.dart';
+import 'package:cat_tinder/models/cat_model.dart';
 
 class CatModelProvider extends InheritedWidget {
   final CatModel cat;

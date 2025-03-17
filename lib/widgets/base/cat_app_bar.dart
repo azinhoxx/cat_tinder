@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hw_1/constants/icons.dart';
+import 'package:cat_tinder/constants/icons.dart';
 
 class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool automaticallyImplyLeading;
