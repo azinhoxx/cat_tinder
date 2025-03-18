@@ -34,8 +34,9 @@ class FullscreenImage extends StatelessWidget {
               child: Stack(
                 children: [
                   PhotoView(
-                    minScale: 0.4,
-                    maxScale: 3.0,
+                    maxScale: PhotoViewComputedScale.contained * 5,
+                    minScale: PhotoViewComputedScale.contained,
+                    initialScale: PhotoViewComputedScale.contained,
                     imageProvider: CachedNetworkImageProvider(cat.imageUrl),
                   ),
 

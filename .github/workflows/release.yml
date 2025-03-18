@@ -283,7 +283,7 @@ jobs:
 
       - name: Get latest release tag
         id: get_release
-        run: echo "TAG_NAME=v1.0.0" >> $GITHUB_ENV
+        run: echo "TAG_NAME=v1.0.$(( $(git tag -l "v1.0.*" | wc -l) ))" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

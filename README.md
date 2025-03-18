@@ -146,4 +146,4 @@ Release версии доступны по [ссылке](https://github.com/azi
 
 # APK
 
-Скачать APK последней версии можно по следующей ссылке: [APK](https://github.com/azinhoxx/cat_tinder/releases/download/v1.0.0/app-release.apk).
+Скачать APK последней версии можно по следующей ссылке: [APK](https://github.com/azinhoxx/cat_tinder/releases/latest/download/app-release.apk).
