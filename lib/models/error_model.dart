@@ -13,5 +13,5 @@ class CustomError {
   final CustomErrorType type;
   final int slidesCount;
 
-  const CustomError({required this.type, this.slidesCount = 0});
+  const CustomError({required this.type, required this.slidesCount});
 }

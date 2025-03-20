@@ -36,7 +36,6 @@ Route<dynamic> _onGenerateRoute(RouteSettings settings) {
             onPressed: args['onPressed'] as Future<bool> Function()?,
           ),
         ),
-        animated: false,
       );
     case '/fullscreen':
     case '/details':

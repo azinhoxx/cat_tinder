@@ -23,21 +23,22 @@ class SwiperProvider extends ChangeNotifier {
       );
 
   final CardSwiperController controller = CardSwiperController();
+
   final List<Slide> _slides = [];
 
   bool _isFirstLoading = true;
   bool _isLoading = true;
+
   int _likesCount = 0;
   int _currentIndex = 0;
   bool _isHandling = false;
 
-  List<Slide> get slides => _slides;
-  int get likesCount => _likesCount;
-  int get currentIndex => _currentIndex;
-  bool get isLoading => _isLoading;
-  bool get isFirstLoading => _isFirstLoading;
-  bool get isHandling => _isHandling;
   CustomError? get error => _errorHandler.error;
+  List<Slide> get slides => _slides;
+  bool get isFirstLoading => _isFirstLoading;
+  bool get isLoading => _isLoading;
+  int get likesCount => _likesCount;
+  bool get isHandling => _isHandling;
   bool get isNotNextSlide => _currentIndex == slides.length;
   bool get isNotPrevSlide => _currentIndex == 0;
 
@@ -107,10 +108,8 @@ class SwiperProvider extends ChangeNotifier {
     return true;
   }
 
-  Future<void> onEnd() async {
-    if (!await _setNetworkError()) {
-      _writeGenericError();
-    }
+  void onEnd() {
+    _setNetworkError();
     controller.undo();
   }
 
@@ -142,28 +141,29 @@ class SwiperProvider extends ChangeNotifier {
       }
       _errorHandler.error = null;
       notifyListeners();
-      await _fetchCats(isNetwork: true, callback: () => {_isHandling = false});
+      await _fetchCats(
+        isNetwork: true,
+        beforeNotify: () => {_isHandling = false},
+      );
       return true;
     }
     return false;
   }
 
-  Future<bool> _setNetworkError() async {
-    bool online = await AppUtils.hasNetwork();
-    if (!online) {
-      _writeNetworkError();
+  void _handleFetchError() {
+    if (_slides.isEmpty) {
+      _setGenericError();
     }
-    return !online;
   }
 
-  void _writeGenericError() {
+  void _setGenericError() {
     _errorHandler.setError(
       type: CustomErrorType.genericError,
       count: _slides.length,
     );
   }
 
-  void _writeNetworkError() {
+  void _setNetworkError() {
     _errorHandler.setError(
       type: CustomErrorType.networkError,
       count: _slides.length,
@@ -172,7 +172,7 @@ class SwiperProvider extends ChangeNotifier {
 
   Future<void> _fetchCats({
     bool isNetwork = false,
-    VoidCallback? callback,
+    VoidCallback? beforeNotify,
   }) async {
     try {
       if (!isNetwork && !await AppUtils.hasNetwork()) return;
@@ -181,16 +181,16 @@ class SwiperProvider extends ChangeNotifier {
         final cats = _parseCats(response.body);
         _slides.addAll(cats);
       } else {
-        _writeGenericError();
+        _handleFetchError();
       }
     } catch (_) {
-      _writeGenericError();
+      _handleFetchError();
     } finally {
-      _finalizeFetching(callback);
+      _finalizeFetch(beforeNotify);
     }
   }
 
-  void _finalizeFetching(VoidCallback? callback) {
+  void _finalizeFetch(VoidCallback? beforeNotify) {
     if (_isLoading) _isLoading = false;
     if (_isFirstLoading) {
       _isFirstLoading = false;
@@ -199,10 +199,10 @@ class SwiperProvider extends ChangeNotifier {
       }
     }
     if (_slides.isEmpty) {
-      _writeNetworkError();
+      _setNetworkError();
     }
-    if (callback != null) {
-      callback();
+    if (beforeNotify != null) {
+      beforeNotify();
     }
     notifyListeners();
   }
