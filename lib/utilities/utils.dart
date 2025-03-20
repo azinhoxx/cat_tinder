@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 abstract final class AppUtils {
   AppUtils._();
@@ -15,7 +16,7 @@ abstract final class AppUtils {
 
   static Route<dynamic> buildRoute({
     required Widget page,
-    bool animated = true,
+    bool animated = false,
   }) {
     if (animated) {
       return PageRouteBuilder(
@@ -40,15 +41,7 @@ abstract final class AppUtils {
   }
 
   static Future<bool> hasNetwork() async {
-    try {
-      if (kIsWeb) {
-        return true;
-      } else {
-        final result = await InternetAddress.lookup('example.com');
-        return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-      }
-    } catch (_) {
-      return false;
-    }
+    bool result = await InternetConnection().hasInternetAccess;
+    return result;
   }
 }
