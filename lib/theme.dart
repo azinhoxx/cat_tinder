@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/constants/colors.dart';
+import 'package:cat_tinder/core/utils/constants/app_colors.dart';
 
 abstract final class AppTheme {
   AppTheme._();
