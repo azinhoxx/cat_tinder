@@ -1,8 +1,8 @@
 import 'package:cat_tinder/core/di/app_component/app_component.dart';
+import 'package:cat_tinder/core/utils/constants/supported_splash.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/paw_loading_indicator.dart';
-import 'package:cat_tinder/features/cat_profiles/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/cat_scaffold.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/bottom_actions_row.dart';
@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
       child: CatScaffold(
         body: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            if (state.isFirstLoading && AppUtils.isSplashSupportedPlatform) {
+            if (state.isFirstLoading && isSplashSupportedPlatform) {
               return const SizedBox.shrink();
             }
 

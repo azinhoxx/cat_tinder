@@ -3,17 +3,22 @@ import 'package:cat_tinder/core/utils/constants/app_decorations.dart';
 
 class ContainerBackground extends StatelessWidget {
   final Widget child;
+  final Color color;
 
-  const ContainerBackground({super.key, required this.child});
+  const ContainerBackground({
+    super.key,
+    required this.child,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(AppDecorations.defaultBorderRadius),
         ),
-        color: Colors.black54,
+        color: color,
       ),
       child: child,
     );

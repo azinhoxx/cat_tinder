@@ -1,11 +1,13 @@
+import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_item_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardRichText extends StatelessWidget {
-  final String label;
-  final TextSpan child;
+  final CatListItemModel<String> item;
 
-  const CardRichText({super.key, required this.label, required this.child});
+  const CardRichText({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,21 @@ class CardRichText extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: '$label: ',
+                  text: '${item.label}: ',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                child,
+                item.value.startsWith(RegExp(r'^https?://'))
+                    ? TextSpan(
+                      text: item.value,
+                      style: const TextStyle(color: Colors.blueAccent),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () {
+                              final url = Uri.parse(item.value);
+                              launchUrl(url);
+                            },
+                    )
+                    : TextSpan(text: item.value + (item.suffix ?? '')),
               ],
             ),
           ),

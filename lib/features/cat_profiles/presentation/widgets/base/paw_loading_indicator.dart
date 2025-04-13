@@ -24,12 +24,6 @@ class _BlinkingPawState extends State<PawLoadingIndicator>
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Center(
       child: ScaleTransition(
@@ -40,5 +34,11 @@ class _BlinkingPawState extends State<PawLoadingIndicator>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
