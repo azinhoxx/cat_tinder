@@ -30,9 +30,14 @@ class SlideDescription extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 20,
                 ),
+                textAlign: TextAlign.center,
               ),
               if (origin != null)
-                Text(origin!, style: const TextStyle(color: Colors.white)),
+                Text(
+                  origin!,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
             ],
           ),
         ),

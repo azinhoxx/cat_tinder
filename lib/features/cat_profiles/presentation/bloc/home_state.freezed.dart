@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeState {
-  bool get isLoading => throw _privateConstructorUsedError;
   bool get isFirstLoading => throw _privateConstructorUsedError;
+  bool get isFetching => throw _privateConstructorUsedError;
   List<Slide> get slides => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
@@ -37,8 +37,8 @@ abstract class $HomeStateCopyWith<$Res> {
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call({
-    bool isLoading,
     bool isFirstLoading,
+    bool isFetching,
     List<Slide> slides,
     int currentIndex,
     int likesCount,
@@ -61,8 +61,8 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
     Object? isFirstLoading = null,
+    Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
     Object? likesCount = null,
@@ -70,15 +70,15 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   }) {
     return _then(
       _value.copyWith(
-            isLoading:
-                null == isLoading
-                    ? _value.isLoading
-                    : isLoading // ignore: cast_nullable_to_non_nullable
-                        as bool,
             isFirstLoading:
                 null == isFirstLoading
                     ? _value.isFirstLoading
                     : isFirstLoading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            isFetching:
+                null == isFetching
+                    ? _value.isFetching
+                    : isFetching // ignore: cast_nullable_to_non_nullable
                         as bool,
             slides:
                 null == slides
@@ -116,8 +116,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    bool isLoading,
     bool isFirstLoading,
+    bool isFetching,
     List<Slide> slides,
     int currentIndex,
     int likesCount,
@@ -139,8 +139,8 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = null,
     Object? isFirstLoading = null,
+    Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
     Object? likesCount = null,
@@ -148,15 +148,15 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$HomeStateImpl(
-        isLoading:
-            null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                    as bool,
         isFirstLoading:
             null == isFirstLoading
                 ? _value.isFirstLoading
                 : isFirstLoading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        isFetching:
+            null == isFetching
+                ? _value.isFetching
+                : isFetching // ignore: cast_nullable_to_non_nullable
                     as bool,
         slides:
             null == slides
@@ -187,8 +187,8 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl({
-    required this.isLoading,
     required this.isFirstLoading,
+    required this.isFetching,
     required final List<Slide> slides,
     required this.currentIndex,
     required this.likesCount,
@@ -196,9 +196,9 @@ class _$HomeStateImpl implements _HomeState {
   }) : _slides = slides;
 
   @override
-  final bool isLoading;
-  @override
   final bool isFirstLoading;
+  @override
+  final bool isFetching;
   final List<Slide> _slides;
   @override
   List<Slide> get slides {
@@ -216,7 +216,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(isLoading: $isLoading, isFirstLoading: $isFirstLoading, slides: $slides, currentIndex: $currentIndex, likesCount: $likesCount, errorMessage: $errorMessage)';
+    return 'HomeState(isFirstLoading: $isFirstLoading, isFetching: $isFetching, slides: $slides, currentIndex: $currentIndex, likesCount: $likesCount, errorMessage: $errorMessage)';
   }
 
   @override
@@ -224,10 +224,10 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
             (identical(other.isFirstLoading, isFirstLoading) ||
                 other.isFirstLoading == isFirstLoading) &&
+            (identical(other.isFetching, isFetching) ||
+                other.isFetching == isFetching) &&
             const DeepCollectionEquality().equals(other._slides, _slides) &&
             (identical(other.currentIndex, currentIndex) ||
                 other.currentIndex == currentIndex) &&
@@ -240,8 +240,8 @@ class _$HomeStateImpl implements _HomeState {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    isLoading,
     isFirstLoading,
+    isFetching,
     const DeepCollectionEquality().hash(_slides),
     currentIndex,
     likesCount,
@@ -259,8 +259,8 @@ class _$HomeStateImpl implements _HomeState {
 
 abstract class _HomeState implements HomeState {
   const factory _HomeState({
-    required final bool isLoading,
     required final bool isFirstLoading,
+    required final bool isFetching,
     required final List<Slide> slides,
     required final int currentIndex,
     required final int likesCount,
@@ -268,9 +268,9 @@ abstract class _HomeState implements HomeState {
   }) = _$HomeStateImpl;
 
   @override
-  bool get isLoading;
-  @override
   bool get isFirstLoading;
+  @override
+  bool get isFetching;
   @override
   List<Slide> get slides;
   @override

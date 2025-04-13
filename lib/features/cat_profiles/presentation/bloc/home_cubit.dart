@@ -18,35 +18,45 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._getAllCats) : super(HomeState.initial());
 
   Future<void> fetchSlides() async {
-    emit(state.copyWith(isLoading: state.isEmpty));
+    emit(state.copyWith(isFetching: true));
     final response = await _getAllCats(NoParams());
     response.when(
       success: (List<CatEntity?>? cats) {
-        final slides =
+        final slides = <Slide>[];
+        if (cats != null) {
+          slides.addAll(
             cats
-                ?.where((cat) => cat != null && cat.url != null)
+                .where((cat) => cat != null && cat.url != null)
                 .map((cat) => Slide(cat: cat!))
-                .toList();
+                .toList(),
+          );
+        }
         if (state.isFirstLoading && isSplashSupportedPlatform) {
           FlutterNativeSplash.remove();
         }
         emit(
           state.copyWith(
-            isLoading: false,
+            isFetching: false,
             isFirstLoading: false,
-            slides: [...state.slides, ...slides!],
+            slides: [...state.slides, ...slides],
             errorMessage: null,
           ),
         );
       },
       failure: (ErrorResultModel error) {
-        emit(state.copyWith(errorMessage: error.message));
+        emit(
+          state.copyWith(
+            isFetching: false,
+            isFirstLoading: false,
+            errorMessage: error.message,
+          ),
+        );
       },
     );
   }
 
   void updateSlides() {
-    if (state.slides.length - state.currentIndex <= 5) {
+    if (state.slides.length - state.currentIndex <= 3) {
       fetchSlides();
     }
   }
