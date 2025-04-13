@@ -1,0 +1,33 @@
+name: Flutter Analyze & Format Check
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  analyze-and-format:
+    name: Analyze & Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Create .env
+        run: |
+          echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run flutter analyze
+        run: flutter analyze
+
+      - name: Check Dart format
+        run: |
+          dart format --output=none --set-exit-if-changed .

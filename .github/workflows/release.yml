@@ -4,118 +4,55 @@ permissions:
   contents: write
 
 on: 
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Flutter Analyze & Format Check"]
+    types:
+      - completed
   
 jobs:
-  build-android-apk:
-    name: Build Android APK
+  build-android:
+    name: Build Android (${{ matrix.build-type }})
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        build-type: [apk, appbundle, apk-split]
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+  
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Create .env file with secrets
+      - name: Create .env
         run: |
-          echo "CATS_API=https://api.thecatapi.com/v1/images/search?limit=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}&api_key=${{ secrets.CATS_API_KEY }}&has_breeds=1" >> .env
           echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-          echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env  
-
-      - name: Current Flutter version
-        id: flutter-version
-        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
         
       - name: Build APK
+        if: matrix.build-type == 'apk'
         run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-  build-android-appbundle:
-    name: Build Android AppBundle
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Create .env file with secrets
-        run: |
-          echo "CATS_API=https://api.thecatapi.com/v1/images/search?limit=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}&api_key=${{ secrets.CATS_API_KEY }}&has_breeds=1" >> .env
-          echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-          echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env    
-
-      - name: Current Flutter version
-        id: flutter-version
-        run: flutter --version
-
-      - name: Install dependencies
-        run: flutter pub get
-
       - name: Build AppBundle
-        run: flutter build appbundle --release   
-
-      - name: Upload AppBundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-appbundle
-          path: build/app/outputs/bundle/release/app-release.aab
-
-  build-android-apk-split:
-    name: Build Android Split APKs
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Create .env file with secrets
-        run: |
-          echo "CATS_API=https://api.thecatapi.com/v1/images/search?limit=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}&api_key=${{ secrets.CATS_API_KEY }}&has_breeds=1" >> .env
-          echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-          echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env    
-
-      - name: Current Flutter version
-        id: flutter-version
-        run: flutter --version
-
-      - name: Install dependencies
-        run: flutter pub get
+        if: matrix.build-type == 'appbundle'
+        run: flutter build appbundle --release
 
       - name: Build Split APKs
+        if: matrix.build-type == 'apk-split'
         run: flutter build apk --release --split-per-abi
 
-      - name: Upload Split APKs
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk-split
+          name: android-${{ matrix.build-type }}
           path: |
-            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-            build/app/outputs/flutter-apk/app-x86_64-release.apk
+            ${{ matrix.build-type == 'apk' && 'build/app/outputs/flutter-apk/app-release.apk' || '' }}
+            ${{ matrix.build-type == 'appbundle' && 'build/app/outputs/bundle/release/app-release.aab' || '' }}
+            ${{ matrix.build-type == 'apk-split' && 'build/app/outputs/flutter-apk/*.apk' || '' }}
 
   build-web:
     name: Build Web
@@ -125,20 +62,13 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Create .env file with secrets
+      - name: Create .env
         run: |
-          echo "CATS_API=https://api.thecatapi.com/v1/images/search?limit=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}&api_key=${{ secrets.CATS_API_KEY }}&has_breeds=1" >> .env
           echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-          echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env
-
-      - name: Current Flutter version
-        id: flutter-version
-        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -160,21 +90,13 @@ jobs:
     - name: Clone repository
       uses: actions/checkout@v4
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+    - uses: subosito/flutter-action@v2
       with:
         channel: stable
 
-    - name: Create .env file with secrets
+    - name: Create .env
       run: |
-        echo "CATS_API=${{ secrets.CATS_API }}" >> .env
         echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-        echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env
-        
-
-    - name: Current Flutter version
-      id: flutter-version
-      run: flutter --version
 
     - name: Install dependencies
       run: flutter pub get
@@ -196,20 +118,13 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Create .env file with secrets
+      - name: Create .env file
         run: |
-          echo "CATS_API=https://api.thecatapi.com/v1/images/search?limit=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}&api_key=${{ secrets.CATS_API_KEY }}&has_breeds=1" >> .env
           echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-          echo "CATS_SLIDES_FETCH_LIMIT=${{ secrets.CATS_SLIDES_FETCH_LIMIT }}" >> .env
-
-      - name: Current Flutter version
-        id: flutter-version
-        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -230,7 +145,7 @@ jobs:
           path: build/windows/x64/installer/Release/*.exe
 
   release:
-    needs: [build-android-apk, build-android-appbundle, build-android-apk-split, build-web, build-windows-portable, build-windows-installer]
+    needs: [build-android, build-web, build-windows-portable, build-windows-installer]
     runs-on: ubuntu-latest
 
     steps:
