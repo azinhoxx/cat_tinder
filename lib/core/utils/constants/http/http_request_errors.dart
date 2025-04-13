@@ -1,5 +1,5 @@
-abstract final class RequestErrors {
-  RequestErrors._();
+abstract final class HttpRequestErrors {
+  HttpRequestErrors._();
 
   static const String commonConnectionFailedMessage =
       'Please, check your Internet Connection';

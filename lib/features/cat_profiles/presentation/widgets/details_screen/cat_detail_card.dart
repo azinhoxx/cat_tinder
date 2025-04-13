@@ -4,7 +4,7 @@ import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_it
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_progress_bar.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_rich_text.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app_decorations.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_image_section.dart';
 
 class CatDetailCard extends StatelessWidget {

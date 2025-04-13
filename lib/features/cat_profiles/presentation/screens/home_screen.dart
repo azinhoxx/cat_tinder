@@ -1,5 +1,5 @@
 import 'package:cat_tinder/core/di/app_component/app_component.dart';
-import 'package:cat_tinder/core/utils/constants/supported_splash.dart';
+import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/paw_loading_indicator.dart';

@@ -1,7 +1,7 @@
 import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_item_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app_icons.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CardRichText extends StatelessWidget {

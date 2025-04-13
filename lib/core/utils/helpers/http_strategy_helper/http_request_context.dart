@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/api_result_model.dart';
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
-import 'package:cat_tinder/core/utils/constants/app_base_url.dart';
-import 'package:cat_tinder/core/utils/constants/request_errors.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_base_url.dart';
+import 'package:cat_tinder/core/utils/constants/http/http_request_errors.dart';
 import 'package:cat_tinder/core/utils/helpers/connectivity_helper/connectivity_checker_helper.dart';
 import 'package:cat_tinder/core/utils/helpers/custom_exceptions/custom_connection_exception.dart';
 import 'package:cat_tinder/core/utils/helpers/http_strategy_helper/http_request_strategy.dart';
 import 'package:http/http.dart' as http;
-import 'package:cat_tinder/core/utils/constants/http_client_headers.dart';
+import 'package:cat_tinder/core/utils/constants/http/http_client_headers.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -53,20 +53,20 @@ class HttpRequestContext {
       } on TimeoutException catch (_) {
         return const ApiResultModel<http.Response>.failure(
           errorResultEntity: ErrorResultModel(
-            message: RequestErrors.commonErrorUnexpectedMessage,
-            statusCode: RequestErrors.timeoutRequestStatusCode,
+            message: HttpRequestErrors.commonErrorUnexpectedMessage,
+            statusCode: HttpRequestErrors.timeoutRequestStatusCode,
           ),
         );
       } on IOException catch (_) {
         throw CustomConnectionException(
-          exceptionMessage: RequestErrors.commonConnectionFailedMessage,
-          exceptionCode: RequestErrors.ioExceptionStatusCode,
+          exceptionMessage: HttpRequestErrors.commonConnectionFailedMessage,
+          exceptionCode: HttpRequestErrors.ioExceptionStatusCode,
         );
       }
     } else {
       throw CustomConnectionException(
-        exceptionMessage: RequestErrors.commonConnectionFailedMessage,
-        exceptionCode: RequestErrors.ioExceptionStatusCode,
+        exceptionMessage: HttpRequestErrors.commonConnectionFailedMessage,
+        exceptionCode: HttpRequestErrors.ioExceptionStatusCode,
       );
     }
   }

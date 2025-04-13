@@ -33,7 +33,7 @@ extension CatBreedToListMapper on CatEntity {
     };
 
     data.forEach((label, value) {
-      if (value is T) {
+      if (value is T && value.toString().isNotEmpty) {
         result.add(
           CatListItemModel<T>(
             label: label,

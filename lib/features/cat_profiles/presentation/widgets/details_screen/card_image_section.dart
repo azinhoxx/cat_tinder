@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app_decorations.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/image_container.dart';
 import 'package:go_router/go_router.dart';
 

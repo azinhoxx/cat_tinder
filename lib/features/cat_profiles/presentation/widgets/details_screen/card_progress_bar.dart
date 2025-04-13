@@ -1,6 +1,6 @@
 import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app_colors.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_colors.dart';
 
 class CardProgressBar extends StatelessWidget {
   final CatListItemModel<int> item;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app_colors.dart';
+import 'package:cat_tinder/core/utils/constants/app/app_colors.dart';
 
 abstract final class AppTheme {
   AppTheme._();
@@ -9,19 +9,14 @@ abstract final class AppTheme {
   static const double _iconSize = 36;
 
   static ThemeData theme() {
-    final primaryBackgroundColor = AppColors.primaryBackgroundColorLight;
+    const primaryBackgroundColor = AppColors.primaryBackgroundColorLight;
 
     final theme = ThemeData(
       brightness: Brightness.light,
       primaryColor: primaryBackgroundColor,
-      textTheme: TextTheme(
-        bodyMedium: TextStyle(
-          fontFamily: _defaultFontFamily,
-          color: Colors.black,
-        ),
-      ),
+      fontFamily: _defaultFontFamily,
       scaffoldBackgroundColor: primaryBackgroundColor,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         scrolledUnderElevation: 0,
         backgroundColor: primaryBackgroundColor,
         iconTheme: IconThemeData(color: Colors.redAccent, size: 28),
@@ -33,9 +28,10 @@ abstract final class AppTheme {
           fontWeight: FontWeight.bold,
         ),
       ),
-      cardTheme: CardTheme(color: primaryBackgroundColor),
+      cardTheme: const CardTheme(color: primaryBackgroundColor),
+      iconTheme: IconThemeData.fallback().copyWith(size: _iconSize),
     );
 
-    return theme.copyWith(iconTheme: theme.iconTheme.copyWith(size: _iconSize));
+    return theme;
   }
 }

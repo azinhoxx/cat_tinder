@@ -4,6 +4,7 @@ abstract final class AppIcons {
   AppIcons._();
 
   static const _fontFamily = 'CVIcons';
+
   static const IconData undo = IconData(0xe801, fontFamily: _fontFamily);
   static const IconData like = IconData(0xe800, fontFamily: _fontFamily);
   static const IconData dislike = IconData(0xe802, fontFamily: _fontFamily);

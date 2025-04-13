@@ -1,6 +1,6 @@
-import 'package:cat_tinder/core/routing/app_routing.dart';
+import 'package:cat_tinder/core/utils/helpers/theme_helper/app_theme_helper.dart';
+import 'package:cat_tinder/core/utils/routing/app_routing.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/theme.dart';
 
 class CatTinderApp extends StatelessWidget {
   const CatTinderApp({super.key});
@@ -10,8 +10,8 @@ class CatTinderApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'CatTinder',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme(),
       routerConfig: router,
+      theme: AppTheme.theme(),
     );
   }
 }
