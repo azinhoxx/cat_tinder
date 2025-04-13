@@ -1,19 +1,19 @@
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app_icons.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/providers/swiper_provider.dart';
-import 'package:provider/provider.dart' show Provider, Selector;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LikeButton extends StatelessWidget {
   const LikeButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final VoidCallback onPressed =
-        Provider.of<SwiperProvider>(context, listen: false).onLike;
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        final onPressed = context.read<HomeCubit>().onLike;
+        final disabled = state.isEnd;
 
-    return Selector<SwiperProvider, bool>(
-      selector: (context, provider) => provider.isNotNextSlide,
-      builder: (context, disabled, child) {
         return IconButton(
           onPressed: disabled ? null : onPressed,
           color: Colors.green,
@@ -22,24 +22,20 @@ class LikeButton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const Icon(AppIcons.like),
-              Selector<SwiperProvider, int>(
-                selector: (context, provider) => provider.likesCount,
-                builder:
-                    (context, likes, child) => Container(
-                      constraints: BoxConstraints(
-                        minWidth: _calculateWidthTextLikes(likes),
-                      ),
-                      child: Text(
-                        '$likes',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:
-                              disabled
-                                  ? Theme.of(context).disabledColor
-                                  : Colors.green,
-                        ),
-                      ),
-                    ),
+              Container(
+                constraints: BoxConstraints(
+                  minWidth: _calculateWidthTextLikes(state.likesCount),
+                ),
+                child: Text(
+                  '${state.likesCount}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color:
+                        disabled
+                            ? Theme.of(context).disabledColor
+                            : Colors.green,
+                  ),
+                ),
               ),
             ],
           ),

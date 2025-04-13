@@ -20,20 +20,24 @@ class CatRemoteDatasourceImpl implements CatRemoteDataSource {
   @override
   Future<ApiResultModel<List<CatModel?>?>> getCats() async {
     try {
-      final ApiResultModel<Response> response = await _httpRequestContext
-          .makeRequest(
-            httpRequestStrategy: GetRequestStrategy(),
-            uri: HttpRequestDetails.baseUri,
-            headers: {
-              HttpClientHeaders.xApiKeyKey: HttpClientHeaders.xApiKeyValue,
-            },
-          );
+      final ApiResultModel<Response>
+      response = await _httpRequestContext.makeRequest(
+        httpRequestStrategy: GetRequestStrategy(),
+        uri: HttpRequestDetails.baseUri,
+        headers: {HttpClientHeaders.xApiKeyKey: HttpClientHeaders.xApiKeyValue},
+        requestData: {
+          HttpRequestDetails.hasBreedsKey: HttpRequestDetails.hasBreedsValue,
+          HttpRequestDetails.limitKey: HttpRequestDetails.limitValue,
+        },
+      );
       return response.when(
         success: (Response response) {
           return ApiResultModel<List<CatModel?>?>.success(
             data:
-                (response.decodeJson() as List<Map<String, dynamic>>)
-                    .map(CatModel.fromJson)
+                (response.decodeJson() as List<dynamic>)
+                    .map(
+                      (item) => CatModel.fromJson(item as Map<String, dynamic>),
+                    )
                     .toList(),
           );
         },
@@ -44,9 +48,11 @@ class CatRemoteDatasourceImpl implements CatRemoteDataSource {
         },
       );
     } on CustomConnectionException catch (e) {
-      throw CustomConnectionException(
-        exceptionCode: e.exceptionCode,
-        exceptionMessage: e.exceptionMessage,
+      return ApiResultModel<List<CatModel?>?>.failure(
+        errorResultEntity: ErrorResultModel(
+          statusCode: e.exceptionCode,
+          message: e.exceptionMessage,
+        ),
       );
     }
   }

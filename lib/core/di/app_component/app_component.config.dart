@@ -23,6 +23,8 @@ import 'package:cat_tinder/features/cat_profiles/domain/repositories/cat_reposit
     as _i156;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart'
     as _i816;
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart'
+    as _i61;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -50,6 +52,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i816.GetAllCats>(
       () => _i816.GetAllCats(gh<_i156.CatRepository>()),
     );
+    gh.factory<_i61.HomeCubit>(() => _i61.HomeCubit(gh<_i816.GetAllCats>()));
     return this;
   }
 }

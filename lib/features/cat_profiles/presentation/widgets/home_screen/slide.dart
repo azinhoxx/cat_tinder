@@ -1,17 +1,13 @@
+import 'package:cat_tinder/core/utils/constants/app_decorations.dart';
+import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/decorations.dart';
-import 'package:cat_tinder/features/cat_profiles/data/models/cat_model.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/image_container.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/container_background.dart';
 
 class Slide extends StatelessWidget {
-  final CatModel cat;
+  final CatEntity cat;
 
   const Slide({super.key, required this.cat});
-
-  void _navigateDetailsScreen(BuildContext context) {
-    Navigator.pushNamed(context, '/details', arguments: {'cat': cat});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +15,19 @@ class Slide extends StatelessWidget {
       borderRadius: const BorderRadius.all(
         Radius.circular(AppDecorations.defaultBorderRadius),
       ),
-      onTap: () => _navigateDetailsScreen(context),
       child: Card(
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             ImageContainer(
               fit: BoxFit.cover,
-              imageUrl: cat.imageUrl,
+              imageUrl: cat.url!,
               borderRadius: const BorderRadius.all(
                 Radius.circular(AppDecorations.defaultBorderRadius),
               ),
             ),
 
-            if (cat.name != null)
+            if (cat.breeds != null)
               Positioned.fill(
                 top: null,
                 child: ContainerBackground(
@@ -48,13 +43,14 @@ class Slide extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            cat.name!,
+                            cat.breeds![0]!.name!,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
-                          if (cat.origin != null) Text(cat.origin!),
+                          if (cat.breeds![0]!.origin != null)
+                            Text(cat.breeds![0]!.origin!),
                         ],
                       ),
                     ),

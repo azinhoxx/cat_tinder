@@ -7,6 +7,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CatScaffold(body: CatDetailCard());
+    // return const CatScaffold(body: CatDetailCard());
+    return Container();
   }
 }

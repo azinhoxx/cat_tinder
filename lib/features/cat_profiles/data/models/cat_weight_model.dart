@@ -14,6 +14,8 @@ class CatWeightModel extends DataMapper<CatWeightEntity> {
   factory CatWeightModel.fromJson(Map<String, dynamic> json) =>
       _$CatWeightModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CatWeightModelToJson(this);
+
   @override
   CatWeightEntity mapToEntity() {
     return CatWeightEntity(imperial: imperial, metric: metric);
