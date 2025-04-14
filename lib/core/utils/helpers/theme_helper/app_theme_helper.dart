@@ -5,7 +5,7 @@ abstract final class AppTheme {
   AppTheme._();
 
   static const _defaultFontFamily = 'TinkoffSans';
-  static const _defaultFontFamilyTitle = 'Sour Gummy';
+  static const _defaultFontFamilyTitle = 'TinkoffSans';
   static const double _iconSize = 36;
 
   static ThemeData theme() {
@@ -19,12 +19,11 @@ abstract final class AppTheme {
       appBarTheme: const AppBarTheme(
         scrolledUnderElevation: 0,
         backgroundColor: primaryBackgroundColor,
-        iconTheme: IconThemeData(color: Colors.redAccent, size: 28),
+        iconTheme: IconThemeData(color: Colors.redAccent, size: 20),
         titleTextStyle: TextStyle(
           fontFamily: _defaultFontFamilyTitle,
           color: Colors.redAccent,
           fontSize: 42,
-          letterSpacing: 1,
           fontWeight: FontWeight.bold,
         ),
       ),

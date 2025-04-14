@@ -10,7 +10,7 @@ class LikeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeCubit, HomeState, (int, bool)>(
-      selector: (state) => (state.likesCount, state.isEnd),
+      selector: (state) => (state.likesCount, state.isLastSlide),
       builder: (context, state) {
         final (likesCount, isEnd) = state;
         return IconButton(

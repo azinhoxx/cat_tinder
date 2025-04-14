@@ -19,7 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   bool get isFirstLoading => throw _privateConstructorUsedError;
   bool get isFetching => throw _privateConstructorUsedError;
-  List<Slide> get slides => throw _privateConstructorUsedError;
+  List<CatEntity> get slides => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $HomeStateCopyWith<$Res> {
   $Res call({
     bool isFirstLoading,
     bool isFetching,
-    List<Slide> slides,
+    List<CatEntity> slides,
     int currentIndex,
     int likesCount,
     String? errorMessage,
@@ -84,7 +84,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                 null == slides
                     ? _value.slides
                     : slides // ignore: cast_nullable_to_non_nullable
-                        as List<Slide>,
+                        as List<CatEntity>,
             currentIndex:
                 null == currentIndex
                     ? _value.currentIndex
@@ -118,7 +118,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   $Res call({
     bool isFirstLoading,
     bool isFetching,
-    List<Slide> slides,
+    List<CatEntity> slides,
     int currentIndex,
     int likesCount,
     String? errorMessage,
@@ -162,7 +162,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
             null == slides
                 ? _value._slides
                 : slides // ignore: cast_nullable_to_non_nullable
-                    as List<Slide>,
+                    as List<CatEntity>,
         currentIndex:
             null == currentIndex
                 ? _value.currentIndex
@@ -189,7 +189,7 @@ class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl({
     required this.isFirstLoading,
     required this.isFetching,
-    required final List<Slide> slides,
+    required final List<CatEntity> slides,
     required this.currentIndex,
     required this.likesCount,
     this.errorMessage,
@@ -199,9 +199,9 @@ class _$HomeStateImpl implements _HomeState {
   final bool isFirstLoading;
   @override
   final bool isFetching;
-  final List<Slide> _slides;
+  final List<CatEntity> _slides;
   @override
-  List<Slide> get slides {
+  List<CatEntity> get slides {
     if (_slides is EqualUnmodifiableListView) return _slides;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_slides);
@@ -261,7 +261,7 @@ abstract class _HomeState implements HomeState {
   const factory _HomeState({
     required final bool isFirstLoading,
     required final bool isFetching,
-    required final List<Slide> slides,
+    required final List<CatEntity> slides,
     required final int currentIndex,
     required final int likesCount,
     final String? errorMessage,
@@ -272,7 +272,7 @@ abstract class _HomeState implements HomeState {
   @override
   bool get isFetching;
   @override
-  List<Slide> get slides;
+  List<CatEntity> get slides;
   @override
   int get currentIndex;
   @override

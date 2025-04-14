@@ -5,7 +5,6 @@ import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/slide.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -23,7 +22,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(state.copyWith(isFetching: true));
 
-    final List<Slide> newSlides = <Slide>[...state.slides];
+    final List<CatEntity> newSlides = <CatEntity>[...state.slides];
     String? newErrorMessage;
 
     final response = await _getAllCats(NoParams());
@@ -31,10 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
       success: (List<CatEntity?>? cats) {
         if (cats != null) {
           newSlides.addAll(
-            cats
-                .where((cat) => cat != null && cat.url != null)
-                .map((cat) => Slide(cat: cat!))
-                .toList(),
+            cats.nonNulls.where((cat) => cat.url != null).toList(),
           );
         }
       },
@@ -58,7 +54,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void updateSlides() {
-    if (state.slides.length - state.currentIndex <= 3) {
+    if (state.isNearEnd) {
       fetchSlides();
     }
   }

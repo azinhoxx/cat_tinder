@@ -10,7 +10,7 @@ class UndoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeCubit, HomeState, bool>(
-      selector: (state) => state.isStart,
+      selector: (state) => state.isFirstSlide,
       builder: (context, isStart) {
         return IconButton(
           onPressed:

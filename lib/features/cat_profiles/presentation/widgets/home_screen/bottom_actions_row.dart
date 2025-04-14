@@ -12,6 +12,7 @@ class BottomActionsRow extends StatelessWidget {
       margin: const EdgeInsets.only(top: 16),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 4.0,
         children: <Widget>[DislikeButton(), LikeButton(), UndoButton()],
       ),
     );

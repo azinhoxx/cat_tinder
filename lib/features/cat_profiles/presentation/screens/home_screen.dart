@@ -1,10 +1,10 @@
-import 'package:cat_tinder/features/cat_profiles/presentation/base/paw_loading_indicator.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/paw_loading_indicator.dart';
 import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/core/utils/helpers/show_error_dialog_helper/show_error_dialog_helper.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/base/cat_scaffold.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/widgets/base/cat_scaffold.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/bottom_actions_row.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/swiper_card_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +18,8 @@ class HomeScreen extends StatelessWidget {
       body: BlocConsumer<HomeCubit, HomeState>(
         listenWhen:
             (prev, curr) =>
-                (prev.errorMessage, prev.isEnd) !=
-                (curr.errorMessage, curr.isEnd),
+                (prev.errorMessage, prev.isLastSlide) !=
+                (curr.errorMessage, curr.isLastSlide),
         listener: (context, state) {
           final String? errorMessage = state.errorMessage;
 
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             Navigator.of(context, rootNavigator: true).pop();
           }
 
-          if (errorMessage != null && state.isEnd) {
+          if (errorMessage != null && state.isLastSlide) {
             showErrorDialog(
               context,
               errorMessage: errorMessage,

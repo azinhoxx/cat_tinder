@@ -1,4 +1,4 @@
-import 'package:cat_tinder/features/cat_profiles/presentation/widgets/home_screen/slide.dart';
+import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_state.freezed.dart';
@@ -8,7 +8,7 @@ class HomeState with _$HomeState {
   const factory HomeState({
     required bool isFirstLoading,
     required bool isFetching,
-    required List<Slide> slides,
+    required List<CatEntity> slides,
     required int currentIndex,
     required int likesCount,
     String? errorMessage,
@@ -24,10 +24,11 @@ class HomeState with _$HomeState {
   );
 }
 
-extension HomeScreenGetters on HomeState {
-  bool get isEnd => currentIndex >= slides.length - 1;
-  bool get isStart => currentIndex <= 0;
+extension HomeStateX on HomeState {
+  int get totalSlides => slides.length;
+  bool get isLastSlide => currentIndex >= totalSlides - 1;
+  bool get isFirstSlide => currentIndex <= 0;
   bool get isEmpty => slides.isEmpty;
   bool get isNotEmpty => slides.isNotEmpty;
-  bool get isError => errorMessage != null;
+  bool get isNearEnd => totalSlides - currentIndex <= 3;
 }

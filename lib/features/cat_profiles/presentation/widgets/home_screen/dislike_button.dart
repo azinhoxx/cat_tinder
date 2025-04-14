@@ -10,7 +10,7 @@ class DislikeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeCubit, HomeState, bool>(
-      selector: (state) => state.isEnd,
+      selector: (state) => state.isLastSlide,
       builder: (context, isEnd) {
         return IconButton(
           onPressed:

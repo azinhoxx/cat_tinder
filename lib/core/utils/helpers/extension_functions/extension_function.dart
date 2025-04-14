@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-extension ExtensionsOnString on String {
+extension StringX on String {
   Uri parseUri({Map<String, dynamic>? params}) {
     return Uri.parse(this).replace(
       queryParameters: params?.map(
@@ -13,7 +13,7 @@ extension ExtensionsOnString on String {
   }
 }
 
-extension ExtensionsOnHttpResponse on Response {
+extension HttpResponseX on Response {
   dynamic decodeJson() {
     return jsonDecode(body);
   }

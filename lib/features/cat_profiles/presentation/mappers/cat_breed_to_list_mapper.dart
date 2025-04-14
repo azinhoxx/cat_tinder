@@ -1,7 +1,7 @@
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_item_model.dart';
 
-extension CatBreedToListMapper on CatEntity {
+extension CatEntityX on CatEntity {
   List<CatListItemModel<T>> toListItemsOfType<T>() {
     final result = <CatListItemModel<T>>[];
 
