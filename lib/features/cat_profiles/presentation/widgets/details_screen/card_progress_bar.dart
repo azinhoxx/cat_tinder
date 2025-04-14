@@ -17,6 +17,7 @@ class CardProgressBar extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           TextSpan(
+            style: const TextStyle(fontSize: 16),
             children: [
               TextSpan(
                 text: '${item.label} ',

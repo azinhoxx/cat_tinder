@@ -28,4 +28,6 @@ extension HomeScreenGetters on HomeState {
   bool get isEnd => currentIndex >= slides.length;
   bool get isStart => currentIndex <= 0;
   bool get isEmpty => slides.isEmpty;
+  bool get isNotEmpty => slides.isNotEmpty;
+  bool get isError => errorMessage != null;
 }

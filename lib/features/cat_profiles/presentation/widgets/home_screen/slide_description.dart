@@ -12,8 +12,8 @@ class SlideDescription extends StatelessWidget {
     return Positioned.fill(
       top: null,
       child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.vertical(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(AppDecorations.defaultBorderRadius),
           ),
           color: Colors.black54,
@@ -35,7 +35,7 @@ class SlideDescription extends StatelessWidget {
               if (origin != null)
                 Text(
                   origin!,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
             ],

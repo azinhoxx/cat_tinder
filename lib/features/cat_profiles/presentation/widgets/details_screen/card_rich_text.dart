@@ -19,6 +19,7 @@ class CardRichText extends StatelessWidget {
         Expanded(
           child: Text.rich(
             TextSpan(
+              style: const TextStyle(fontSize: 16),
               children: [
                 TextSpan(
                   text: '${item.label}: ',

@@ -10,6 +10,8 @@ class LikeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen:
+          (previous, current) => previous.likesCount != current.likesCount,
       builder: (context, state) {
         final onPressed = context.read<HomeCubit>().onLike;
         final disabled = state.isEnd;

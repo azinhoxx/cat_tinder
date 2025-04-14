@@ -4,7 +4,7 @@ import 'package:cat_tinder/core/utils/constants/app/app_colors.dart';
 abstract final class AppTheme {
   AppTheme._();
 
-  static const _defaultFontFamily = 'Montserrat';
+  static const _defaultFontFamily = 'TinkoffSans';
   static const _defaultFontFamilyTitle = 'Sour Gummy';
   static const double _iconSize = 36;
 

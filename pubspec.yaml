@@ -60,11 +60,13 @@ flutter:
       fonts:
         - asset: fonts/SourGummy-Bold.ttf
           weight: 700
-    - family: 'Montserrat'
+    - family: 'TinkoffSans'
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/TinkoffSans-Regular.ttf
           weight: 400
-        - asset: fonts/Montserrat-Bold.ttf
+        - asset: fonts/TinkoffSans-Medium.ttf
+          weight: 600
+        - asset: fonts/TinkoffSans-Bold.ttf
           weight: 700
 inno_bundle:
   id: 0a9a47d0-02b3-11f0-bc70-f72afea39321

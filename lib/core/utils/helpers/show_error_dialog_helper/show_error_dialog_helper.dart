@@ -1,4 +1,4 @@
-import 'package:cat_tinder/core/base_components/error_dialog.dart';
+import 'package:cat_tinder/core/base_components/error_dialog/error_dialog.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showErrorDialog(

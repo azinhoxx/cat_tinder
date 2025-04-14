@@ -10,6 +10,9 @@ class SwiperCardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen:
+          (previous, current) =>
+              previous.slides.length != current.slides.length,
       builder: (context, state) {
         final cubit = context.read<HomeCubit>();
         final count = state.slides.length;
@@ -22,7 +25,6 @@ class SwiperCardList extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           onSwipe: cubit.onSwipe,
           onUndo: cubit.onUndo,
-          onEnd: cubit.onEnd,
           isLoop: false,
           maxAngle: 15,
           allowedSwipeDirection: const AllowedSwipeDirection.only(
