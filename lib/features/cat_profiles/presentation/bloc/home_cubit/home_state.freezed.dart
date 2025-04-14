@@ -21,7 +21,6 @@ mixin _$HomeState {
   bool get isFetching => throw _privateConstructorUsedError;
   List<CatEntity> get slides => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
-  int get likesCount => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
@@ -41,7 +40,6 @@ abstract class $HomeStateCopyWith<$Res> {
     bool isFetching,
     List<CatEntity> slides,
     int currentIndex,
-    int likesCount,
     String? errorMessage,
   });
 }
@@ -65,7 +63,6 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
-    Object? likesCount = null,
     Object? errorMessage = freezed,
   }) {
     return _then(
@@ -89,11 +86,6 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                 null == currentIndex
                     ? _value.currentIndex
                     : currentIndex // ignore: cast_nullable_to_non_nullable
-                        as int,
-            likesCount:
-                null == likesCount
-                    ? _value.likesCount
-                    : likesCount // ignore: cast_nullable_to_non_nullable
                         as int,
             errorMessage:
                 freezed == errorMessage
@@ -120,7 +112,6 @@ abstract class _$$HomeStateImplCopyWith<$Res>
     bool isFetching,
     List<CatEntity> slides,
     int currentIndex,
-    int likesCount,
     String? errorMessage,
   });
 }
@@ -143,7 +134,6 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
-    Object? likesCount = null,
     Object? errorMessage = freezed,
   }) {
     return _then(
@@ -168,11 +158,6 @@ class __$$HomeStateImplCopyWithImpl<$Res>
                 ? _value.currentIndex
                 : currentIndex // ignore: cast_nullable_to_non_nullable
                     as int,
-        likesCount:
-            null == likesCount
-                ? _value.likesCount
-                : likesCount // ignore: cast_nullable_to_non_nullable
-                    as int,
         errorMessage:
             freezed == errorMessage
                 ? _value.errorMessage
@@ -187,20 +172,22 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl({
-    required this.isFirstLoading,
-    required this.isFetching,
-    required final List<CatEntity> slides,
-    required this.currentIndex,
-    required this.likesCount,
-    this.errorMessage,
+    this.isFirstLoading = true,
+    this.isFetching = false,
+    final List<CatEntity> slides = const <CatEntity>[],
+    this.currentIndex = 0,
+    this.errorMessage = null,
   }) : _slides = slides;
 
   @override
+  @JsonKey()
   final bool isFirstLoading;
   @override
+  @JsonKey()
   final bool isFetching;
   final List<CatEntity> _slides;
   @override
+  @JsonKey()
   List<CatEntity> get slides {
     if (_slides is EqualUnmodifiableListView) return _slides;
     // ignore: implicit_dynamic_type
@@ -208,15 +195,15 @@ class _$HomeStateImpl implements _HomeState {
   }
 
   @override
+  @JsonKey()
   final int currentIndex;
   @override
-  final int likesCount;
-  @override
+  @JsonKey()
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'HomeState(isFirstLoading: $isFirstLoading, isFetching: $isFetching, slides: $slides, currentIndex: $currentIndex, likesCount: $likesCount, errorMessage: $errorMessage)';
+    return 'HomeState(isFirstLoading: $isFirstLoading, isFetching: $isFetching, slides: $slides, currentIndex: $currentIndex, errorMessage: $errorMessage)';
   }
 
   @override
@@ -231,8 +218,6 @@ class _$HomeStateImpl implements _HomeState {
             const DeepCollectionEquality().equals(other._slides, _slides) &&
             (identical(other.currentIndex, currentIndex) ||
                 other.currentIndex == currentIndex) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -244,7 +229,6 @@ class _$HomeStateImpl implements _HomeState {
     isFetching,
     const DeepCollectionEquality().hash(_slides),
     currentIndex,
-    likesCount,
     errorMessage,
   );
 
@@ -259,11 +243,10 @@ class _$HomeStateImpl implements _HomeState {
 
 abstract class _HomeState implements HomeState {
   const factory _HomeState({
-    required final bool isFirstLoading,
-    required final bool isFetching,
-    required final List<CatEntity> slides,
-    required final int currentIndex,
-    required final int likesCount,
+    final bool isFirstLoading,
+    final bool isFetching,
+    final List<CatEntity> slides,
+    final int currentIndex,
     final String? errorMessage,
   }) = _$HomeStateImpl;
 
@@ -275,8 +258,6 @@ abstract class _HomeState implements HomeState {
   List<CatEntity> get slides;
   @override
   int get currentIndex;
-  @override
-  int get likesCount;
   @override
   String? get errorMessage;
 

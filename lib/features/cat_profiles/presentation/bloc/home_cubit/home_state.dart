@@ -6,22 +6,12 @@ part 'home_state.freezed.dart';
 @freezed
 class HomeState with _$HomeState {
   const factory HomeState({
-    required bool isFirstLoading,
-    required bool isFetching,
-    required List<CatEntity> slides,
-    required int currentIndex,
-    required int likesCount,
-    String? errorMessage,
+    @Default(true) bool isFirstLoading,
+    @Default(false) bool isFetching,
+    @Default(<CatEntity>[]) List<CatEntity> slides,
+    @Default(0) int currentIndex,
+    @Default(null) String? errorMessage,
   }) = _HomeState;
-
-  factory HomeState.initial() => const HomeState(
-    isFirstLoading: true,
-    isFetching: false,
-    slides: [],
-    currentIndex: 0,
-    likesCount: 0,
-    errorMessage: null,
-  );
 }
 
 extension HomeStateX on HomeState {

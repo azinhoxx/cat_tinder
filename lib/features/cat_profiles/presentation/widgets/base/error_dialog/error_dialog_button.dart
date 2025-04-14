@@ -1,6 +1,6 @@
 import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_state.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_cubit.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

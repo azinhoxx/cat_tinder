@@ -8,11 +8,13 @@ part 'cat_model.g.dart';
 
 @JsonSerializable()
 class CatModel extends DataMapper<CatEntity> {
+  final String? id;
+
   final String? url;
 
   final List<CatBreedModel?>? breeds;
 
-  CatModel({this.url, this.breeds});
+  CatModel({this.id, this.url, this.breeds});
 
   factory CatModel.fromJson(Map<String, dynamic> json) =>
       _$CatModelFromJson(json);
@@ -28,6 +30,6 @@ class CatModel extends DataMapper<CatEntity> {
             )
             .toList();
 
-    return CatEntity(url: url, breeds: breedsEntity);
+    return CatEntity(id: id, url: url, breeds: breedsEntity);
   }
 }

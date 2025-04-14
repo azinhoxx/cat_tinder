@@ -55,7 +55,6 @@ class CatBreedEntity extends Equatable {
     temperament,
     lifeSpan,
     wikipediaUrl,
-    weight,
     adaptability,
     affectionLevel,
     childFriendly,
@@ -68,5 +67,6 @@ class CatBreedEntity extends Equatable {
     socialNeeds,
     strangerFriendly,
     vocalisation,
+    weight,
   ];
 }
