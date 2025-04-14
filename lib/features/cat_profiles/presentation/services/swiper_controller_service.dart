@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 class SwiperControllerService {
   final CardSwiperController controller;
 
-  const SwiperControllerService(this.controller);
+  SwiperControllerService(this.controller);
 
   void swipeRight() {
     controller.swipe(CardSwiperDirection.right);

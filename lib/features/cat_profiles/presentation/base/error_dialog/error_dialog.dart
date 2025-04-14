@@ -1,4 +1,4 @@
-import 'package:cat_tinder/core/base_components/error_dialog/error_dialog_button.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/base/error_dialog/error_dialog_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 

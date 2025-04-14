@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_icons.dart';
-import 'package:cat_tinder/core/base_components/paw_loading_indicator.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/base/paw_loading_indicator.dart';
 
 class ImageContainer extends StatefulWidget {
   final BorderRadiusGeometry borderRadius;

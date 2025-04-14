@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
-import 'package:cat_tinder/core/base_components/image_container.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/base/image_container.dart';
 import 'package:go_router/go_router.dart';
 
 class CardImageSection extends StatelessWidget {

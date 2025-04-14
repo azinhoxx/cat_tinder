@@ -1,6 +1,6 @@
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/base_components/cat_scaffold.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/base/cat_scaffold.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/cat_detail_card.dart';
 
 class DetailsScreen extends StatelessWidget {

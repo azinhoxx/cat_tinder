@@ -1,6 +1,6 @@
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
 import 'package:cat_tinder/core/common_domain/usecases/base_params_usecase.dart';
-import 'package:cat_tinder/core/services/swiper_controller_service.dart';
+import 'package:cat_tinder/features/cat_profiles/presentation/services/swiper_controller_service.dart';
 import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart';
