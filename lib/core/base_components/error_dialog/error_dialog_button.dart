@@ -13,9 +13,8 @@ class ErrorDialogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        return Container(
+        return SizedBox(
           width: 140,
-          padding: const EdgeInsets.only(bottom: 16.0),
           child: ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(
@@ -40,6 +39,7 @@ class ErrorDialogButton extends StatelessWidget {
                     : const Text(
                       'TRY AGAIN',
                       style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
           ),
         );

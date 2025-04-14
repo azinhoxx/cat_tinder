@@ -9,16 +9,16 @@ class DislikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<HomeCubit>();
-
-    final bool disabled = context.select<HomeCubit, bool>(
-      (cubit) => cubit.state.isEnd,
-    );
-
-    return IconButton(
-      onPressed: disabled ? null : cubit.onDislike,
-      color: Colors.red,
-      icon: const Icon(AppIcons.dislike),
+    return BlocSelector<HomeCubit, HomeState, bool>(
+      selector: (state) => state.isEnd,
+      builder: (context, isEnd) {
+        return IconButton(
+          onPressed:
+              isEnd ? null : context.read<HomeCubit>().swiperService.swipeLeft,
+          color: Colors.red,
+          icon: const Icon(AppIcons.dislike),
+        );
+      },
     );
   }
 }

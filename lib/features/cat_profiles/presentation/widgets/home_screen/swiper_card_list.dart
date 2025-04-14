@@ -9,16 +9,12 @@ class SwiperCardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen:
-          (previous, current) =>
-              previous.slides.length != current.slides.length,
-      builder: (context, state) {
+    return BlocSelector<HomeCubit, HomeState, int>(
+      selector: (state) => state.slides.length,
+      builder: (context, count) {
         final cubit = context.read<HomeCubit>();
-        final count = state.slides.length;
-
         return CardSwiper(
-          controller: cubit.controller,
+          controller: cubit.swiperService.controller,
           cardsCount: count,
           numberOfCardsDisplayed: count < 3 ? count : 3,
           backCardOffset: const Offset(0, 0),
@@ -37,7 +33,7 @@ class SwiperCardList extends StatelessWidget {
             horizontalOffsetPercentage,
             verticalOffsetPercentage,
           ) {
-            return state.slides[index];
+            return cubit.state.slides[index];
           },
         );
       },

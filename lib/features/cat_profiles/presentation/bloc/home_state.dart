@@ -25,7 +25,7 @@ class HomeState with _$HomeState {
 }
 
 extension HomeScreenGetters on HomeState {
-  bool get isEnd => currentIndex >= slides.length;
+  bool get isEnd => currentIndex >= slides.length - 1;
   bool get isStart => currentIndex <= 0;
   bool get isEmpty => slides.isEmpty;
   bool get isNotEmpty => slides.isNotEmpty;

@@ -1,5 +1,6 @@
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
 import 'package:cat_tinder/core/common_domain/usecases/base_params_usecase.dart';
+import 'package:cat_tinder/core/services/swiper_controller_service.dart';
 import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart';
@@ -13,44 +14,47 @@ import 'package:injectable/injectable.dart';
 @injectable
 class HomeCubit extends Cubit<HomeState> {
   final GetAllCats _getAllCats;
-  final CardSwiperController controller = CardSwiperController();
+  final SwiperControllerService swiperService;
 
-  HomeCubit(this._getAllCats) : super(HomeState.initial());
+  HomeCubit(this._getAllCats, this.swiperService) : super(HomeState.initial());
 
   Future<void> fetchSlides() async {
     if (state.isFetching) return;
 
     emit(state.copyWith(isFetching: true));
 
+    final List<Slide> newSlides = <Slide>[...state.slides];
+    String? newErrorMessage;
+
     final response = await _getAllCats(NoParams());
     response.when(
       success: (List<CatEntity?>? cats) {
-        final slides = <Slide>[];
         if (cats != null) {
-          slides.addAll(
+          newSlides.addAll(
             cats
                 .where((cat) => cat != null && cat.url != null)
                 .map((cat) => Slide(cat: cat!))
                 .toList(),
           );
         }
-        emit(
-          state.copyWith(
-            slides: [...state.slides, ...slides],
-            errorMessage: null,
-          ),
-        );
       },
-      failure: (ErrorResultModel error) {
-        emit(state.copyWith(errorMessage: error.message));
+      failure: (ErrorResultModel errorModel) {
+        newErrorMessage = errorModel.message;
       },
     );
 
-    if (state.isFirstLoading && isSplashSupportedPlatform) {
+    if (state.isFirstLoading && kIsSplashSupportedPlatform) {
       FlutterNativeSplash.remove();
     }
 
-    emit(state.copyWith(isFetching: false, isFirstLoading: false));
+    emit(
+      state.copyWith(
+        isFetching: false,
+        isFirstLoading: false,
+        slides: newSlides,
+        errorMessage: newErrorMessage,
+      ),
+    );
   }
 
   void updateSlides() {
@@ -94,21 +98,9 @@ class HomeCubit extends Cubit<HomeState> {
     return true;
   }
 
-  void onLike() {
-    controller.swipe(CardSwiperDirection.right);
-  }
-
-  void onDislike() {
-    controller.swipe(CardSwiperDirection.left);
-  }
-
-  void onRevoke() {
-    controller.undo();
-  }
-
   @override
   Future<void> close() {
-    controller.dispose();
+    swiperService.controller.dispose();
     return super.close();
   }
 }

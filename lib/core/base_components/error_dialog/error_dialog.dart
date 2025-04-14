@@ -35,8 +35,9 @@ class ErrorDialog extends StatelessWidget {
               child: const Icon(Icons.error, size: 60, color: Colors.white),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'Oops...',
@@ -51,7 +52,12 @@ class ErrorDialog extends StatelessWidget {
                 ],
               ),
             ),
-            ErrorDialogButton(onRetry: onRetry),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+              ).copyWith(bottom: 16.0),
+              child: ErrorDialogButton(onRetry: onRetry),
+            ),
           ],
         ),
       ),

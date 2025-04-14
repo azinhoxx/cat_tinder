@@ -1,4 +1,4 @@
-import 'package:cat_tinder/core/di/app_component/app_component.dart';
+import 'package:cat_tinder/core/base_components/paw_loading_indicator.dart';
 import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/core/utils/helpers/show_error_dialog_helper/show_error_dialog_helper.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit.dart';
@@ -17,17 +17,20 @@ class HomeScreen extends StatelessWidget {
     return CatScaffold(
       body: BlocConsumer<HomeCubit, HomeState>(
         listenWhen:
-            (previous, current) =>
-                previous.errorMessage != current.errorMessage,
+            (prev, curr) =>
+                (prev.errorMessage, prev.isEnd) !=
+                (curr.errorMessage, curr.isEnd),
         listener: (context, state) {
+          final String? errorMessage = state.errorMessage;
+
           if (Navigator.canPop(context)) {
             Navigator.of(context, rootNavigator: true).pop();
           }
 
-          if (state.isError) {
+          if (errorMessage != null && state.isEnd) {
             showErrorDialog(
               context,
-              errorMessage: state.errorMessage!,
+              errorMessage: errorMessage,
               onRetry: () async {
                 await context.read<HomeCubit>().fetchSlides();
               },
@@ -39,9 +42,12 @@ class HomeScreen extends StatelessWidget {
                 previous.isFirstLoading != current.isFirstLoading ||
                 previous.isEmpty != current.isEmpty,
         builder: (context, state) {
-          if (state.isFirstLoading && isSplashSupportedPlatform ||
-              state.isEmpty) {
+          if (state.isFirstLoading && kIsSplashSupportedPlatform) {
             return const SizedBox.shrink();
+          }
+
+          if (state.isEmpty) {
+            return const PawLoadingIndicator();
           }
 
           return const Column(

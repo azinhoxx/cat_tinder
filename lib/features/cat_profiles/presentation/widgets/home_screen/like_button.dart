@@ -9,15 +9,13 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen:
-          (previous, current) => previous.likesCount != current.likesCount,
+    return BlocSelector<HomeCubit, HomeState, (int, bool)>(
+      selector: (state) => (state.likesCount, state.isEnd),
       builder: (context, state) {
-        final onPressed = context.read<HomeCubit>().onLike;
-        final disabled = state.isEnd;
-
+        final (likesCount, isEnd) = state;
         return IconButton(
-          onPressed: disabled ? null : onPressed,
+          onPressed:
+              isEnd ? null : context.read<HomeCubit>().swiperService.swipeRight,
           color: Colors.green,
           icon: Row(
             spacing: 8.0,
@@ -26,16 +24,14 @@ class LikeButton extends StatelessWidget {
               const Icon(AppIcons.like),
               Container(
                 constraints: BoxConstraints(
-                  minWidth: _calculateWidthTextLikes(state.likesCount),
+                  minWidth: _calculateWidthTextLikes(likesCount),
                 ),
                 child: Text(
-                  '${state.likesCount}',
+                  '$likesCount',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color:
-                        disabled
-                            ? Theme.of(context).disabledColor
-                            : Colors.green,
+                        isEnd ? Theme.of(context).disabledColor : Colors.green,
                   ),
                 ),
               ),

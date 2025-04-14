@@ -2,5 +2,5 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-final bool isSplashSupportedPlatform =
+final bool kIsSplashSupportedPlatform =
     kIsWeb || Platform.isIOS || Platform.isAndroid;

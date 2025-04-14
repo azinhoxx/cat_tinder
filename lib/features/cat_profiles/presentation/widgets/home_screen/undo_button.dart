@@ -9,16 +9,16 @@ class UndoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<HomeCubit>();
-
-    final bool disabled = context.select<HomeCubit, bool>(
-      (cubit) => cubit.state.isStart,
-    );
-
-    return IconButton(
-      onPressed: disabled ? null : cubit.onRevoke,
-      color: Colors.blue,
-      icon: const Icon(AppIcons.undo),
+    return BlocSelector<HomeCubit, HomeState, bool>(
+      selector: (state) => state.isStart,
+      builder: (context, isStart) {
+        return IconButton(
+          onPressed:
+              isStart ? null : context.read<HomeCubit>().swiperService.undo,
+          color: Colors.blue,
+          icon: const Icon(AppIcons.undo),
+        );
+      },
     );
   }
 }

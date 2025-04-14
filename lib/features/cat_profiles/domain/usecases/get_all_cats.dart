@@ -11,7 +11,9 @@ class GetAllCats implements BaseParamsUseCase<List<CatEntity?>?, NoParams> {
   const GetAllCats(this.catRepository);
 
   @override
-  Future<ApiResultModel<List<CatEntity?>?>> call(NoParams? params) {
+  Future<ApiResultModel<List<CatEntity?>?>> call([
+    NoParams? params = const NoParams(),
+  ]) {
     return catRepository.getCats();
   }
 }

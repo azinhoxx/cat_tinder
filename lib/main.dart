@@ -25,7 +25,7 @@ Future<void> main() async {
 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
-  if (isSplashSupportedPlatform) {
+  if (kIsSplashSupportedPlatform) {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   }
 
