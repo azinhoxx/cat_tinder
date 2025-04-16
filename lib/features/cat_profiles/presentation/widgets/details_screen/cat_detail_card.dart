@@ -4,8 +4,8 @@ import 'package:cat_tinder/features/cat_profiles/presentation/models/cat_list_it
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_progress_bar.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_rich_text.dart';
 import 'package:flutter/material.dart';
-import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/widgets/details_screen/card_image_section.dart';
+import 'package:go_router/go_router.dart';
 
 class CatDetailCard extends StatelessWidget {
   final CatEntity cat;
@@ -18,29 +18,49 @@ class CatDetailCard extends StatelessWidget {
         cat.toListItemsOfType<String>();
     final List<CatListItemModel<int>> integerItems =
         cat.toListItemsOfType<int>();
+    const EdgeInsets horizontalPadding = EdgeInsets.symmetric(horizontal: 12.0);
 
     return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(AppDecorations.defaultBorderRadius),
-        ),
-      ),
-      color: Colors.white,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Flexible(child: CardImageSection(url: cat.url!)),
           Flexible(
-            child: ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
-              padding: const EdgeInsets.all(12.0),
-              itemCount: stringItems.length + integerItems.length,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => context.push('/fullscreen', extra: cat.url),
+                child: CardImageSection(url: cat.url!),
+              ),
+            ),
+          ),
+          Flexible(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              itemCount: stringItems.length + integerItems.length + 1,
               itemBuilder: (context, index) {
                 if (index < stringItems.length) {
-                  return CardRichText(item: stringItems[index]);
+                  return Padding(
+                    padding: horizontalPadding,
+                    child: Column(
+                      children: [
+                        CardRichText(item: stringItems[index]),
+                        if (index != stringItems.length - 1) const Divider(),
+                      ],
+                    ),
+                  );
                 }
-                return CardProgressBar(
-                  item: integerItems[index - stringItems.length],
+
+                if (index == stringItems.length) {
+                  return const Divider();
+                }
+
+                final adjustedIndex = index - stringItems.length - 1;
+                return Padding(
+                  padding: horizontalPadding.copyWith(
+                    bottom:
+                        adjustedIndex == integerItems.length - 1 ? 0.0 : 8.0,
+                  ),
+                  child: CardProgressBar(item: integerItems[adjustedIndex]),
                 );
               },
             ),

@@ -7,7 +7,7 @@ documentation: https://github.com/azinhoxx/cat_tinder
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0
 
 environment:
   sdk: ^3.7.0
@@ -33,6 +33,8 @@ dependencies:
   injectable_generator: ^2.7.0
   go_router: ^14.8.1
   flutter_bloc: ^9.1.0
+  animations: ^2.0.11
+  intl: ^0.20.2
 
 dev_dependencies:
   # dart run inno_bundle:build --release
@@ -51,6 +53,7 @@ flutter:
   assets:
     - .env
     - assets/icons/paw_loading_icon.svg
+    - assets/icons/cat_avatar_placeholder.png
 
   fonts:
     - family: CVIcons

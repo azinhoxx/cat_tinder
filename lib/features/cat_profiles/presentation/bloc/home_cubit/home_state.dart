@@ -20,5 +20,5 @@ extension HomeStateX on HomeState {
   bool get isFirstSlide => currentIndex <= 0;
   bool get isEmpty => slides.isEmpty;
   bool get isNotEmpty => slides.isNotEmpty;
-  bool get isNearEnd => totalSlides - currentIndex <= 3;
+  bool get isNearEnd => totalSlides - currentIndex <= 5;
 }

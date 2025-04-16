@@ -25,6 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(isFetching: true));
 
     final List<CatEntity> newSlides = <CatEntity>[...state.slides];
+    final existingIds = newSlides.map((CatEntity cat) => cat.id).toSet();
     String? newErrorMessage;
 
     final response = await _getAllCats(NoParams());
@@ -32,7 +33,15 @@ class HomeCubit extends Cubit<HomeState> {
       success: (List<CatEntity?>? cats) {
         if (cats != null) {
           newSlides.addAll(
-            cats.nonNulls.where((cat) => cat.url != null).toList(),
+            cats.nonNulls
+                .where(
+                  (CatEntity cat) =>
+                      cat.url != null &&
+                      cat.id != null &&
+                      cat.breeds != null &&
+                      !existingIds.contains(cat.id),
+                )
+                .toList(),
           );
         }
       },

@@ -7,7 +7,7 @@ abstract final class HttpRequestDetails {
   static const int hasBreedsValue = 1;
 
   static const String limitKey = 'limit';
-  static const int limitValue = 3;
+  static const int limitValue = 12;
 
   static const Duration timeOutDuration = Duration(seconds: 20);
 }

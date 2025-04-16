@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$LikedCatsState {
   List<CatLikedEntity> get likedCats => throw _privateConstructorUsedError;
+  List<CatLikedEntity> get filteredCats => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
+  String get currentFilter => throw _privateConstructorUsedError;
 
   /// Create a copy of LikedCatsState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +36,12 @@ abstract class $LikedCatsStateCopyWith<$Res> {
     $Res Function(LikedCatsState) then,
   ) = _$LikedCatsStateCopyWithImpl<$Res, LikedCatsState>;
   @useResult
-  $Res call({List<CatLikedEntity> likedCats, int likesCount});
+  $Res call({
+    List<CatLikedEntity> likedCats,
+    List<CatLikedEntity> filteredCats,
+    int likesCount,
+    String currentFilter,
+  });
 }
 
 /// @nodoc
@@ -51,7 +58,12 @@ class _$LikedCatsStateCopyWithImpl<$Res, $Val extends LikedCatsState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? likedCats = null, Object? likesCount = null}) {
+  $Res call({
+    Object? likedCats = null,
+    Object? filteredCats = null,
+    Object? likesCount = null,
+    Object? currentFilter = null,
+  }) {
     return _then(
       _value.copyWith(
             likedCats:
@@ -59,11 +71,21 @@ class _$LikedCatsStateCopyWithImpl<$Res, $Val extends LikedCatsState>
                     ? _value.likedCats
                     : likedCats // ignore: cast_nullable_to_non_nullable
                         as List<CatLikedEntity>,
+            filteredCats:
+                null == filteredCats
+                    ? _value.filteredCats
+                    : filteredCats // ignore: cast_nullable_to_non_nullable
+                        as List<CatLikedEntity>,
             likesCount:
                 null == likesCount
                     ? _value.likesCount
                     : likesCount // ignore: cast_nullable_to_non_nullable
                         as int,
+            currentFilter:
+                null == currentFilter
+                    ? _value.currentFilter
+                    : currentFilter // ignore: cast_nullable_to_non_nullable
+                        as String,
           )
           as $Val,
     );
@@ -79,7 +101,12 @@ abstract class _$$LikedCatsStateImplCopyWith<$Res>
   ) = __$$LikedCatsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CatLikedEntity> likedCats, int likesCount});
+  $Res call({
+    List<CatLikedEntity> likedCats,
+    List<CatLikedEntity> filteredCats,
+    int likesCount,
+    String currentFilter,
+  });
 }
 
 /// @nodoc
@@ -95,7 +122,12 @@ class __$$LikedCatsStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? likedCats = null, Object? likesCount = null}) {
+  $Res call({
+    Object? likedCats = null,
+    Object? filteredCats = null,
+    Object? likesCount = null,
+    Object? currentFilter = null,
+  }) {
     return _then(
       _$LikedCatsStateImpl(
         likedCats:
@@ -103,11 +135,21 @@ class __$$LikedCatsStateImplCopyWithImpl<$Res>
                 ? _value._likedCats
                 : likedCats // ignore: cast_nullable_to_non_nullable
                     as List<CatLikedEntity>,
+        filteredCats:
+            null == filteredCats
+                ? _value._filteredCats
+                : filteredCats // ignore: cast_nullable_to_non_nullable
+                    as List<CatLikedEntity>,
         likesCount:
             null == likesCount
                 ? _value.likesCount
                 : likesCount // ignore: cast_nullable_to_non_nullable
                     as int,
+        currentFilter:
+            null == currentFilter
+                ? _value.currentFilter
+                : currentFilter // ignore: cast_nullable_to_non_nullable
+                    as String,
       ),
     );
   }
@@ -118,8 +160,11 @@ class __$$LikedCatsStateImplCopyWithImpl<$Res>
 class _$LikedCatsStateImpl implements _LikedCatsState {
   const _$LikedCatsStateImpl({
     final List<CatLikedEntity> likedCats = const [],
+    final List<CatLikedEntity> filteredCats = const [],
     this.likesCount = 0,
-  }) : _likedCats = likedCats;
+    this.currentFilter = '',
+  }) : _likedCats = likedCats,
+       _filteredCats = filteredCats;
 
   final List<CatLikedEntity> _likedCats;
   @override
@@ -130,13 +175,25 @@ class _$LikedCatsStateImpl implements _LikedCatsState {
     return EqualUnmodifiableListView(_likedCats);
   }
 
+  final List<CatLikedEntity> _filteredCats;
+  @override
+  @JsonKey()
+  List<CatLikedEntity> get filteredCats {
+    if (_filteredCats is EqualUnmodifiableListView) return _filteredCats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredCats);
+  }
+
   @override
   @JsonKey()
   final int likesCount;
+  @override
+  @JsonKey()
+  final String currentFilter;
 
   @override
   String toString() {
-    return 'LikedCatsState(likedCats: $likedCats, likesCount: $likesCount)';
+    return 'LikedCatsState(likedCats: $likedCats, filteredCats: $filteredCats, likesCount: $likesCount, currentFilter: $currentFilter)';
   }
 
   @override
@@ -148,15 +205,23 @@ class _$LikedCatsStateImpl implements _LikedCatsState {
               other._likedCats,
               _likedCats,
             ) &&
+            const DeepCollectionEquality().equals(
+              other._filteredCats,
+              _filteredCats,
+            ) &&
             (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount));
+                other.likesCount == likesCount) &&
+            (identical(other.currentFilter, currentFilter) ||
+                other.currentFilter == currentFilter));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
     const DeepCollectionEquality().hash(_likedCats),
+    const DeepCollectionEquality().hash(_filteredCats),
     likesCount,
+    currentFilter,
   );
 
   /// Create a copy of LikedCatsState
@@ -174,13 +239,19 @@ class _$LikedCatsStateImpl implements _LikedCatsState {
 abstract class _LikedCatsState implements LikedCatsState {
   const factory _LikedCatsState({
     final List<CatLikedEntity> likedCats,
+    final List<CatLikedEntity> filteredCats,
     final int likesCount,
+    final String currentFilter,
   }) = _$LikedCatsStateImpl;
 
   @override
   List<CatLikedEntity> get likedCats;
   @override
+  List<CatLikedEntity> get filteredCats;
+  @override
   int get likesCount;
+  @override
+  String get currentFilter;
 
   /// Create a copy of LikedCatsState
   /// with the given fields replaced by the non-null parameter values.

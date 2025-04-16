@@ -60,11 +60,15 @@ class SwiperCardList extends StatelessWidget {
     BuildContext context,
     CatEntity cat,
   ) {
+    final homeCubit = context.read<HomeCubit>();
+    if (homeCubit.state.currentIndex + 1 >= homeCubit.state.totalSlides) {
+      return false;
+    }
     if (direction == CardSwiperDirection.right) {
       context.read<LikedCatsCubit>().addCat(cat);
     }
-    context.read<HomeCubit>().updateIndex(currentIndex);
-    context.read<HomeCubit>().updateSlides();
+    homeCubit.updateIndex(currentIndex);
+    homeCubit.updateSlides();
     return true;
   }
 

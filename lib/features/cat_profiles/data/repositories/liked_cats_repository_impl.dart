@@ -31,7 +31,20 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
   }
 
   @override
-  void clearLikedCats() {
+  List<CatLikedEntity> filterCatsByBreedName(String breedName) {
+    final lowerBreedName = breedName.toLowerCase();
+
+    return _likedCats
+        .where(
+          (CatLikedEntity likedCat) => likedCat.cat.breeds![0]!.name!
+              .toLowerCase()
+              .contains(lowerBreedName),
+        )
+        .toList();
+  }
+
+  @override
+  void clearCats() {
     _likedCats.clear();
   }
 }

@@ -27,6 +27,8 @@ import 'package:cat_tinder/features/cat_profiles/domain/repositories/liked_cats_
     as _i424;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/add_liked_cat.dart'
     as _i452;
+import 'package:cat_tinder/features/cat_profiles/domain/usecases/filter_liked_cats.dart'
+    as _i719;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart'
     as _i816;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_liked_cats.dart'
@@ -64,14 +66,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i452.AddLikedCat>(
       () => _i452.AddLikedCat(gh<_i424.LikedCatsRepository>()),
     );
+    gh.factory<_i719.FilterLikedCats>(
+      () => _i719.FilterLikedCats(gh<_i424.LikedCatsRepository>()),
+    );
     gh.factory<_i872.GetAllLikedCats>(
       () => _i872.GetAllLikedCats(gh<_i424.LikedCatsRepository>()),
     );
-    gh.factory<_i711.RemoveLikedCat>(
-      () => _i711.RemoveLikedCat(gh<_i424.LikedCatsRepository>()),
-    );
     gh.factory<_i619.GetLikesCount>(
       () => _i619.GetLikesCount(gh<_i424.LikedCatsRepository>()),
+    );
+    gh.factory<_i711.RemoveLikedCat>(
+      () => _i711.RemoveLikedCat(gh<_i424.LikedCatsRepository>()),
     );
     gh.factory<_i156.CatRepository>(
       () => _i823.CatRepositoryImpl(
@@ -84,6 +89,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i452.AddLikedCat>(),
         gh<_i711.RemoveLikedCat>(),
         gh<_i619.GetLikesCount>(),
+        gh<_i719.FilterLikedCats>(),
       ),
     );
     gh.factory<_i816.GetAllCats>(

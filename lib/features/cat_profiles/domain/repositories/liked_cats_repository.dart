@@ -5,6 +5,7 @@ abstract class LikedCatsRepository {
   List<CatLikedEntity> getAllLikedCats();
   void addCat(CatLikedEntity cat);
   void removeCat(CatEntity cat);
-  void clearLikedCats();
+  void clearCats();
   int getLikesCount();
+  List<CatLikedEntity> filterCatsByBreedName(String breedName);
 }

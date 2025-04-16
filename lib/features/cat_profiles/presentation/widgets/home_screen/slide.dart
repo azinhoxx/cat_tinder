@@ -12,33 +12,31 @@ class Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        context.push('/details', extra: cat);
-      },
-      borderRadius: const BorderRadius.all(
-        Radius.circular(AppDecorations.defaultBorderRadius),
-      ),
-      child: Card(
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            ImageContainer(
-              fit: BoxFit.cover,
-              imageUrl: cat.url!,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(AppDecorations.defaultBorderRadius),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          context.push('/details', extra: cat);
+        },
+        child: Card(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              ImageContainer(
+                fit: BoxFit.cover,
+                imageUrl: cat.url!,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(AppDecorations.defaultBorderRadius),
+                ),
               ),
-            ),
 
-            if (cat.breeds != null &&
-                cat.breeds!.isNotEmpty &&
-                cat.breeds?[0]?.name != null)
-              SlideDescription(
-                name: cat.breeds![0]!.name!,
-                origin: cat.breeds![0]!.origin,
-              ),
-          ],
+              if (cat.breeds!.isNotEmpty)
+                SlideDescription(
+                  name: cat.breeds![0]!.name!,
+                  origin: cat.breeds?[0]?.origin,
+                ),
+            ],
+          ),
         ),
       ),
     );
