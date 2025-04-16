@@ -42,10 +42,10 @@ Release версии (Web, Windows, Android) с описанием измене�
 - Экран с runtime-статистикой лайков — позволяет посмотреть текущие лайки в формате списка по породам. Могут быть дубли самих пород (как и во всём приложении), но отличаются изображениями. Более того, можно искать по названию породы: для этого реализовано поле с поиском.
 
 <p float="left">
-  <img src="assets/readme/liked_cats_screen_1.png" width="25%" />
-  <img src="assets/readme/liked_cats_screen_2.png" width="25%" />
-  <img src="assets/readme/liked_cats_screen_3.png" width="25%" />
-  <img src="assets/readme/liked_cats_screen_4.png" width="25%" />
+  <img src="assets/readme/liked_cats_screen_1.png" width="200" />
+  <img src="assets/readme/liked_cats_screen_2.png" width="200" />
+  <img src="assets/readme/liked_cats_screen_3.png" width="200" />
+  <img src="assets/readme/liked_cats_screen_4.png" width="200" />
 </p>
 
 ## Ошибки
@@ -67,10 +67,10 @@ Release версии (Web, Windows, Android) с описанием измене�
 Последняя gif отображается возможность самостоятельно загрузить изображение, если было потеряно подключение, но пользователь продолжал просматривать слайды.
 
 <p float="left">
-  <img src="assets/readme/splash_screen_1.png" width="25%" />
-  <img src="assets/readme/loading_screen.gif" width="25%" />
-  <img src="assets/readme/liked_cats_screen_5.png" width="25%" />
-  <img src="assets/readme/home_screen_2.gif" width="25%" />
+  <img src="assets/readme/splash_screen_1.png" width="223" />
+  <img src="assets/readme/loading_screen.gif" width="250" />
+  <img src="assets/readme/liked_cats_screen_5.png" width="223" />
+  <img src="assets/readme/home_screen_2.gif" width="250" />
 </p>
 
 # Особенности
