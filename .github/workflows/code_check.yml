@@ -2,7 +2,7 @@ name: Flutter Analyze & Format Check
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   analyze-and-format:
