@@ -26,26 +26,27 @@ Release версии (Web, Windows, Android) с описанием измене�
 
 - Главный экран — отображение слайдов котов. Есть возможность поставить лайк, дизлайк и отменить предыдущее действие — вернуться на предыдущий слайд.
 
-<img src="assets/readme/home_screen_1.png" width="200" style="margin: 16px 0;" />
+<img src="assets/readme/home_screen_1.png" width="200" />
 
 - Экран с описанием — отображение изображения одного из представителей породы и её подробное описание.
 
-<img src="assets/readme/details_screen_1.png" width="200" style="margin: 16px 0;" />
+<img src="assets/readme/details_screen_1.png" width="200" />
 
 - Полноэкранное отображение изображения — позволяет посмотреть изображение в полном формате с приближением, отдалением. Может быть полезно, если на двух предыдущих экранах изображение могло отобразиться некорректно.
 
-<div style="overflow-x: auto; white-space: nowrap; display: flex; column-gap: 10px; margin: 16px 0;">
+<p float="left">
   <img src="assets/readme/details_screen_1.png" width="200" />
   <img src="assets/readme/details_screen_2.png" width="200" />
-</div>
+</p>
+
 - Экран с runtime-статистикой лайков — позволяет посмотреть текущие лайки в формате списка по породам. Могут быть дубли самих пород (как и во всём приложении), но отличаются изображениями. Более того, можно искать по названию породы: для этого реализовано поле с поиском.
 
-<div style="overflow-x: auto; white-space: nowrap; display: flex; column-gap: 10px; margin: 16px 0;">
-  <img src="assets/readme/liked_cats_screen_1.png" width="200" />
-  <img src="assets/readme/liked_cats_screen_2.png" width="200" />
-  <img src="assets/readme/liked_cats_screen_3.png" width="200" />
-  <img src="assets/readme/liked_cats_screen_4.png" width="200" />
-</div>
+<p float="left">
+  <img src="assets/readme/liked_cats_screen_1.png" width="25%" />
+  <img src="assets/readme/liked_cats_screen_2.png" width="25%" />
+  <img src="assets/readme/liked_cats_screen_3.png" width="25%" />
+  <img src="assets/readme/liked_cats_screen_4.png" width="25%" />
+</p>
 
 ## Ошибки
 
@@ -65,12 +66,12 @@ Release версии (Web, Windows, Android) с описанием измене�
 
 Последняя gif отображается возможность самостоятельно загрузить изображение, если было потеряно подключение, но пользователь продолжал просматривать слайды.
 
-<div style="overflow-x: auto; white-space: nowrap; display: flex; column-gap: 10px; margin: 16px 0;">
-  <img src="assets/readme/splash_screen_1.png" width="210" />
-  <img src="assets/readme/loading_screen.gif" width="250" />
-  <img src="assets/readme/liked_cats_screen_5.png" width="210" />
-  <img src="assets/readme/home_screen_2.gif" width="250" />
-</div>
+<p float="left">
+  <img src="assets/readme/splash_screen_1.png" width="25%" />
+  <img src="assets/readme/loading_screen.gif" width="25%" />
+  <img src="assets/readme/liked_cats_screen_5.png" width="25%" />
+  <img src="assets/readme/home_screen_2.gif" width="25%" />
+</p>
 
 # Особенности
 
