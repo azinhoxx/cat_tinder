@@ -4,7 +4,9 @@ import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_liked_entit
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:vibration/vibration.dart';
 
 class LikedCatItem extends StatelessWidget {
   final CatLikedEntity likedEntity;
@@ -19,32 +21,24 @@ class LikedCatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: key!,
-      background: Container(
-        decoration: const BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.all(
-            Radius.circular(AppDecorations.defaultBorderRadius),
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.centerLeft,
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
-      secondaryBackground: Container(
-        decoration: const BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.all(
-            Radius.circular(AppDecorations.defaultBorderRadius),
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+      direction: DismissDirection.endToStart,
+      background: const _DismissableBackground(
         alignment: Alignment.centerRight,
-        child: const Icon(Icons.delete, color: Colors.white),
       ),
       onDismissed: (direction) => _onRemove(context),
+      onUpdate: (details) {
+        if (details.previousReached != details.reached) {
+          Vibration.vibrate(duration: 50, amplitude: 1);
+        }
+      },
       child: ListTile(
+        tileColor: Colors.white,
+        selectedColor: Colors.white,
+        hoverColor: Colors.white,
+        mouseCursor: SystemMouseCursors.click,
+        onTap: () => context.push('/details', extra: likedEntity.cat),
         visualDensity: const VisualDensity(vertical: 2.0),
-        contentPadding: const EdgeInsets.all(0.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
         leading: ClipOval(
           child: CachedNetworkImage(
             height: 64.0,
@@ -72,6 +66,27 @@ class LikedCatItem extends StatelessWidget {
           icon: const Icon(Icons.remove, size: 20),
         ),
       ),
+    );
+  }
+}
+
+class _DismissableBackground extends StatelessWidget {
+  final Alignment alignment;
+
+  const _DismissableBackground({required this.alignment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppDecorations.defaultBorderRadius),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: alignment,
+      child: const Icon(Icons.delete, color: Colors.white),
     );
   }
 }

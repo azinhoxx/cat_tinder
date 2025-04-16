@@ -15,9 +15,7 @@ class Slide extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {
-          context.push('/details', extra: cat);
-        },
+        onTap: () => context.push('/details', extra: cat),
         child: Card(
           child: Stack(
             fit: StackFit.expand,
