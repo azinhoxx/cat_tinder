@@ -1,6 +1,5 @@
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/api_result_model.dart';
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
-import 'package:cat_tinder/core/utils/helpers/custom_exceptions/custom_connection_exception.dart';
 import 'package:cat_tinder/features/cat_profiles/data/datasources/remote_datasource/cat_remote_datasource.dart';
 import 'package:cat_tinder/features/cat_profiles/data/models/cat_model.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
@@ -30,10 +29,11 @@ class CatRepositoryImpl implements CatRepository {
           );
         },
       );
-    } on CustomConnectionException catch (e) {
-      throw CustomConnectionException(
-        exceptionCode: e.exceptionCode,
-        exceptionMessage: e.exceptionMessage,
+    } catch (e) {
+      return ApiResultModel<List<CatEntity?>?>.failure(
+        errorResultEntity: ErrorResultModel(
+          message: 'Something went wrong: $e',
+        ),
       );
     }
   }

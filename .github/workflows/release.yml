@@ -54,34 +54,6 @@ jobs:
             ${{ matrix.build-type == 'appbundle' && 'build/app/outputs/bundle/release/app-release.aab' || '' }}
             ${{ matrix.build-type == 'apk-split' && 'build/app/outputs/flutter-apk/*.apk' || '' }}
 
-  build-web:
-    name: Build Web
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Create .env
-        run: |
-          echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
-
-      - name: Install dependencies
-        run: flutter pub get
-        
-      - name: Build Web
-        run: flutter build web
-
-      - name: Upload Web
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: build/web/
-
   build-windows-portable:
     name: Build Windows Portable
     runs-on: windows-latest
@@ -145,7 +117,7 @@ jobs:
           path: build/windows/x64/installer/Release/*.exe
 
   release:
-    needs: [build-android, build-web, build-windows-portable, build-windows-installer]
+    needs: [build-android, build-windows-portable, build-windows-installer]
     runs-on: ubuntu-latest
 
     steps:
@@ -190,11 +162,7 @@ jobs:
 
       - name: Create zip archive of Windows portable folder
         run: |
-          zip -r release/windows/portable-windows.zip release/windows/portable
-
-      - name: Create zip archive of Web folder
-        run: |
-          zip -r release/web.zip release/web     
+          zip -r release/windows/portable-windows.zip release/windows/portable  
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -208,6 +176,5 @@ jobs:
             release/android/app-release.apk
             release/windows/portable-windows.zip
             release/windows/installer/*.exe
-            release/web.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

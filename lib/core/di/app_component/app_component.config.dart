@@ -13,6 +13,10 @@ import 'package:cat_tinder/core/utils/helpers/connectivity_helper/connectivity_c
     as _i287;
 import 'package:cat_tinder/core/utils/helpers/http_strategy_helper/http_request_context.dart'
     as _i5;
+import 'package:cat_tinder/features/cat_profiles/data/datasources/local_datasource/liked_cats_local_datasource.dart'
+    as _i359;
+import 'package:cat_tinder/features/cat_profiles/data/datasources/local_datasource/liked_cats_local_datasource_impl.dart'
+    as _i338;
 import 'package:cat_tinder/features/cat_profiles/data/datasources/remote_datasource/cat_remote_datasource.dart'
     as _i759;
 import 'package:cat_tinder/features/cat_profiles/data/datasources/remote_datasource/cat_remote_datasource_impl.dart'
@@ -25,18 +29,10 @@ import 'package:cat_tinder/features/cat_profiles/domain/repositories/cat_reposit
     as _i156;
 import 'package:cat_tinder/features/cat_profiles/domain/repositories/liked_cats_repository.dart'
     as _i424;
-import 'package:cat_tinder/features/cat_profiles/domain/usecases/add_liked_cat.dart'
-    as _i452;
-import 'package:cat_tinder/features/cat_profiles/domain/usecases/filter_liked_cats.dart'
-    as _i719;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart'
     as _i816;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_liked_cats.dart'
     as _i872;
-import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_likes_count.dart'
-    as _i619;
-import 'package:cat_tinder/features/cat_profiles/domain/usecases/remove_liked_cat.dart'
-    as _i711;
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_cubit.dart'
     as _i165;
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_cubit.dart'
@@ -54,29 +50,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i287.ConnectivityCheckerHelper>(
       () => _i287.ConnectivityCheckerHelper(),
     );
-    gh.lazySingleton<_i424.LikedCatsRepository>(
-      () => _i205.LikedCatsRepositoryImpl(),
-    );
     gh.factory<_i5.HttpRequestContext>(
       () => _i5.HttpRequestContext(gh<_i287.ConnectivityCheckerHelper>()),
+    );
+    gh.factory<_i359.LikedCatsLocalDatasource>(
+      () => _i338.LikedCatsLocalDatasourceImpl(),
+    );
+    gh.singleton<_i424.LikedCatsRepository>(
+      () => _i205.LikedCatsRepositoryImpl(
+        likedCatsDatasource: gh<_i359.LikedCatsLocalDatasource>(),
+      ),
     );
     gh.factory<_i759.CatRemoteDataSource>(
       () => _i1007.CatRemoteDatasourceImpl(gh<_i5.HttpRequestContext>()),
     );
-    gh.factory<_i452.AddLikedCat>(
-      () => _i452.AddLikedCat(gh<_i424.LikedCatsRepository>()),
-    );
-    gh.factory<_i719.FilterLikedCats>(
-      () => _i719.FilterLikedCats(gh<_i424.LikedCatsRepository>()),
-    );
     gh.factory<_i872.GetAllLikedCats>(
       () => _i872.GetAllLikedCats(gh<_i424.LikedCatsRepository>()),
-    );
-    gh.factory<_i619.GetLikesCount>(
-      () => _i619.GetLikesCount(gh<_i424.LikedCatsRepository>()),
-    );
-    gh.factory<_i711.RemoveLikedCat>(
-      () => _i711.RemoveLikedCat(gh<_i424.LikedCatsRepository>()),
     );
     gh.factory<_i156.CatRepository>(
       () => _i823.CatRepositoryImpl(
@@ -84,13 +73,7 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i172.LikedCatsCubit>(
-      () => _i172.LikedCatsCubit(
-        gh<_i872.GetAllLikedCats>(),
-        gh<_i452.AddLikedCat>(),
-        gh<_i711.RemoveLikedCat>(),
-        gh<_i619.GetLikesCount>(),
-        gh<_i719.FilterLikedCats>(),
-      ),
+      () => _i172.LikedCatsCubit(gh<_i872.GetAllLikedCats>()),
     );
     gh.factory<_i816.GetAllCats>(
       () => _i816.GetAllCats(gh<_i156.CatRepository>()),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
+import 'package:cat_tinder/core/utils/constants/is_vibration_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_liked_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_cubit.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,8 @@ class LikedCatItem extends StatelessWidget {
       ),
       onDismissed: (direction) => _onRemove(context),
       onUpdate: (details) {
-        if (details.previousReached != details.reached) {
+        if (kIsVibrationSupported &&
+            details.previousReached != details.reached) {
           Vibration.vibrate(duration: 50, amplitude: 1);
         }
       },

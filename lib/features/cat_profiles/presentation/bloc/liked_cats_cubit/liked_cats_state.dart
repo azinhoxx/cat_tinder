@@ -8,7 +8,10 @@ class LikedCatsState with _$LikedCatsState {
   const factory LikedCatsState({
     @Default([]) List<CatLikedEntity> likedCats,
     @Default([]) List<CatLikedEntity> filteredCats,
-    @Default(0) int likesCount,
     @Default('') String currentFilter,
   }) = _LikedCatsState;
+}
+
+extension LikedCatsCubitX on LikedCatsState {
+  int get likesCount => likedCats.length;
 }

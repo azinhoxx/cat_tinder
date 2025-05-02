@@ -1,50 +1,64 @@
-import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
+import 'package:cat_tinder/core/common_domain/entities/based_api_result/api_result_model.dart';
+import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
+import 'package:cat_tinder/features/cat_profiles/data/datasources/local_datasource/liked_cats_local_datasource.dart';
+import 'package:cat_tinder/features/cat_profiles/data/models/cat_liked_model.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_liked_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/repositories/liked_cats_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: LikedCatsRepository)
+@Singleton(as: LikedCatsRepository)
 class LikedCatsRepositoryImpl implements LikedCatsRepository {
-  final List<CatLikedEntity> _likedCats = <CatLikedEntity>[];
+  final LikedCatsLocalDatasource likedCatsDatasource;
+
+  LikedCatsRepositoryImpl({required this.likedCatsDatasource});
 
   @override
-  List<CatLikedEntity> getAllLikedCats() => _likedCats;
-
-  @override
-  int getLikesCount() => _likedCats.length;
-
-  @override
-  void addCat(CatLikedEntity cat) {
-    final exists = _likedCats.any(
-      (CatLikedEntity likedCat) => cat.cat.id == likedCat.cat.id,
-    );
-    if (!exists) {
-      _likedCats.add(cat);
+  Future<ApiResultModel<List<CatLikedEntity>>> getCats() async {
+    try {
+      final ApiResultModel<List<CatLikedModel>> response =
+          await likedCatsDatasource.getCats();
+      return response.when(
+        success: (List<CatLikedModel> listCatModel) {
+          return ApiResultModel<List<CatLikedEntity>>.success(
+            data: listCatModel.map((e) => e.mapToEntity()).toList(),
+          );
+        },
+        failure: (ErrorResultModel errorModel) {
+          return ApiResultModel<List<CatLikedEntity>>.failure(
+            errorResultEntity: errorModel,
+          );
+        },
+      );
+    } catch (e) {
+      return ApiResultModel<List<CatLikedEntity>>.failure(
+        errorResultEntity: ErrorResultModel(
+          message: 'Something went wrong: $e',
+        ),
+      );
     }
   }
 
   @override
-  void removeCat(CatEntity cat) {
-    _likedCats.removeWhere(
-      (CatLikedEntity likedCat) => cat.id == likedCat.cat.id,
-    );
-  }
+  Future<ApiResultModel<void>> saveCats(List<CatLikedEntity> cats) async {
+    try {
+      final ApiResultModel<void> response = await likedCatsDatasource.saveCats(
+        <CatLikedModel>[],
+      );
 
-  @override
-  List<CatLikedEntity> filterCatsByBreedName(String breedName) {
-    final lowerBreedName = breedName.toLowerCase();
-
-    return _likedCats
-        .where(
-          (CatLikedEntity likedCat) => likedCat.cat.breeds![0]!.name!
-              .toLowerCase()
-              .contains(lowerBreedName),
-        )
-        .toList();
-  }
-
-  @override
-  void clearCats() {
-    _likedCats.clear();
+      return response.when(
+        success: (_) {
+          return ApiResultModel<void>.success(data: null);
+        },
+        failure: (ErrorResultModel errorModel) {
+          return ApiResultModel<void>.failure(errorResultEntity: errorModel);
+        },
+      );
+    } catch (e) {
+      return ApiResultModel<void>.failure(
+        errorResultEntity: ErrorResultModel(
+          message: 'Something went wrong: $e',
+        ),
+      );
+    }
   }
 }

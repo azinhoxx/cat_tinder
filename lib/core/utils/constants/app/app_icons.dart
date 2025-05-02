@@ -14,4 +14,9 @@ abstract final class AppIcons {
     0xe804,
     fontFamily: _fontFamily,
   );
+  static const IconData toastCheck = IconData(0xf06d, fontFamily: _fontFamily);
+  static const IconData warningCheck = IconData(
+    0xe806,
+    fontFamily: _fontFamily,
+  );
 }

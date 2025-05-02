@@ -9,9 +9,7 @@ part 'cat_model.g.dart';
 @JsonSerializable()
 class CatModel extends DataMapper<CatEntity> {
   final String? id;
-
   final String? url;
-
   final List<CatBreedModel?>? breeds;
 
   CatModel({this.id, this.url, this.breeds});

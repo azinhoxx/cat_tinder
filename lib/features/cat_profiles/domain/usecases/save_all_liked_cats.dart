@@ -5,16 +5,14 @@ import 'package:cat_tinder/features/cat_profiles/domain/repositories/liked_cats_
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetAllLikedCats
-    implements BaseApiParamsUseCase<List<CatLikedEntity>, NoParams> {
+class SaveAllLikedCats
+    implements BaseApiParamsUseCase<void, List<CatLikedEntity>> {
   final LikedCatsRepository repository;
 
-  const GetAllLikedCats(this.repository);
+  const SaveAllLikedCats(this.repository);
 
   @override
-  Future<ApiResultModel<List<CatLikedEntity>>> call([
-    NoParams? params = const NoParams(),
-  ]) {
-    return repository.getCats();
+  Future<ApiResultModel<void>> call(List<CatLikedEntity> params) {
+    return repository.saveCats(params);
   }
 }

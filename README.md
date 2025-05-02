@@ -4,7 +4,7 @@
 
 Скачать APK последней версии можно по следующей ссылке: [APK](https://github.com/azinhoxx/cat_tinder/releases/latest/download/app-release.apk).
 
-Release версии (Web, Windows, Android) с описанием изменений доступны по [ссылке](https://github.com/azinhoxx/cat_tinder/releases).
+Release версии (Android) с описанием изменений доступны по [ссылке](https://github.com/azinhoxx/cat_tinder/releases).
 
 # ПОЛНОЭКРАННЫЙ РЕЖИМ
 
@@ -22,14 +22,7 @@ Release версии (Web, Windows, Android) с описанием измене�
 
 # Поддерживаемые платформы
 
-На данный момент приложение протестировано, и готовы release-версии для Android, Windows и Web.
-
-* Android :white_check_mark:
-* iOS :question:
-* Windows :white_check_mark:
-* Linux :question:
-* macOS :question:
-* Web :white_check_mark:
+На данный момент поддерживается только Android и Windows платформы.
 
 ## Визуальная часть
 
@@ -76,7 +69,3 @@ Release версии (Web, Windows, Android) с описанием измене�
   <img src="assets/readme/liked_cats_screen_5.png" width="223" />
   <img src="assets/readme/home_screen_2.gif" width="250" />
 </p>
-
-# Особенности
-
-Из-за CORS в Web-версии отсутствуют изображения.

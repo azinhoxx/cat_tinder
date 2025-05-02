@@ -57,6 +57,18 @@
       "css": "arrows-cw",
       "code": 59397,
       "src": "fontawesome"
+    },
+    {
+      "uid": "5e1ef647438e2204c15197c6efc4151e",
+      "css": "ok-circled",
+      "code": 61549,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "c76b7947c957c9b78b11741173c8349b",
+      "css": "attention",
+      "code": 59398,
+      "src": "fontawesome"
     }
   ]
 }
