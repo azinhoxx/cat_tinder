@@ -17,6 +17,12 @@ jobs:
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Create .env
+        run: |
+          echo "CATS_API_KEY=${{ secrets.CATS_API_KEY }}" >> .env
 
       - name: Install dependencies
         run: flutter pub get
