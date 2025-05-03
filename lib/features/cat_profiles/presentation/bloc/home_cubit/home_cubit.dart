@@ -19,39 +19,43 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> fetchSlides() async {
     if (state.isFetching) return;
 
-    print('fetch');
-
     emit(state.copyWith(isFetching: true));
 
     final List<CatEntity> newSlides = <CatEntity>[...state.slides];
-    final existingIds = newSlides.map((CatEntity cat) => cat.id).toSet();
     ErrorResultModel? newError;
 
     final response = await _getAllCats();
     response.when(
       success: (List<CatEntity?>? cats) {
         if (cats != null) {
-          newSlides.addAll(
-            cats.nonNulls
-                .where(
-                  (CatEntity cat) =>
-                      cat.url != null &&
-                      cat.id != null &&
-                      cat.breeds != null &&
-                      !existingIds.contains(cat.id),
-                )
-                .toList(),
-          );
+          final List<CatEntity> filtered =
+              cats.nonNulls
+                  .where(
+                    (CatEntity cat) =>
+                        cat.url != null && cat.id != null && cat.breeds != null,
+                  )
+                  .toList();
+
+          final List<CatEntity> uniqueCats = [];
+          final Set<String> seenIds = {};
+
+          for (final cat in newSlides) {
+            seenIds.add(cat.id!);
+          }
+
+          for (final cat in filtered) {
+            if (seenIds.add(cat.id!)) {
+              uniqueCats.add(cat);
+            }
+          }
+
+          newSlides.addAll(uniqueCats);
         }
       },
       failure: (ErrorResultModel errorModel) {
         newError = errorModel;
       },
     );
-
-    print(newError);
-
-    print(newSlides);
 
     emit(
       state.copyWith(
@@ -67,7 +71,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(currentIndex: index ?? state.currentIndex));
   }
 
-  void updateSlides() {
+  Future<void> updateSlides() async {
     if (state.isNearEnd) {
       fetchSlides();
     }

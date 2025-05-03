@@ -39,6 +39,8 @@ import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/ho
     as _i165;
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_cubit.dart'
     as _i172;
+import 'package:cat_tinder/features/cat_profiles/presentation/bloc/network_cubut/network_cubit.dart'
+    as _i604;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -62,6 +64,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i205.LikedCatsRepositoryImpl(
         likedCatsDatasource: gh<_i359.LikedCatsLocalDatasource>(),
       ),
+    );
+    gh.factory<_i604.NetworkCubit>(
+      () => _i604.NetworkCubit(gh<_i287.ConnectivityCheckerHelper>()),
     );
     gh.factory<_i759.CatRemoteDataSource>(
       () => _i1007.CatRemoteDatasourceImpl(gh<_i5.HttpRequestContext>()),

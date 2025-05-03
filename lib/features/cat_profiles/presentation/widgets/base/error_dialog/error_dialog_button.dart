@@ -1,4 +1,3 @@
-import 'package:cat_tinder/core/utils/constants/app/app_decorations.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_cubit.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_state.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +20,7 @@ class ErrorDialogButton extends StatelessWidget {
               backgroundColor: Colors.blue,
               minimumSize: const Size.fromHeight(44),
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(AppDecorations.defaultBorderRadius),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),
             ),
             child:
