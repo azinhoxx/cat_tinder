@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                   if (homeState.error?.type == ErrorType.networkError) {
                     return const ScreenErrorState(
                       message:
-                          'No network connection\nLiked cats are still available 😻',
+                          'Offline-mode\nLiked cats are still available 😻',
                     );
                   }
                   if (homeState.error?.type == ErrorType.unknownError) {
