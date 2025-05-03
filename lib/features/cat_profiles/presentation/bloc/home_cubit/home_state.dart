@@ -1,3 +1,4 @@
+import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,7 +11,7 @@ class HomeState with _$HomeState {
     @Default(false) bool isFetching,
     @Default(<CatEntity>[]) List<CatEntity> slides,
     @Default(0) int currentIndex,
-    @Default(null) String? errorMessage,
+    @Default(null) ErrorResultModel? error,
   }) = _HomeState;
 }
 

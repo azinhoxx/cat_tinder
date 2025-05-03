@@ -52,6 +52,7 @@ class CatRemoteDatasourceImpl implements CatRemoteDataSource {
         errorResultEntity: ErrorResultModel(
           statusCode: e.exceptionCode,
           message: e.exceptionMessage,
+          type: ErrorType.networkError,
         ),
       );
     }

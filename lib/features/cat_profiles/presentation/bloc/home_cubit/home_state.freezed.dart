@@ -21,7 +21,7 @@ mixin _$HomeState {
   bool get isFetching => throw _privateConstructorUsedError;
   List<CatEntity> get slides => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
+  ErrorResultModel? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +40,7 @@ abstract class $HomeStateCopyWith<$Res> {
     bool isFetching,
     List<CatEntity> slides,
     int currentIndex,
-    String? errorMessage,
+    ErrorResultModel? error,
   });
 }
 
@@ -63,7 +63,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
-    Object? errorMessage = freezed,
+    Object? error = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -87,11 +87,11 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                     ? _value.currentIndex
                     : currentIndex // ignore: cast_nullable_to_non_nullable
                         as int,
-            errorMessage:
-                freezed == errorMessage
-                    ? _value.errorMessage
-                    : errorMessage // ignore: cast_nullable_to_non_nullable
-                        as String?,
+            error:
+                freezed == error
+                    ? _value.error
+                    : error // ignore: cast_nullable_to_non_nullable
+                        as ErrorResultModel?,
           )
           as $Val,
     );
@@ -112,7 +112,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
     bool isFetching,
     List<CatEntity> slides,
     int currentIndex,
-    String? errorMessage,
+    ErrorResultModel? error,
   });
 }
 
@@ -134,7 +134,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? isFetching = null,
     Object? slides = null,
     Object? currentIndex = null,
-    Object? errorMessage = freezed,
+    Object? error = freezed,
   }) {
     return _then(
       _$HomeStateImpl(
@@ -158,11 +158,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
                 ? _value.currentIndex
                 : currentIndex // ignore: cast_nullable_to_non_nullable
                     as int,
-        errorMessage:
-            freezed == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                    as String?,
+        error:
+            freezed == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as ErrorResultModel?,
       ),
     );
   }
@@ -176,7 +176,7 @@ class _$HomeStateImpl implements _HomeState {
     this.isFetching = false,
     final List<CatEntity> slides = const <CatEntity>[],
     this.currentIndex = 0,
-    this.errorMessage = null,
+    this.error = null,
   }) : _slides = slides;
 
   @override
@@ -199,11 +199,11 @@ class _$HomeStateImpl implements _HomeState {
   final int currentIndex;
   @override
   @JsonKey()
-  final String? errorMessage;
+  final ErrorResultModel? error;
 
   @override
   String toString() {
-    return 'HomeState(isFirstLoading: $isFirstLoading, isFetching: $isFetching, slides: $slides, currentIndex: $currentIndex, errorMessage: $errorMessage)';
+    return 'HomeState(isFirstLoading: $isFirstLoading, isFetching: $isFetching, slides: $slides, currentIndex: $currentIndex, error: $error)';
   }
 
   @override
@@ -218,8 +218,7 @@ class _$HomeStateImpl implements _HomeState {
             const DeepCollectionEquality().equals(other._slides, _slides) &&
             (identical(other.currentIndex, currentIndex) ||
                 other.currentIndex == currentIndex) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -229,7 +228,7 @@ class _$HomeStateImpl implements _HomeState {
     isFetching,
     const DeepCollectionEquality().hash(_slides),
     currentIndex,
-    errorMessage,
+    error,
   );
 
   /// Create a copy of HomeState
@@ -247,7 +246,7 @@ abstract class _HomeState implements HomeState {
     final bool isFetching,
     final List<CatEntity> slides,
     final int currentIndex,
-    final String? errorMessage,
+    final ErrorResultModel? error,
   }) = _$HomeStateImpl;
 
   @override
@@ -259,7 +258,7 @@ abstract class _HomeState implements HomeState {
   @override
   int get currentIndex;
   @override
-  String? get errorMessage;
+  ErrorResultModel? get error;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

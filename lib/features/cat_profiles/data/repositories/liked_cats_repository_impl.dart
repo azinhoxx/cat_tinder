@@ -1,6 +1,7 @@
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/api_result_model.dart';
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
 import 'package:cat_tinder/features/cat_profiles/data/datasources/local_datasource/liked_cats_local_datasource.dart';
+import 'package:cat_tinder/features/cat_profiles/data/mappers/cat_liked_entity_to_model_mapper.dart';
 import 'package:cat_tinder/features/cat_profiles/data/models/cat_liked_model.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_liked_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/repositories/liked_cats_repository.dart';
@@ -41,8 +42,11 @@ class LikedCatsRepositoryImpl implements LikedCatsRepository {
   @override
   Future<ApiResultModel<void>> saveCats(List<CatLikedEntity> cats) async {
     try {
+      final List<CatLikedModel> mapped =
+          cats.map((e) => e.mapToModel()).toList();
+
       final ApiResultModel<void> response = await likedCatsDatasource.saveCats(
-        <CatLikedModel>[],
+        mapped,
       );
 
       return response.when(

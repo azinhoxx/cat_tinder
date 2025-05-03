@@ -1,8 +1,5 @@
-import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_cubit.dart';
-import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:cat_tinder/core/utils/constants/app/app_icons.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -54,18 +51,13 @@ class CatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
                 : const SizedBox.shrink(),
         actions: <Widget>[
-          BlocSelector<HomeCubit, HomeState, (bool, bool)>(
-            selector: (state) => (state.isFirstLoading, state.isEmpty),
-            builder:
-                (context, state) =>
-                    showMenuButton && !state.$1 && !state.$2
-                        ? IconButton(
-                          onPressed: () => context.push('/likes'),
-                          icon: const Icon(Icons.menu),
-                          tooltip: 'Show likes list',
-                        )
-                        : SizedBox.square(dimension: 40),
-          ),
+          showMenuButton
+              ? IconButton(
+                onPressed: () => context.push('/likes'),
+                icon: const Icon(Icons.menu),
+                tooltip: 'Show likes list',
+              )
+              : SizedBox.square(dimension: 40),
         ],
         actionsPadding: const EdgeInsets.only(right: 8.0).copyWith(left: 6.0),
       ),

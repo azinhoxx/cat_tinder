@@ -8,6 +8,7 @@ class LikedCatsState with _$LikedCatsState {
   const factory LikedCatsState({
     @Default([]) List<CatLikedEntity> likedCats,
     @Default([]) List<CatLikedEntity> filteredCats,
+    @Default(true) bool isFirstLoading,
     @Default('') String currentFilter,
   }) = _LikedCatsState;
 }

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/api_result_model.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_liked_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_liked_cats.dart';
+import 'package:cat_tinder/features/cat_profiles/domain/usecases/save_all_liked_cats.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -9,14 +12,19 @@ import 'package:injectable/injectable.dart';
 @injectable
 class LikedCatsCubit extends Cubit<LikedCatsState> {
   final GetAllLikedCats _getAllLikedCats;
+  final SaveAllLikedCats _saveAllLikedCats;
 
-  LikedCatsCubit(this._getAllLikedCats) : super(LikedCatsState());
+  Timer? _saveTimer;
 
-  Future<List<CatLikedEntity>> getCats() async {
+  LikedCatsCubit(this._getAllLikedCats, this._saveAllLikedCats)
+    : super(LikedCatsState());
+
+  Future<List<CatLikedEntity>> _getCats() async {
     final ApiResultModel<List<CatLikedEntity>> response =
         await _getAllLikedCats();
 
     final List<CatLikedEntity> cats = [];
+
     response.when(
       success: (List<CatLikedEntity> catsResponse) {
         cats.addAll(catsResponse);
@@ -28,7 +36,7 @@ class LikedCatsCubit extends Cubit<LikedCatsState> {
   }
 
   Future<void> loadCats() async {
-    emit(state.copyWith(likedCats: await getCats()));
+    emit(state.copyWith(likedCats: await _getCats(), isFirstLoading: false));
   }
 
   void addCat(CatEntity cat) {
@@ -43,6 +51,7 @@ class LikedCatsCubit extends Cubit<LikedCatsState> {
 
     if (!exists) {
       emit(state.copyWith(likedCats: [...state.likedCats, entity]));
+      _debouncedSave();
     }
   }
 
@@ -70,9 +79,29 @@ class LikedCatsCubit extends Cubit<LikedCatsState> {
             .toList();
 
     emit(state.copyWith(likedCats: updatedList, filteredCats: filteredCats));
+    _debouncedSave();
   }
 
   void initFilterList() {
     emit(state.copyWith(filteredCats: state.likedCats));
+  }
+
+  Future<void> saveCats() async {
+    final ApiResultModel<void> response = await _saveAllLikedCats(
+      state.likedCats,
+    );
+
+    response.when(success: (_) {}, failure: (_) {});
+  }
+
+  void _debouncedSave() {
+    _saveTimer?.cancel();
+    _saveTimer = Timer(const Duration(milliseconds: 1000), saveCats);
+  }
+
+  @override
+  Future<void> close() {
+    _saveTimer?.cancel();
+    return super.close();
   }
 }

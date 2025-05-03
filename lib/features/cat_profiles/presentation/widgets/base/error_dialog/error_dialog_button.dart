@@ -14,12 +14,12 @@ class ErrorDialogButton extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return SizedBox(
-          width: 140,
+          width: 160,
           child: ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
-              minimumSize: const Size.fromHeight(50),
+              minimumSize: const Size.fromHeight(44),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppDecorations.defaultBorderRadius),
@@ -28,7 +28,7 @@ class ErrorDialogButton extends StatelessWidget {
             ),
             child:
                 state.isFetching
-                    ? SizedBox(
+                    ? const SizedBox(
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(

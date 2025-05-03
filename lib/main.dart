@@ -18,6 +18,9 @@ void setSystemChrome() {
   );
 }
 
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 Future<void> main() async {
   await dotenv.load();
 

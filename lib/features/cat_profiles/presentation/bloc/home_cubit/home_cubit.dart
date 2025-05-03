@@ -1,13 +1,10 @@
 import 'package:cat_tinder/core/common_domain/entities/based_api_result/error_result_model.dart';
-import 'package:cat_tinder/core/common_domain/usecases/base_params_usecase.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/services/swiper_controller_service.dart';
-import 'package:cat_tinder/core/utils/constants/is_splash_supported.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/entities/cat_entity.dart';
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.dart';
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -22,13 +19,15 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> fetchSlides() async {
     if (state.isFetching) return;
 
+    print('fetch');
+
     emit(state.copyWith(isFetching: true));
 
     final List<CatEntity> newSlides = <CatEntity>[...state.slides];
     final existingIds = newSlides.map((CatEntity cat) => cat.id).toSet();
-    String? newErrorMessage;
+    ErrorResultModel? newError;
 
-    final response = await _getAllCats(NoParams());
+    final response = await _getAllCats();
     response.when(
       success: (List<CatEntity?>? cats) {
         if (cats != null) {
@@ -46,20 +45,20 @@ class HomeCubit extends Cubit<HomeState> {
         }
       },
       failure: (ErrorResultModel errorModel) {
-        newErrorMessage = errorModel.message;
+        newError = errorModel;
       },
     );
 
-    if (state.isFirstLoading && kIsSplashSupportedPlatform) {
-      FlutterNativeSplash.remove();
-    }
+    print(newError);
+
+    print(newSlides);
 
     emit(
       state.copyWith(
         isFetching: false,
         isFirstLoading: false,
         slides: newSlides,
-        errorMessage: newErrorMessage,
+        error: newError,
       ),
     );
   }

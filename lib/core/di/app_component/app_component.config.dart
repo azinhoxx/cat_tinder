@@ -33,6 +33,8 @@ import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_cats.da
     as _i816;
 import 'package:cat_tinder/features/cat_profiles/domain/usecases/get_all_liked_cats.dart'
     as _i872;
+import 'package:cat_tinder/features/cat_profiles/domain/usecases/save_all_liked_cats.dart'
+    as _i745;
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/home_cubit/home_cubit.dart'
     as _i165;
 import 'package:cat_tinder/features/cat_profiles/presentation/bloc/liked_cats_cubit/liked_cats_cubit.dart'
@@ -67,13 +69,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i872.GetAllLikedCats>(
       () => _i872.GetAllLikedCats(gh<_i424.LikedCatsRepository>()),
     );
+    gh.factory<_i745.SaveAllLikedCats>(
+      () => _i745.SaveAllLikedCats(gh<_i424.LikedCatsRepository>()),
+    );
     gh.factory<_i156.CatRepository>(
       () => _i823.CatRepositoryImpl(
         remoteDataSource: gh<_i759.CatRemoteDataSource>(),
       ),
     );
     gh.factory<_i172.LikedCatsCubit>(
-      () => _i172.LikedCatsCubit(gh<_i872.GetAllLikedCats>()),
+      () => _i172.LikedCatsCubit(
+        gh<_i872.GetAllLikedCats>(),
+        gh<_i745.SaveAllLikedCats>(),
+      ),
     );
     gh.factory<_i816.GetAllCats>(
       () => _i816.GetAllCats(gh<_i156.CatRepository>()),
